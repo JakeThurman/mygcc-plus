@@ -200,10 +200,10 @@ Features:
                     $("#sideBar").css({ "width": "245px", "padding-right": "15px" });
                     $("#pageTitle, #pageTitle h2").css({ "margin": 0 });
                     $("#contextName").css({ position: "absolute", top: 0, right: 0, "background-color": "rgba(255,255,255,0.8)",  "color": "rgb(60, 61, 62)", "text-align": "center", "font-size": "24px", "display": "block", "box-sizing":"border-box", "cursor": "default", "text-decoration": "none", "line-height": "51px", "height":"151px", "padding": "50px" });
-                    $(".pHead").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "padding-top": "3px", "border-bottom": "none", "padding-bottom": "3px", "margin-top": "5px", "background": "none", "font-size": "20px", "box-shadow": "none" });
+                    $(".pHead").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
                     $(".pHead a, .pHead h3").css({ "color": "rgb(60, 61, 62)", "text-align": "center" });
                     $(".pHead h3").css({ "padding": 0 });
-                    $("h4").css({ "background-color": "#e4e4e4", "color": "black", "text-align": "center", "border-radius": "0" });
+                    $("h4").css({ "background-color": "#f2f2f2", "color": "black", "text-align": "center", "border-radius": "0" });
                     $("#contextPages li.currentPage").css({ "background": "#ececec", "border-left": "3px solid #69152e" });
                     $("#sideBar .searchControls").css({ "padding-top": "0", "padding-left": "10px" });
                     $("#footer_wrap").css({ "border-top": sidebarBorder });
