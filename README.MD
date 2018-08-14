@@ -1,3 +1,5 @@
+**NOT YET UPDATED FOR THE 2018 REDESIGN :(** 
+
 # Using MyGCC-Plus
  1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
  2. Add this whole file as a new script....
