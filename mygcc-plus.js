@@ -260,6 +260,33 @@ h1, h2, h3, h4, h5, h6 {
     padding: 15px;
     font-weight: normal;
 }
+
+#top-nav-bar {
+    background-color: #1d2121;
+    border-bottom: 4px solid #c00;
+    height: 46px;
+    overflow:hidden;
+}
+
+#top-nav-bar a {
+    font-size: 14px !important;
+    font-weight: normal;
+    line-height:23px;
+    padding: 10px 16px;
+    display: inline-block;
+    border-right: 1px solid #3c3b3b;
+}
+
+#top-nav-bar a:hover, #top-nav-bar a:focus,
+#top-nav-bar .selected a:hover, #top-nav-bar .selected a:focus {
+    background-color: #020202;
+    color: white !important;
+}
+
+#hamburger-menu-section ul li.selected a {
+    background-color: #312b2b;
+    font-weight: bold !important;
+}
                     `).appendTo(document.body);
 
                     // Delete stuff
