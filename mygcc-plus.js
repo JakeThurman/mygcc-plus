@@ -381,13 +381,15 @@ li.quick-links-with-sub-nav #myPages,
     color: #515151;
 }
 
-#contextPages .current-page a {
+#contextPages .current-page a,
+.slide-menu-right .navbar li button {
     border-left: 7px solid #a60000;
     text-indent: -7px;
     font-weight: bold !important;
 }
 
-#contextPages a {
+#contextPages a,
+.slide-menu-right .navbar li button {
     font-weight: normal;
     padding-left: 25px;
 }
