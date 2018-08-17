@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  mygcc-plus
 // @author       Jake Thurman
-// @match        https://my.gcc.edu/ICS/*
+// @match        https://my.gcc.edu/ICS/**
 // @grant        none
 // ==/UserScript==
 
@@ -191,6 +191,7 @@ Features:
                     var sidebarColor = "white";//rgb(240, 240, 240)";
                     var sidebarText = "#212121";
                     var sidebarBorder = "1px solid #adadad";
+
                     $("#headerTabs").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "background": "#98002e", "box-shadow": "black 0px 2px 6px 0px" });
                     $("#headerTabs .selected").attr({ "style": "background:#69152e!important" });
                     $("#sideBar div.sideSection, #sideBar div#quickLinks").css({ border: "none", "border-radius": 0 });
@@ -213,7 +214,7 @@ Features:
                     $("#sideBar").css({ "width": "245px", "padding-right": "15px" });
                     $("#pageTitle, #pageTitle h2").css({ "margin": 0 });
                     $("#contextName").css({ position: "absolute", top: 0, right: 0, "background-color": "rgba(255,255,255,0.8)",  "color": "rgb(60, 61, 62)", "text-align": "center", "font-size": "24px", "display": "block", "box-sizing":"border-box", "cursor": "default", "text-decoration": "none", "line-height": "51px", "height":"151px", "padding": "50px" });
-                    $(".pHead").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
+                    $(".pHead").css({ "border-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
                     $(".pHead a, .pHead h3").css({ "color": "rgb(60, 61, 62)", "text-align": "center" });
                     $(".pHead h3").css({ "padding": 0 });
                     $("h4").css({ "background-color": "#f2f2f2", "color": "black", "text-align": "center", "border-radius": "0" });
@@ -234,9 +235,32 @@ Features:
                     $(".gradeItemGrid tbody, .groupedGrid tbody").each(function (_, el) { $(el).find("tr").each(function (i, row) { $(row).css({ "background-color": i % 2 == 0 ? "#fff" : "#f3f4f6" }); }); });
                     $(".gradeItemGrid td, .groupedGrid td").css({ "text-align": "left", "padding": "0 7px", "height": "28px", "font-size": "13px" });
                     $(".gradeItemGrid td:not(:first-child), .groupedGrid td:not(:first-child)").css({ "border-left": "1px solid #ececee" });
-                    $(".gradeItemGrid th, .groupedGrid th").css({ "text-align": "left", "height": "28px", "font-size": "13px", "padding": "0 7px", "color": "#4b535e", "background-color": "#ebecee", "white-space": "nowrap" });
+                    $(".gradeItemGrid th, .groupedGrid .header td, .groupedGrid th").css({ "text-align": "left", "height": "28px", "font-size": "13px", "padding": "0 7px", "color": "#4b535e", "background-color": "#ebecee", "white-space": "nowrap" });
                     $(".gradeItemGrid th:not(:first-child), .groupedGrid th:not(:first-child)").css({ "border-left": "1px solid #bbbec3" });
                     $(".gradeGroupSidebar").css({ "background-color": "white" });
+
+                    $("<style>").text(`
+a, a:link, a:visited {
+    color: #026C7C;
+}
+
+.gccfooter a {
+    color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+.feedbackMessage {
+    font-size: 1em;
+    background-color: white;
+    border-color: #d6d6d6;
+    margin: 15px 3px;
+    padding: 15px;
+    font-weight: normal;
+}
+                    `).appendTo(document.body);
 
                     // Delete stuff
                     $("#DivStaff").remove();
