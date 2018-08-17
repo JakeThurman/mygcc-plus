@@ -189,7 +189,7 @@ Features:
                 if (doStyling) {
                     var bodyBG = "";
                     var sidebarColor = "white";//rgb(240, 240, 240)";
-                    var sidebarText = "#212121";
+                    var sidebarText = "#515151";
                     var sidebarBorder = "1px solid #adadad";
 
                     $("#headerTabs").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "background": "#98002e", "box-shadow": "black 0px 2px 6px 0px" });
@@ -201,7 +201,6 @@ Features:
                         .last().css({ "border-bottom": sidebarBorder });
                     $(".assignmentTitle").css({"border": "1px dashed #003471", "border-bottom": "none"});
                     $("#userWelcome, #ltlLabel, #sideBar h2, #sideBar h2 a, #sideBar h3, #sideBar h3 a, #sideBar div#quickLinks h3, #sideBar h2, #sideBar div#quickLinks h3, #quickLinks li a, #thisContext a").attr({ "style": "color:" + sidebarText + " !important" });
-                    $("#contextPages li").css({ "border-bottom": "1px solid #b3b3b3" });
                     $("#sideBar h2, #sideBar div#quickLinks h3").css({ "border-bottom": "1px solid black", "margin-bottom": "0", "margin": "10px 0 0 0", "padding-left": "7px" });
                     $("#txtInput").css({ "border-radius": "4px", "border": "1px solid #ccc", "margin-top": "5px" });
                     $("#btnClear").attr("style", "font-size: 11px");
@@ -211,13 +210,10 @@ Features:
                     $(".one_column .pColumn1 .portlet").css({"border": "none"});
                     $(".buttonBar").css({ "background-color": "transparent" });
                     $("#portlets").css({ "width": "calc(100% - 270px)", "margin-top": "20px" });
-                    $("#sideBar").css({ "width": "245px", "padding-right": "15px" });
                     $("#pageTitle, #pageTitle h2").css({ "margin": 0 });
-                    $("#contextName").css({ position: "absolute", top: 0, right: 0, "background-color": "rgba(255,255,255,0.8)",  "color": "rgb(60, 61, 62)", "text-align": "center", "font-size": "24px", "display": "block", "box-sizing":"border-box", "cursor": "default", "text-decoration": "none", "line-height": "51px", "height":"151px", "padding": "50px" });
                     $(".pHead").css({ "border-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
                     $(".pHead a, .pHead h3").css({ "color": "rgb(60, 61, 62)", "text-align": "center" });
                     $(".pHead h3").css({ "padding": 0 });
-                    $("h4").css({ "background-color": "#f2f2f2", "color": "black", "text-align": "center", "border-radius": "0" });
                     $("#contextPages li.currentPage").css({ "background": "#ececec", "border-left": "3px solid #69152e" });
                     $("#sideBar .searchControls").css({ "padding-top": "0", "padding-left": "10px" });
                     $("#footer_wrap").css({ "border-top": sidebarBorder });
@@ -240,18 +236,10 @@ Features:
                     $(".gradeGroupSidebar").css({ "background-color": "white" });
 
                     $("<style>").text(`
-a, a:link, a:visited {
-    color: #026C7C;
-}
-
-.gccfooter a {
-    color: white;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: #333;
-}
-
+/* -------------------------
+ *          ???
+ * -------------------------
+ */
 .feedbackMessage {
     font-size: 1em;
     background-color: white;
@@ -261,6 +249,50 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
+
+/* -------------------------
+ *          GLOBAL
+ * -------------------------
+ */
+a, a:link, a:visited {
+    color: #0b8092;
+    text-decoration: none;
+}
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+#mainLayout {
+    margin-top: 46px;
+}
+
+.page-title,
+.page-title-btn {
+    display: none;
+}
+
+footer {
+    z-index: 10;
+    position: relative;
+}
+
+a.btn-primary {
+    color: white;
+}
+
+a.btn-primary:hover {
+    background-color: #940909;
+}
+
+
+/* -------------------------
+ *            NAV
+ * -------------------------
+ */
 #top-nav-bar {
     background-color: #1d2121;
     border-bottom: 4px solid #c00;
@@ -286,6 +318,97 @@ h1, h2, h3, h4, h5, h6 {
 #hamburger-menu-section ul li.selected a {
     background-color: #312b2b;
     font-weight: bold !important;
+}
+
+#masthead {
+    background-color: #9a9999;
+}
+
+
+/* -------------------------
+ *          SIDEBAR
+ * -------------------------
+ */
+#sideBar {
+    width: 270px;
+    padding-top: 20px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-right: 0;
+    margin-bottom: -1px;
+    padding-bottom: 20px;
+}
+
+.quick-links-with-sub-nav a {
+    font-weight: normal !important;
+    font-size: 13px !important;
+    padding-left: 95px !important;
+    text-indent: -85px;
+}
+
+.slide-menu-right .navbar li.add-page,
+.slide-menu-right .navbar li.manage-context,
+.slide-menu-right .navbar li.usage-stats,
+.slide-menu-right .navbar li.copy-courses,
+.slide-menu-right .navbar li.manage-group,
+.slide-menu-right .navbar ul.sub-contexts li,
+.slide-menu-right .navbar li.sidebar-quick-link {
+    border: none;
+}
+
+li.quick-links-with-sub-nav button,
+li.quick-links-with-sub-nav #myPages,
+.my-courses.sub-nav {
+    display: none;
+}
+
+.quick-links-with-sub-nav {
+    border-bottom: 1px solid #ccc;
+}
+
+.sidebar-quick-link a {
+    font-size: 13px !important;
+}
+
+.glyphicons.glyphicons-link.sidebar-icon-link {
+    display: none;
+}
+
+.slide-menu-right .sidebar-link-title {
+    border-color: transparent;
+    color: #515151;
+}
+
+#contextPages .current-page a {
+    border-left: 7px solid #a60000;
+    text-indent: -7px;
+    font-weight: bold !important;
+}
+
+#contextPages a {
+    font-weight: normal;
+    padding-left: 25px;
+}
+
+.quick-links-with-sub-nav + .sidebar-quick-link {
+    padding-top: 20px;
+}
+
+#myCourses {
+    padding: 10px 0;
+}
+
+/* -------------------------
+ *         PORTLETS
+ * -------------------------
+ */
+.portlet-grid .portlet-header-bar {
+    padding: 13px 20px 10px 20px;
+    background-color: #ececec;
+}
+
+.portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
+    color: #515151;
 }
                     `).appendTo(document.body);
 
