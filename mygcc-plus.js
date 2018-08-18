@@ -15,7 +15,6 @@ To use this script
  1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
  2. Add this whole file as a new script....
  3. Save
- 4. Open the script, click the "Settings" tab at the top, and set "Update URL" to: https://raw.githubusercontent.com/JakeThurman/mygcc-plus/master/mygcc-plus.js
 
 Customizing:
   1. Settings are at the bottom of the page, in the footer of mygcc
@@ -118,7 +117,7 @@ Features:
                 sessionStorage.setItem(ss_just_logged_in, JSON.stringify(true));
 
                 // Click the submit button
-                document.getElementById("btnLogin").click();
+                $("#siteNavBar_btnLogin").click();
             }
         } else {
             // Capture click on submit button to get username and password
@@ -211,7 +210,6 @@ Features:
                     $(".portlet").css({ "border": "1px solid #ddd", "border-radius": "3px" });
                     $(".one_column .pColumn1 .portlet").css({"border": "none"});
                     $(".buttonBar").css({ "background-color": "transparent" });
-                    $("#portlets").css({ "width": "calc(100% - 270px)", "margin-top": "20px" });
                     $("#pageTitle, #pageTitle h2").css({ "margin": 0 });
                     $(".pHead").css({ "border-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
                     $(".pHead a, .pHead h3").css({ "color": "rgb(60, 61, 62)", "text-align": "center" });
@@ -227,6 +225,10 @@ Features:
                     $(".contentTabs li").css({ "padding-bottom": "4px", "padding-top": 8 });
                     $(".contentTabs li:first").remove();
                     $("#calendar").css({"background-color": "white"});
+
+                    // Styles with spcial case handling
+                    if ($("#sideBar").length)
+                        $("#portlets").css({ "width": "calc(100% - 270px)", "margin-top": "10px" });
 
                     // Table stuff
                     $(".gradeItemGrid, .groupedGrid").css({ "border-collapse": "collapse", "width": "100%", "border": "1px solid #bbbec3" });
@@ -298,8 +300,7 @@ a.btn-primary:hover {
 #top-nav-bar {
     background-color: #1d2121;
     border-bottom: 4px solid #c00;
-    height: 46px;
-    overflow:hidden;
+    height: 44px;
 }
 
 #top-nav-bar a {
