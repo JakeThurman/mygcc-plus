@@ -11,7 +11,6 @@ This all started as a quick script to keep me logged-in (which it does pretty we
  1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
  2. Add mygcc-plus.js as a new user script....
  3. Save
- 4. Open the script, click the "Settings" tab at the top, and set "Update URL" to: https://raw.githubusercontent.com/JakeThurman/mygcc-plus/master/mygcc-plus.js
 
 
 # Customizing
