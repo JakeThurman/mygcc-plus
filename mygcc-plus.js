@@ -121,7 +121,7 @@ Features:
             }
         } else {
             // Capture click on submit button to get username and password
-            $("#btnLogin").click(function () {
+            $("#siteNavBar_btnLogin").click(function () {
                 try {
                     localStorage.setItem(local_storage_username_key, document.getElementsByName("userName")[0].value);
                     localStorage.setItem(local_storage_password_key, document.getElementsByName("password")[0].value);
