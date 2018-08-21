@@ -244,11 +244,20 @@ a.btn-primary:hover {
 */
 @media screen and (min-width: 1026px) {
     #top-nav-bar {
-        background-color: #1d2121;
-        border-bottom: 4px solid #c00;
-        height: 44px;
         top: 200px;
-    }
+    }    
+}
+
+@media screen and (max-width: 1025px) {
+    #top-nav-bar {
+        border-bottom: transparent;
+    }    
+}
+
+#top-nav-bar {
+    background-color: #1d2121;
+    border-bottom: 4px solid #c00;
+    height: 44px;
 }
 
 #top-nav-bar a {
