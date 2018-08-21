@@ -140,14 +140,16 @@ Features:
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Use Jake's Custom Styling", true);
         var replaceMasthead = addOption("mygcc-plus--replace-masthead", "Use Ian's Header Image", true);
+        var useShadow = addOption("mygcc-plus--use-shadow", "Have shadow under porlets", false);
 
         if (replaceMasthead) {
             document.body.classList.add("ian-masthead");
             document.getElementById("top-nav-bar").classList.add("ian-move-navigation-bar");
             document.getElementById("siteNavBar_loginToggle").classList.add("ian-move-picture");
             document.getElementById("siteNavBar_SearchButton").classList.add("ian-move-search");
-            
-            
+        }
+        if (useShadow) {
+            $(".porlet-grid .porlet").css({"box-shadow": "0px 5px 20px 0px #bbb"});
         }
 
         //Move side bar higher
@@ -399,15 +401,16 @@ padding-top: 3px;
 .container-fluid-sidebar {
     padding-left: 10px;
 }
-
-#sideBar {
-width: 270px;
-padding-top: 60px;
-border-right: 1px solid #ccc;
-border-bottom: 1px solid #ccc;
-padding-right: 0;
-margin-bottom: -1px;
-padding-bottom: 20px;
+@media screen and (min-width: 1026px) {
+    #sideBar {
+    width: 270px;
+    padding-top: 60px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-right: 0;
+    margin-bottom: -1px;
+    padding-bottom: 20px;
+    }
 }
 
 .quick-links-with-sub-nav a {
@@ -490,9 +493,9 @@ background-color: #ececec;
 color: #515151;
 }
 
-.portlet-grid .portlet {
-    box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
-}
+// .portlet {
+//     box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
+// }
 
 /* -------------------------
 *           FOOTER
