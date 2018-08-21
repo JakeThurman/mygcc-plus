@@ -1,4 +1,6 @@
-**NOW UPDATED FOR THE 2018 REDESIGN :+1:** 
+![Grove City Skyline](./references/simple-header.png)
+
+**NOW UPDATED OR THE 2018 REDESIGN :+1:** 
 
 Ever wanted MyGCC to look *non*-awful?
 
