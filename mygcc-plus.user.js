@@ -31,8 +31,6 @@ Features:
 (function() {
     'use strict';
 
-    console.log("tmp");
-
     function onError(e) {
         console.error(e);
     }
