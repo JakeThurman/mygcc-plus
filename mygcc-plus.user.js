@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.1
+// @version      1.0.2
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -32,6 +32,9 @@ Features:
 
 (function() {
     'use strict';
+
+    console.log("tmp");
+
     function onError(e) {
         console.error(e);
     }
