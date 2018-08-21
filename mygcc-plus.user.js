@@ -150,6 +150,11 @@ Features:
             
         }
 
+        //Move side bar higher
+        $("<div id='temp-holder'></div>").insertAfter("#top-nav-bar").addClass("container-fluid-sidebar"); //Create div to hold the moved side bar (yes I know this is a nasty hack)
+        $("#sideBar").appendTo("#temp-holder");
+
+
         // CSS
         if (doStyling) {
             var bodyBG = "";
@@ -192,7 +197,7 @@ Features:
 
             // Styles with spcial case handling
             if ($("#sideBar").length)
-                $("#portlets").css({ "width": "calc(100% - 270px)", "margin-top": "10px" });
+                $("#portlets").css({"margin-top": "10px"});
 
             // Table stuff
             $(".gradeItemGrid, .groupedGrid").css({ "border-collapse": "collapse", "width": "100%", "border": "1px solid #bbbec3" });
@@ -223,6 +228,12 @@ font-weight: normal;
 */
 #TargetedMessage { /* MyGCC ad, this makes it show over the sidebar. It is deleted on all but the root page */
 z-index: 2;
+}
+@media screen and (min-width: 1026px) {
+    .targeted-message {
+        right: -135px;
+        width: calc(100% - 300px);
+    }
 }
 
 
@@ -296,9 +307,9 @@ font-weight: bold !important;
 }
 
 @media screen and (min-width: 1026px) {
-.top-nav-bar .nav-container .user-btn .user-image {
-height: 50px;
-}
+    .top-nav-bar .nav-container .user-btn .user-image {
+    height: 50px;
+    }
 }
 
 body.ian-masthead #masthead {
@@ -354,9 +365,44 @@ padding-top: 3px;
 *          SIDEBAR
 * -------------------------
 */
+
+@media screen and (max-width: 1025px) {
+    .slide-menu-right .navbar .slide-menu-toggle-btns .active a {
+        background: #97002e;
+        color: #fff !important;
+    }
+    .slide-menu-right .navbar .slide-menu-toggle-btns a:hover {
+        background: #97002e;
+        color: #fff !important;
+    }
+    .slide-menu-right .navbar .slide-menu-toggle-btns .active a:hover {
+        background: #97002e;
+        color: #fff !important;
+    }
+    .slide-menu-right .navbar .slide-menu-toggle-btns li a {
+        background: transparent;
+        color: #111;
+    }
+    .slide-menu-btn {
+        background-color: #97002e;
+        width: 45px;
+        height: 45px;
+    }
+    .sidebar-slide-btn-icon {
+        font-size: 30px;
+    }
+    .sidebar-slide-menu-button {
+        left: 328px !important;
+    }
+}
+
+.container-fluid-sidebar {
+    padding-left: 10px;
+}
+
 #sideBar {
 width: 270px;
-padding-top: 20px;
+padding-top: 60px;
 border-right: 1px solid #ccc;
 border-bottom: 1px solid #ccc;
 padding-right: 0;
@@ -429,6 +475,12 @@ padding: 10px 0;
 *         PORTLETS
 * -------------------------
 */
+@media screen and (min-width: 1026px) {
+    #portlets {
+        width: calc(100% - 270px);
+    }
+}
+
 .portlet-grid .portlet-header-bar {
 padding: 13px 20px 10px 20px;
 background-color: #ececec;
@@ -436,6 +488,18 @@ background-color: #ececec;
 
 .portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
 color: #515151;
+}
+
+.portlet-grid .portlet {
+    box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
+}
+
+/* -------------------------
+*           FOOTER
+* -------------------------
+*/
+.footer {
+    background: #222;
 }
 
                     `).appendTo(document.body);
@@ -471,6 +535,15 @@ color: #515151;
                 setTimeout(function () {
                     $("#myCourses").addClass("in").css("height", "unset");
                 }, 300);
+
+                //Fix bug where list of courses disappear when navigating the sidebar
+                document.getElementById("sidebar-slide-menu-button").addEventListener("click", showClasses);
+                document.getElementById("quick-links-tab").addEventListener("click", showClasses);
+                document.getElementById("menu-links-tab").addEventListener("click", showClasses);
+
+                function showClasses() {
+                    $("#myCourses").addClass("in");
+                }
 
                 // Improve course registration by cheeting
                 var wasDisabled = $("#pg0_V_tabAddCourse_divSearch input:disabled").attr("disabled", false).removeClass("aspNetDisabled").toArray().length;
@@ -511,7 +584,7 @@ color: #515151;
                     $("#sideBar div.sideSection, #sideBar div#quickLinks").css({ "background": sidebarColor, "border-right": sidebarBorder, "margin": "0", "color": sidebarText })
                         .last().css({ "border-bottom": sidebarBorder });
                     $(".assignmentTitle").css({"border": "1px dashed #003471", "border-bottom": "none"});
-                    $("#userWelcome, #ltlLabel, #sideBar h2, #sideBar h2 a, #sideBar h3, #sideBar h3 a, #sideBar div#quickLinks h3, #sideBar h2, #sideBar div#quickLinks h3, #quickLinks li a, #thisContext a").attr({ "style": "color:" + sidebarText + " !important" });
+                    $("#userWelcome, #ltlLabel, #sideBar h2, #sideBar h2 a, #sideBar h3, #sideBar h3 a, #sideBar div#quickLinks h3, #sideBar h2, #sideBar div#quickLinks h3, #quickLinks li a, #thisContext a").attr({ "style": "color:" + "#111" + " !important" });
                     $("#sideBar h2, #sideBar div#quickLinks h3").css({ "border-bottom": "1px solid black", "margin-bottom": "0", "margin": "10px 0 0 0", "padding-left": "7px" });
                     $("#txtInput").css({ "border-radius": "4px", "border": "1px solid #ccc", "margin-top": "5px" });
                     $("#btnClear").attr("style", "font-size: 11px");
@@ -536,9 +609,9 @@ color: #515151;
                     $(".contentTabs li:first").remove();
                     $("#calendar").css({"background-color": "white"});
 
-                    // Styles with spcial case handling
+                    // Styles with special case handling
                     if ($("#sideBar").length)
-                        $("#portlets").css({ "width": "calc(100% - 270px)", "margin-top": "10px" });
+                        $("#portlets").css({"margin-top": "10px"});
 
                     // Table stuff
                     $(".gradeItemGrid, .groupedGrid").css({ "border-collapse": "collapse", "width": "100%", "border": "1px solid #bbbec3" });
