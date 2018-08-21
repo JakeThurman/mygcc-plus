@@ -139,15 +139,8 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Use Jake's Custom Styling", true);
-        var replaceMasthead = addOption("mygcc-plus--replace-masthead", "Use Ian's Header Image", true);
         var useShadow = addOption("mygcc-plus--use-shadow", "Have shadow under porlets", false);
 
-        if (replaceMasthead) {
-            document.body.classList.add("ian-masthead");
-            document.getElementById("top-nav-bar").classList.add("ian-move-navigation-bar");
-            document.getElementById("siteNavBar_loginToggle").classList.add("ian-move-picture");
-            document.getElementById("siteNavBar_SearchButton").classList.add("ian-move-search");
-        }
         if (useShadow) {
             $(".porlet-grid .porlet").css({"box-shadow": "0px 5px 20px 0px #bbb"});
         }
@@ -159,57 +152,6 @@ Features:
 
         // CSS
         if (doStyling) {
-            var bodyBG = "";
-            var sidebarColor = "white";//rgb(240, 240, 240)";
-            var sidebarText = "#515151";
-            var sidebarBorder = "1px solid #adadad";
-
-            $("#headerTabs").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "background": "#98002e", "box-shadow": "black 0px 2px 6px 0px" });
-            $("#headerTabs .selected").attr({ "style": "background:#69152e!important" });
-            $("#sideBar div.sideSection, #sideBar div#quickLinks").css({ border: "none", "border-radius": 0 });
-            $("#pageTitleButtons, #mainCrumbs").hide();
-            $("#headerTabs").css({ position: "sticky", top: -1, "z-index":7999 });
-            $("#sideBar div.sideSection, #sideBar div#quickLinks").css({ "background": sidebarColor, "border-right": sidebarBorder, "margin": "0", "color": sidebarText })
-                .last().css({ "border-bottom": sidebarBorder });
-            $(".assignmentTitle").css({"border": "1px dashed #003471", "border-bottom": "none"});
-            $("#userWelcome, #ltlLabel, #sideBar h2, #sideBar h2 a, #sideBar h3, #sideBar h3 a, #sideBar div#quickLinks h3, #sideBar h2, #sideBar div#quickLinks h3, #quickLinks li a, #thisContext a").attr({ "style": "color:" + sidebarText + " !important" });
-            $("#sideBar h2, #sideBar div#quickLinks h3").css({ "border-bottom": "1px solid black", "margin-bottom": "0", "margin": "10px 0 0 0", "padding-left": "7px" });
-            $("#txtInput").css({ "border-radius": "4px", "border": "1px solid #ccc", "margin-top": "5px" });
-            $("#btnClear").attr("style", "font-size: 11px");
-            $("body[data-gr-c-s-loaded]").css({"background-image": bodyBG, "min-width": "initial"});
-            $("div.postItem").css({ "background-image": bodyBG });
-            $(".portlet").css({ "border": "1px solid #ddd", "border-radius": "3px" });
-            $(".one_column .pColumn1 .portlet").css({"border": "none"});
-            $(".buttonBar").css({ "background-color": "transparent" });
-            $("#pageTitle, #pageTitle h2").css({ "margin": 0 });
-            $(".pHead").css({ "border-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
-            $(".pHead a, .pHead h3").css({ "color": "rgb(60, 61, 62)", "text-align": "center" });
-            $(".pHead h3").css({ "padding": 0 });
-            $("#contextPages li.currentPage").css({ "background": "#ececec", "border-left": "3px solid #69152e" });
-            $("#sideBar .searchControls").css({ "padding-top": "0", "padding-left": "10px" });
-            $("#footer_wrap").css({ "border-top": sidebarBorder });
-            $("#mainLayout").css({ "padding-bottom": 0, "margin-bottom": "-1px" });
-            $(".pToolbar:empty").css({"display": "none"});
-            $(".hint, .tabbox").css({ "background-color": "white" });
-            $(".CS .GrayBordered, .CS .GrayBordered th, .CS .GrayBordered td").css({ "background-color": "white" });
-            $(".contentTabs li a").css({ "font-size": "13px", "padding": "0 22px" });
-            $(".contentTabs li").css({ "padding-bottom": "4px", "padding-top": 8 });
-            $(".contentTabs li:first").remove();
-            $("#calendar").css({"background-color": "white"});
-
-            // Styles with spcial case handling
-            if ($("#sideBar").length)
-                $("#portlets").css({"margin-top": "10px"});
-
-            // Table stuff
-            $(".gradeItemGrid, .groupedGrid").css({ "border-collapse": "collapse", "width": "100%", "border": "1px solid #bbbec3" });
-            $(".gradeItemGrid tbody, .groupedGrid tbody").each(function (_, el) { $(el).find("tr").each(function (i, row) { $(row).css({ "background-color": i % 2 == 0 ? "#fff" : "#f3f4f6" }); }); });
-            $(".gradeItemGrid td, .groupedGrid td").css({ "text-align": "left", "padding": "0 7px", "height": "28px", "font-size": "13px" });
-            $(".gradeItemGrid td:not(:first-child), .groupedGrid td:not(:first-child)").css({ "border-left": "1px solid #ececee" });
-            $(".gradeItemGrid th, .groupedGrid .header td, .groupedGrid th").css({ "text-align": "left", "height": "28px", "font-size": "13px", "padding": "0 7px", "color": "#4b535e", "background-color": "#ebecee", "white-space": "nowrap" });
-            $(".gradeItemGrid th:not(:first-child), .groupedGrid th:not(:first-child)").css({ "border-left": "1px solid #bbbec3" });
-            $(".gradeGroupSidebar").css({ "background-color": "white" });
-
             $("<style>").text(`
 /* -------------------------
 *          ???
@@ -314,7 +256,7 @@ a.btn-primary:hover {
     }
 }
 
-body.ian-masthead #masthead {
+#masthead {
     background-color: #222222;
     background-image: url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/grove-city-college-outline.png?raw=true') !important;
     background-size: cover;
@@ -323,18 +265,18 @@ body.ian-masthead #masthead {
 }
 
 @media screen and (min-width: 1026px) {
-    .ian-move-navigation-bar {
-        top: 200px !important;
+    #siteNavBar_loginToggle {
+        top: -145px;
+        right: 10px;
     }
+	
+	#search-section {
+		margin-right: 65px;
+	}
 
-    .ian-move-picture {
-        top: -185px !important;
-        right: 10px !important;
-    }
-
-    .ian-move-search {
-        top: -175px !important;
-        right: 80px !important;
+    #siteNavBar_SearchButton {
+        top: -135px;
+        right: 80px;
     }
 }
 
@@ -494,10 +436,6 @@ li.quick-links-with-sub-nav #myPages,
     color: #515151;
 }
 
-// .portlet {
-//     box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
-// }
-
 /* -------------------------
 *           FOOTER
 * -------------------------
@@ -549,15 +487,15 @@ li.quick-links-with-sub-nav #myPages,
                     $("#myCourses").addClass("in");
                 }
 
-                // Improve course registration by cheeting
+                // Improve course registration by cheating
                 var wasDisabled = $("#pg0_V_tabAddCourse_divSearch input:disabled").attr("disabled", false).removeClass("aspNetDisabled").toArray().length;
                 if (wasDisabled)
                     $("<div>")
                         .text("\"Don't click this until registration starts!\" -Jake")
                         .insertAfter($("#pg0_V_tabAddCourse_divSearch input[type=submit]"));
 
-                //Make Couse links link to "Cousework" page
-                var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Cousework Page", true);
+                //Make Course links link to "Cousework" page
+                var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Cousrework Page", true);
 
                 // Handle coursework linking
                 if (doLinkToCoursework) {
