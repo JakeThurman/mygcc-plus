@@ -11,7 +11,7 @@ This all started as a quick script to keep me logged-in (which it does pretty we
 
 # Using MyGCC-Plus
  1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
- 2. Add mygcc-plus.js as a new user script....
+ 2. Add mygcc-plus.user.js as a new user script....
  3. Save
 
 
@@ -26,7 +26,7 @@ This all started as a quick script to keep me logged-in (which it does pretty we
   5. Courses links go to Coursework page (OPTIONAL)
 
 
-# CREDIT:
+# CREDIT
 Credit where credit is due...
 
 Shout out to @davidcorbin for his [mygcc-plus chrome plugin](https://github.com/davidcorbin/mygcc-plus) as a source for some of the original login code.
