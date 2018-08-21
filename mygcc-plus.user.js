@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0
+// @version      1.0.0
 // @description  mygcc-plus
+// @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
 // @match        https://my.gcc.edu/ICS**
 // @match        https://my.gcc.edu/ics**
-// @grant        none
+// @grant        GM_setValue
+// @grant        GM_getValue
 // ==/UserScript==
 
 /*
