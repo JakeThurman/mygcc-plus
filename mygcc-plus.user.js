@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.2
+// @version      1.0.3
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -12,12 +12,14 @@
 /*
 
 To use this script
- 1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
- 2. Add this whole file as a new script....
- 3. Save
+  1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
+  2. Navigate to: https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js
+
+To update:
+  - Navigate to the given url, or use the tampermonkey "Check for userscript updates" feature;
 
 Customizing:
-  1. Settings are at the bottom of the page, in the footer of mygcc
+  - Settings are at the bottom of the page, in the footer of mygcc
 
 Features:
   1. Courses is always expanded

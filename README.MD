@@ -10,13 +10,11 @@ I'm open to feedback for improvments, this was just a quick hack one night.
 This all started as a quick script to keep me logged-in (which it does pretty well).
 
 # Using MyGCC-Plus
- 1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
- 2. Add mygcc-plus.user.js as a new user script....
- 3. Save
+  1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
+  2. Navigate to: [https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js](Navigate to: https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js)
 
-
-# Customizing
-  1. Settings are at the bottom of the page, in the footer of mygcc
+## How To Update
+Navigate to the url above, or use the tampermonkey "Check for userscript updates" feature;
 
 # Features
   1. Courses is always expanded
@@ -24,6 +22,9 @@ This all started as a quick script to keep me logged-in (which it does pretty we
   3. Keeps you logged in (usually)
   4. Looks better (OPTIONAL)
   5. Courses links go to Coursework page (OPTIONAL)
+
+## Customizing
+Settings are at the bottom of the page, in the footer of mygcc
 
 
 # CREDIT
