@@ -303,7 +303,7 @@ height: 50px;
 
 body.ian-masthead #masthead {
 background-color: #222222;
-background-image: url('/references/grove-city-college-outline.png') !important;
+background-image: url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/grove-city-college-outline.png?raw=true') !important;
 background-size: cover;
 background-position: center center;
 height: 200px;
