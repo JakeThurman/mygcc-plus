@@ -139,19 +139,25 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Use Jake's Custom Styling", true);
-        var useShadow = addOption("mygcc-plus--use-shadow", "Have shadow under porlets", false);
+        var doIansStyles = addOption("mygcc-plus--ian-flag", "Use Ian's Custom Styling", false);
 
-        if (useShadow) {
-            $(".porlet-grid .porlet").css({"box-shadow": "0px 5px 20px 0px #bbb"});
+        if (doIansStyles) {
+			$("<style>").text(`
+.portlet {
+	box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
+}
+			`).appendTo(document.body);
         }
-
-        //Move side bar higher
-        $("<div id='temp-holder'></div>").insertAfter("#top-nav-bar").addClass("container-fluid-sidebar"); //Create div to hold the moved side bar (yes I know this is a nasty hack)
-        $("#sideBar").appendTo("#temp-holder");
-
 
         // CSS
         if (doStyling) {
+            //Move side bar higher
+            //Create div to hold the moved side bar (yes I know this is a nasty hack)
+            $("<div>", { id: "temp-holder", "class": "container-fluid-sidebar" })
+				.insertAfter($("#top-nav-bar"))
+				.append($("#sideBar"));
+
+
             $("<style>").text(`
 /* -------------------------
 *          ???
@@ -273,7 +279,7 @@ a.btn-primary:hover {
         top: -145px;
         right: 10px;
     }
-	
+
 	#search-section {
 		margin-right: 65px;
 	}
@@ -282,11 +288,11 @@ a.btn-primary:hover {
         top: -135px;
         right: 80px;
     }
-	
+
 	#user-login-section .arrow {
 		left: 72% !important;
 	}
-	
+
 	#user-login-section a {
 		border-right: none !important;
 	}
@@ -448,6 +454,7 @@ li.quick-links-with-sub-nav #myPages,
     color: #515151;
 }
 
+
 /* -------------------------
 *           FOOTER
 * -------------------------
@@ -487,7 +494,7 @@ li.quick-links-with-sub-nav #myPages,
 
                 // Open the "My Courses" sidebar section
 				//  This logic is duplicated in the css
-				//   it is only left here for the sake of 
+				//   it is only left here for the sake of
 				//   still being useful when css is off.
                 setTimeout(function () {
                     $("#myCourses").addClass("in").css("height", "unset");
