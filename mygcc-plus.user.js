@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.6
+// @version      1.0.7
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -242,10 +242,13 @@ a.btn-primary:hover {
 *            NAV
 * -------------------------
 */
-#top-nav-bar {
-    background-color: #1d2121;
-    border-bottom: 4px solid #c00;
-    height: 44px;
+@media screen and (min-width: 1026px) {
+    #top-nav-bar {
+        background-color: #1d2121;
+        border-bottom: 4px solid #c00;
+        height: 44px;
+        top: 200px;
+    }
 }
 
 #top-nav-bar a {
@@ -279,7 +282,7 @@ a.btn-primary:hover {
     background-image: url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/grove-city-college-outline.png?raw=true') !important;
     background-size: cover;
     background-position: center center;
-    height: 200px;
+    height: 200px !important;
 }
 
 #myCourses.collapse {
@@ -297,7 +300,7 @@ a.btn-primary:hover {
 	}
 
     #siteNavBar_SearchButton {
-        top: -135px;
+        top: -185px;
         right: 80px;
     }
 
@@ -307,7 +310,11 @@ a.btn-primary:hover {
 
 	#user-login-section a {
 		border-right: none !important;
-	}
+    }
+    
+    .top-nav-bar .nav-container .user-btn .user-image {
+        top: -50px;
+    }
 }
 
 #masthead h1 a {
