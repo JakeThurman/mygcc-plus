@@ -138,17 +138,25 @@ Features:
 
 
         // Add option in footer for styling
-        var doStyling = addOption(local_storage_restyle_key, "Use Jake's Custom Styling", true);
+        var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
+        var doJakesStyles = addOption("mygcc-plus--jake-flag", "Use Jake's Custom Styling", false);
         var doIansStyles = addOption("mygcc-plus--ian-flag", "Use Ian's Custom Styling", false);
+
+        // Handle custom css differences via custom overrides
+        if (doJakesStyles) {
+			$("<style>").text(`
+#masthead {
+    border-top: 10px solid #222;
+    border-bottom: 10px solid #222;
+    background-size: contain !important;
+}
+			`).appendTo(document.body);
+        }
 
         if (doIansStyles) {
 			$("<style>").text(`
 .portlet {
-	box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
-}
-
-.footer {
-        background: #222;
+    box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
 }
 			`).appendTo(document.body);
         }
@@ -157,7 +165,7 @@ Features:
         if (doStyling) {
             //Move side bar higher
             //Create div to hold the moved side bar (yes I know this is a nasty hack)
-            $("<div>", { id: "temp-holder", "class": "container-fluid-sidebar" })
+            $("<div>", { "class": "container-fluid-sidebar" })
 				.insertAfter($("#top-nav-bar"))
 				.append($("#sideBar"));
 
@@ -300,10 +308,6 @@ a.btn-primary:hover {
 	#user-login-section a {
 		border-right: none !important;
 	}
-}
-
-#masthead {
-    background-color: #eee;
 }
 
 #masthead h1 a {
@@ -456,6 +460,15 @@ li.quick-links-with-sub-nav #myPages,
 
 .portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
     color: #515151;
+}
+
+
+/* -------------------------
+*           FOOTER
+* -------------------------
+*/
+.footer {
+        background: #222;
 }
 
                     `).appendTo(document.body);
