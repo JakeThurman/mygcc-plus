@@ -257,6 +257,14 @@ Features:
     font-weight: normal;
 }
 
+/* -------------------------
+ *          Special
+ * -------------------------
+ */
+#TargetedMessage { /* MyGCC ad, this makes it show over the sidebar. It is deleted on all but the root page */
+    z-index: 2;
+}
+
 
 /* -------------------------
  *          GLOBAL
@@ -428,6 +436,7 @@ li.quick-links-with-sub-nav #myPages,
 .portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
     color: #515151;
 }
+
                     `).appendTo(document.body);
 
                     // Delete stuff
