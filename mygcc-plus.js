@@ -4,8 +4,8 @@
 // @version      1.0
 // @description  mygcc-plus
 // @author       Jake Thurman
-// @match        https://my.gcc.edu/ICS/**
-// @match        https://my.gcc.edu/ics/**
+// @match        https://my.gcc.edu/ICS**
+// @match        https://my.gcc.edu/ics**
 // @grant        none
 // ==/UserScript==
 
