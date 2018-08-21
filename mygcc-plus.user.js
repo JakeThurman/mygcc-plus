@@ -146,6 +146,10 @@ Features:
 .portlet {
 	box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
 }
+
+.footer {
+        background: #222;
+}
 			`).appendTo(document.body);
         }
 
@@ -452,15 +456,6 @@ li.quick-links-with-sub-nav #myPages,
 
 .portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
     color: #515151;
-}
-
-
-/* -------------------------
-*           FOOTER
-* -------------------------
-*/
-.footer {
-        background: #222;
 }
 
                     `).appendTo(document.body);
