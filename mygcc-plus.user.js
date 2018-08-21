@@ -264,6 +264,10 @@ a.btn-primary:hover {
     height: 200px;
 }
 
+#myCourses.collapse {
+	display: block !important;
+}
+
 @media screen and (min-width: 1026px) {
     #siteNavBar_loginToggle {
         top: -145px;
@@ -278,6 +282,14 @@ a.btn-primary:hover {
         top: -135px;
         right: 80px;
     }
+	
+	#user-login-section .arrow {
+		left: 72% !important;
+	}
+	
+	#user-login-section a {
+		border-right: none !important;
+	}
 }
 
 #masthead {
@@ -474,18 +486,12 @@ li.quick-links-with-sub-nav #myPages,
                 }
 
                 // Open the "My Courses" sidebar section
+				//  This logic is duplicated in the css
+				//   it is only left here for the sake of 
+				//   still being useful when css is off.
                 setTimeout(function () {
                     $("#myCourses").addClass("in").css("height", "unset");
                 }, 300);
-
-                //Fix bug where list of courses disappear when navigating the sidebar
-                document.getElementById("sidebar-slide-menu-button").addEventListener("click", showClasses);
-                document.getElementById("quick-links-tab").addEventListener("click", showClasses);
-                document.getElementById("menu-links-tab").addEventListener("click", showClasses);
-
-                function showClasses() {
-                    $("#myCourses").addClass("in");
-                }
 
                 // Improve course registration by cheating
                 var wasDisabled = $("#pg0_V_tabAddCourse_divSearch input:disabled").attr("disabled", false).removeClass("aspNetDisabled").toArray().length;
