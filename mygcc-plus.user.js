@@ -221,12 +221,13 @@ body #masthead {
 *          GLOBAL
 * -------------------------
 */
-a, a:link, a:visited {
+a, a:link, a:visited, .link-btn, .link-btn span {
     color: #0b8092;
     text-decoration: none;
 }
-a:hover, a:focus {
+a:hover, a:focus, .link-btn:hover, .link-btn:focus {
     text-decoration: underline;
+    border: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
