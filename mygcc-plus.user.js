@@ -145,10 +145,28 @@ Features:
         // Handle custom css differences via custom overrides
         if (doJakesStyles) {
 			$("<style>").text(`
-#masthead {
-    border-top: 10px solid #222;
-    border-bottom: 10px solid #222;
+/* These styles shorten the masthead even more than original */
+body #masthead {
     background-size: contain !important;
+    height: 120px !important;
+}
+
+@media screen and (min-width: 1026px) {
+     #siteNavBar_loginToggle {
+        top: -110px !important;
+    }
+
+    #top-nav-bar {
+        top: 120px !important;
+    }
+
+    #siteNavBar_loginToggle .user-image {
+        top: 0;
+    }
+}
+
+#siteNavBar_SearchButton {
+    top: -97px !important;
 }
 			`).appendTo(document.body);
         }
