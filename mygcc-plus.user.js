@@ -217,6 +217,7 @@ body #masthead {
     }
 }
 
+
 /* -------------------------
 *          GLOBAL
 * -------------------------
@@ -264,13 +265,13 @@ a.btn-primary:hover {
 @media screen and (min-width: 1026px) {
     #top-nav-bar {
         top: 200px;
-    }    
+    }
 }
 
 @media screen and (max-width: 1025px) {
     #top-nav-bar {
         border-bottom: transparent;
-    }    
+    }
 }
 
 #top-nav-bar {
@@ -317,6 +318,11 @@ a.btn-primary:hover {
 	display: block !important;
 }
 
+.logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
+    left: unset;
+    right: 0px;
+}
+
 @media screen and (min-width: 1026px) {
     #siteNavBar_loginToggle {
         top: -145px;
@@ -339,7 +345,7 @@ a.btn-primary:hover {
 	#user-login-section a {
 		border-right: none !important;
     }
-    
+
     .top-nav-bar .nav-container .user-btn .user-image {
         top: -50px;
     }
