@@ -301,7 +301,8 @@ a.btn-primary:hover {
 
 @media screen and (min-width: 1026px) {
     .top-nav-bar .nav-container .user-btn .user-image {
-    height: 50px;
+    height: 67px;
+    width: 50px;
     }
 }
 
@@ -319,7 +320,7 @@ a.btn-primary:hover {
 
 @media screen and (min-width: 1026px) {
     #siteNavBar_loginToggle {
-        top: -145px;
+        top: -185px;
         right: 10px;
     }
 
@@ -328,7 +329,7 @@ a.btn-primary:hover {
 	}
 
     #siteNavBar_SearchButton {
-        top: -185px;
+        top: -170px;
         right: 80px;
     }
 
@@ -338,10 +339,6 @@ a.btn-primary:hover {
 
 	#user-login-section a {
 		border-right: none !important;
-    }
-    
-    .top-nav-bar .nav-container .user-btn .user-image {
-        top: -50px;
     }
 }
 
