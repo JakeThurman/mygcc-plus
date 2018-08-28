@@ -217,6 +217,7 @@ body #masthead {
     }
 }
 
+
 /* -------------------------
 *          GLOBAL
 * -------------------------
@@ -264,13 +265,13 @@ a.btn-primary:hover {
 @media screen and (min-width: 1026px) {
     #top-nav-bar {
         top: 200px;
-    }    
+    }
 }
 
 @media screen and (max-width: 1025px) {
     #top-nav-bar {
         border-bottom: transparent;
-    }    
+    }
 }
 
 #top-nav-bar {
@@ -316,6 +317,11 @@ a.btn-primary:hover {
 
 #myCourses.collapse {
 	display: block !important;
+}
+
+.logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
+    left: unset;
+    right: 0px;
 }
 
 @media screen and (min-width: 1026px) {
