@@ -136,6 +136,11 @@ Features:
         }
         var t_jq1 = performance.now();
 
+        //Make the courswork portlet 100% wide instead of 50% wide
+        if ((window.location.href.indexOf("Attendance") > -1) || (window.location.href.indexOf("Course_Information") > -1) || (window.location.href.indexOf("Coursework") > -1) || (window.location.href.indexOf("Gradebook") > -1)) {
+            $(".portlet-column").addClass("portlet-max-width");
+        }
+
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
@@ -499,6 +504,13 @@ li.quick-links-with-sub-nav #myPages,
 .portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
     color: #515151;
 }
+
+@media (min-width: 992px) {
+    .portlet-max-width {
+        width: 100%;
+    }
+}
+
 
 
 /* -------------------------
