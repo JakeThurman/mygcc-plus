@@ -141,6 +141,16 @@ Features:
             $(".portlet-column").addClass("portlet-max-width");
         }
 
+        //Fix porlet "Student Self-Service" on Academics page going beyound the border it should
+        if (window.location.href.indexOf("Academics") > -1) {
+            document.getElementById("pg10_V_iframe").removeAttribute("style");
+            $("#pg10_V_iframe").css({
+                width: '100%',
+                height: '351px'
+            });
+        }
+        
+
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
@@ -211,6 +221,12 @@ body #masthead {
 *          Special
 * -------------------------
 */
+
+//Fix issue with GCC "ad" pushing all the content way way WAY down because the AD IS JUST TOO STINK'N BIG
+.wysiwygtext img {
+    max-width: 822px;
+}
+
 #TargetedMessage { /* MyGCC ad, this makes it show over the sidebar. It is deleted on all but the root page */
     z-index: 2;
 }
