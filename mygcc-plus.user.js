@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.7
+// @version      1.0.8
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -141,10 +141,11 @@ Features:
             $(".portlet-column").addClass("portlet-max-width");
         }
 
-        //Fix porlets going beyond their alotted space when your screen is too tiny (*AHEM* Class of 2020 laptops)
+        //Fix portlets going beyond their alotted space when your screen is too tiny
         $("iframe").addClass("proper-iframe-borders");
         
         //A really nasty way to move the "Student Dining Options" and "Contact Information" because it's too big to fit on a tiny screen with 50% width. Good job GCC. Good. Job.
+        //Don't even bother trying to understand what I did. Just trust the force, Luke.
         if (window.location.href.indexOf("Sign-Up") > -1) {
             $("<div>", { "class": "portlet-grid-modified" })
                 .insertAfter($(".portlet-grid"))
