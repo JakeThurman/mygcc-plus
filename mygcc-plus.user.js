@@ -141,21 +141,29 @@ Features:
             $(".portlet-column").addClass("portlet-max-width");
         }
 
-        //Fix porlet "Student Self-Service" on Academics page going beyound the border it should
-        if (window.location.href.indexOf("Academics") > -1) {
-            document.getElementById("pg10_V_iframe").removeAttribute("style");
-            $("#pg10_V_iframe").css({
-                width: '100%',
-                height: '351px'
-            });
-        }
+        //Fix porlets going beyond their alotted space when your screen is too tiny (*AHEM* Class of 2020 laptops)
+        $("iframe").addClass("proper-iframe-borders");
         
-
+        //A really nasty way to move the "Student Dining Options" and "Contact Information" because it's too big to fit on a tiny screen with 50% width. Good job GCC. Good. Job.
+        if (window.location.href.indexOf("Sign-Up") > -1) {
+            $("<div>", { "class": "portlet-grid-modified" })
+                .insertAfter($(".portlet-grid"))
+                $("<div>", { "class": "row-modified" })
+                    .appendTo($(".portlet-grid-modified"))
+                    $("<div>", { "class": "new-portlets" })
+                        .appendTo($(".portlet-grid-modified"))
+                        $("<div>", { "class": "holder" })
+                            .appendTo($(".portlet-grid-modified"))
+                            .append($("#pg2_Universal"))
+                            .append($("#pg6_Universal"));
+        $(".portlet-grid-modified").addClass("portlet-grid");
+        $(".row-modified").addClass("row");
+        }
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
         var doJakesStyles = addOption("mygcc-plus--jake-flag", "Use Jake's Custom Styling", false);
-        var doIansStyles = addOption("mygcc-plus--ian-flag", "Use Ian's Custom Styling", false);
+        var doIansStyles = addOption("mygcc-plus--ian-flag", "Use Ian's Custom Styling", true);
 
         // Handle custom css differences via custom overrides
         if (doJakesStyles) {
@@ -506,6 +514,11 @@ li.quick-links-with-sub-nav #myPages,
 *         PORTLETS
 * -------------------------
 */
+
+.proper-iframe-borders {
+    width: 100% !important;
+}
+
 @media screen and (min-width: 1026px) {
     #portlets {
         width: calc(100% - 270px);
@@ -545,7 +558,9 @@ li.quick-links-with-sub-nav #myPages,
                 var t_style0 = performance.now();
 
                 // Stop mygcc from scrolling halfway down the page when it loads. Why would you ever want that anyway????
-                window.scrollTo(0, 0);
+                window.onload = function () {
+                    window.scrollTo(0, 0);
+                }
 
                 if (!justLoggedIn && justLoggedIn2) {
                     // Clear secondary flag if we obviously aren't looping
