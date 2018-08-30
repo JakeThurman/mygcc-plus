@@ -237,14 +237,11 @@ body #masthead {
 @media screen and (min-width: 1026px) {
     .targeted-message {
         right: -135px;
-        width: calc(100% - 300px);
+        width: calc(100% - 538px);
     }
 }
 
-//Fix issue with GCC "ad" pushing all the content way way WAY down because the AD IS JUST TOO STINK'N BIG
-.targeted-message {
-    max-width: 725px;
-}
+
 
 
 /* -------------------------
