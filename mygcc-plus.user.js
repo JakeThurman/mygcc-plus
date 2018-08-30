@@ -157,8 +157,8 @@ Features:
                             .appendTo($(".portlet-grid-modified"))
                             .append($("#pg2_Universal"))
                             .append($("#pg6_Universal"));
-        $(".portlet-grid-modified").addClass("portlet-grid");
-        $(".row-modified").addClass("row");
+            $(".portlet-grid-modified").addClass("portlet-grid");
+            $(".row-modified").addClass("row");
         }
 
         // Add option in footer for styling
@@ -230,12 +230,6 @@ body #masthead {
 *          Special
 * -------------------------
 */
-
-//Fix issue with GCC "ad" pushing all the content way way WAY down because the AD IS JUST TOO STINK'N BIG
-.wysiwygtext img {
-    max-width: 822px;
-}
-
 #TargetedMessage { /* MyGCC ad, this makes it show over the sidebar. It is deleted on all but the root page */
     z-index: 2;
 }
@@ -245,6 +239,11 @@ body #masthead {
         right: -135px;
         width: calc(100% - 300px);
     }
+}
+
+//Fix issue with GCC "ad" pushing all the content way way WAY down because the AD IS JUST TOO STINK'N BIG
+.targeted-message {
+    max-width: 725px;
 }
 
 
