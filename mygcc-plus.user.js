@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.8
+// @version      1.0.9
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -27,6 +27,9 @@ Features:
   3. Keeps you logged in (usually)
   4. Looks better (OPTIONAL)
   5. Courses links go to Coursework page (OPTIONAL)
+  6. Stupid random bugs of MyGCC are fixed (sorry, doesn't include ICS error)
+    a. examples: page jumps down to the bottom when you laod the page
+                 portlets on sign-up page are no longer cut off
 
 */
 
@@ -161,6 +164,22 @@ Features:
             $(".row-modified").addClass("row");
         }
 
+        /*
+        Change colors of course names on the left depending on when an assignment is due
+        */
+       //Capture all URLS for student courses
+       if (window.location.href.indexOf("My_Pages") < 1) {
+            var myCoursesArray = [];
+            var links = document.getElementById('myCourses').getElementsByTagName('a');
+            for (var i = 0; i < myCoursesArray.length; i++) {
+                myCoursesArray.push(links[i].href + "Coursework.jnz");
+            }
+
+            // $.get('https://www.freecodecamp.com/' + name, function(response) {
+            //     console.log(response);
+            // });
+       }
+
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
         var doJakesStyles = addOption("mygcc-plus--jake-flag", "Use Jake's Custom Styling", false);
@@ -171,7 +190,7 @@ Features:
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
-    background-size: contain !important;
+    background-size: cover !important;
     height: 120px !important;
 }
 
@@ -224,6 +243,10 @@ body #masthead {
     margin: 15px 3px;
     padding: 15px;
     font-weight: normal;
+}
+
+.popover.bottom {
+    margin-top: -20px;
 }
 
 /* -------------------------
