@@ -410,7 +410,7 @@ a.btn-primary:hover {
 #masthead h1 a {
     background: transparent url('https://raw.githubusercontent.com/JakeThurman/mygcc-plus/master/references/gcc-logo.png') no-repeat;
     height: 57px;
-    width: 50px;
+    width: 54px;
 }
 
 @media screen and (max-width: 1025px) {
