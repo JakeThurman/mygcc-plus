@@ -190,7 +190,7 @@ Features:
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
-    background-size: cover !important;
+    background-size: contain !important;
     height: 120px !important;
 }
 
