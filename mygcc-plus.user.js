@@ -338,6 +338,16 @@ a.btn-primary:hover {
     border-right: 1px solid #3c3b3b;
 }
 
+#top-nav-bar .more-links-div {
+    background-color: #1d2121;
+    border-top: 4px solid #a60000;
+    border-bottom: 0px solid #a60000;
+}
+
+#top-nav-bar .more-links-div ul li {
+    padding: 0
+}
+
 #top-nav-bar a:hover, #top-nav-bar a:focus,
 #top-nav-bar .selected a:hover, #top-nav-bar .selected a:focus {
     background-color: #020202;
