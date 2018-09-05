@@ -156,29 +156,13 @@ Features:
                     .appendTo($(".portlet-grid-modified"))
                     $("<div>", { "class": "new-portlets" })
                         .appendTo($(".portlet-grid-modified"))
-                        $("<div>", { "class": "holder" })
+                        $("<div>", { "class": "holder"})
                             .appendTo($(".portlet-grid-modified"))
                             .append($("#pg2_Universal"))
                             .append($("#pg6_Universal"));
             $(".portlet-grid-modified").addClass("portlet-grid");
             $(".row-modified").addClass("row");
         }
-
-        /*
-        Change colors of course names on the left depending on when an assignment is due
-        */
-       //Capture all URLS for student courses
-       if (window.location.href.indexOf("My_Pages") < 1) {
-            var myCoursesArray = [];
-            var links = document.getElementById('myCourses').getElementsByTagName('a');
-            for (var i = 0; i < myCoursesArray.length; i++) {
-                myCoursesArray.push(links[i].href + "Coursework.jnz");
-            }
-
-            // $.get('https://www.freecodecamp.com/' + name, function(response) {
-            //     console.log(response);
-            // });
-       }
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
@@ -190,7 +174,7 @@ Features:
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
-    background-size: cover !important;
+    background-size: contain !important;
     height: 120px !important;
 }
 
