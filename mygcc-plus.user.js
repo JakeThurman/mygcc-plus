@@ -166,8 +166,8 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
-        var doJakesStyles = addOption("mygcc-plus--jake-flag", "Use Jake's Custom Styling", false);
-        var doIansStyles = addOption("mygcc-plus--ian-flag", "Use Ian's Custom Styling", true);
+        var doJakesStyles = addOption("mygcc-plus--jake-flag", "Shorten Header", true);
+        var doIansStyles = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
 
         // Handle custom css differences via custom overrides
         if (doJakesStyles) {
