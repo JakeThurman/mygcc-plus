@@ -1,6 +1,6 @@
 **Ever wanted MyGCC to look *non*-awful?**
 
-![Screenshot of my.gcc.edu with the plugin running](./screenshot.png)
+![Screenshot of my.gcc.edu with the plugin running](./references/screenshot.png)
 
 ## Install
   1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
