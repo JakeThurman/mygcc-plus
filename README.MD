@@ -1,5 +1,3 @@
-![Grove City Skyline](./references/simple-header.png)
-
 **Ever wanted MyGCC to look *non*-awful?**
 
 ![Screenshot of my.gcc.edu with the plugin running](./screenshot.png)
