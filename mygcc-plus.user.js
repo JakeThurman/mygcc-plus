@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.10
+// @version      1.0.11
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -166,11 +166,12 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
-        var doJakesStyles = addOption("mygcc-plus--jake-flag", "Shorten Header", true);
-        var doIansStyles = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
+        var shortenHeader = addOption("mygcc-plus--jake-flag", "Shorten Header", true);
+        var addShadows = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
+	var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
 
         // Handle custom css differences via custom overrides
-        if (doJakesStyles) {
+        if (shortenHeader) {
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
@@ -198,7 +199,7 @@ body #masthead {
 			`).appendTo(document.body);
         }
 
-        if (doIansStyles) {
+        if (addShadows) {
 			$("<style>").text(`
 .portlet {
     box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
@@ -611,7 +612,7 @@ li.quick-links-with-sub-nav #myPages,
                         .insertAfter($("#pg0_V_tabAddCourse_divSearch input[type=submit]"));
 
                 //Make Course links link to "Cousework" page
-                var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Cousrework Page", true);
+                var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Coursework Page", true);
 
                 // Handle coursework linking
                 if (doLinkToCoursework) {
@@ -684,7 +685,8 @@ li.quick-links-with-sub-nav #myPages,
                     $("#DivStaff").remove();
 
                     // Leave the "ad" on the home page ONLY
-                    if (location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life")
+		    //  also check setting flag!
+                    if (hideAds && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life")
                         $("#TargetedMessage").remove();
                 }
 
