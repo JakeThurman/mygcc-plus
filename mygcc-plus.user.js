@@ -554,7 +554,56 @@ li.quick-links-with-sub-nav #myPages,
     }
 }
 
+/* -------------------------
+*     HOMEWORK SUBMISSION
+* -------------------------
+*/
 
+div.lateAssignment span.assignmentStatus strong {
+    color: #ff0000;
+}
+
+div.detailInfoContent.formatType.formatUpload {
+    background-image: none;
+}
+
+div.openAssignment {
+    background-color: #B3E5FC;
+    border: 0px;
+    margin: 0;
+    padding: 5px 10px 1px 5px;
+}
+
+div.fileDisplay {
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp.png?raw=true);
+}
+
+div.openAssignment div.statusDisplay {
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_calendar_today_black_18dp.png?raw=true);
+}
+
+div.uploadAssignmentInfo, div.onlineAssignmentInfo {
+    background-position: 0px 0px;
+}
+
+a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
+    color: #0b8092;
+}
+
+a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
+    background-color: #eee;
+    padding: 25px 25px 25px 55px;
+    margin: 0px 0px 25px 25px;
+    border: 0px;
+    border-radius: 13px;
+    text-decoration: none;
+    box-shadow: 0px 5px 20px 0px #ccc;
+}
+
+.uploadFile {
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_cyan_18dp.png?raw=true);
+    background-position: 15px 20px;
+}
 
 /* -------------------------
 *           FOOTER
