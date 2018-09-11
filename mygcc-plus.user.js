@@ -164,6 +164,20 @@ Features:
             $(".row-modified").addClass("row");
         }
 
+        if (document.querySelector('.lateAssignment') !== null) {
+            $("<style>").text(`
+                a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
+                    background-color: #ff97a1;
+                }
+                a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
+                    color: #000 !important;
+                }
+                .uploadFile {
+                    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_black_18dp.png?raw=true)
+                }
+            `).appendTo(document.body);
+        }
+
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
         var shortenHeader = addOption("mygcc-plus--jake-flag", "Shorten Header", true);
@@ -560,7 +574,6 @@ li.quick-links-with-sub-nav #myPages,
     }
 }
 
-<<<<<<< HEAD
 /* -------------------------
 *     HOMEWORK SUBMISSION
 * -------------------------
@@ -568,6 +581,13 @@ li.quick-links-with-sub-nav #myPages,
 
 div.lateAssignment span.assignmentStatus strong {
     color: #ff0000;
+}
+
+div.lateAssignment {
+    border: 0px;
+    margin: 0px;
+    background-color: #ff97a1;
+    color: #000;
 }
 
 div.detailInfoContent.formatType.formatUpload {
@@ -585,6 +605,7 @@ div.fileDisplay {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp.png?raw=true);
 }
 
+div.lateAssignment div.statusDisplay,
 div.openAssignment div.statusDisplay {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_calendar_today_black_18dp.png?raw=true);
 }
@@ -594,7 +615,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
 }
 
 a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
-    color: #0b8092;
+    color: #0288D1;
 }
 
 a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
@@ -608,12 +629,10 @@ a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
 }
 
 .uploadFile {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_cyan_18dp.png?raw=true);
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_blue_18dp.png?raw=true);
     background-position: 15px 20px;
 }
 
-=======
->>>>>>> 904acde6cd9b11231148dede72578d4d515d8d58
 /* -------------------------
  *           FOOTER
  * -------------------------
