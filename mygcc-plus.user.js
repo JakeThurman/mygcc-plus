@@ -601,13 +601,17 @@ div.openAssignment {
     padding: 5px 10px 1px 5px;
 }
 
-div.fileDisplay {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp.png?raw=true);
-}
-
 div.lateAssignment div.statusDisplay,
 div.openAssignment div.statusDisplay {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_calendar_today_black_18dp.png?raw=true);
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_calendar_today_black_18dp-2x.png?raw=true);
+    background-size: 25px;
+    background-position: 10px;
+}
+
+div.fileDisplay {
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true);
+    background-size: 20px;
+    padding: 0px 0px 0px 25px
 }
 
 div.uploadAssignmentInfo, div.onlineAssignmentInfo {
@@ -630,7 +634,8 @@ a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
 
 .uploadFile {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_blue_18dp.png?raw=true);
-    background-position: 15px 20px;
+    background-position: 17px 22px;
+    background-size: 25px;
 }
 
 /* -------------------------
