@@ -1,10 +1,8 @@
-![Grove City Skyline](./references/simple-header.png)
-
 **Ever wanted MyGCC to look *non*-awful?**
 
-![Screenshot of my.gcc.edu with the plugin running](./screenshot.png)
+![Screenshot of my.gcc.edu with the plugin running](./references/screenshot.png)
 
-## Using MyGCC-Plus
+## Install
   1. Install the TamperMokey plugin for google chrome (or GreeseMonkey for Firefox)
   2. Navigate to: [https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js](https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js)
 

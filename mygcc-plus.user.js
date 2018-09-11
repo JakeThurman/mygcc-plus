@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.0.10
+// @version      1.0.12
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -146,7 +146,7 @@ Features:
 
         //Fix portlets going beyond their alotted space when your screen is too tiny
         $("iframe").addClass("proper-iframe-borders");
-        
+
         //A really nasty way to move the "Student Dining Options" and "Contact Information" because it's too big to fit on a tiny screen with 50% width. Good job GCC. Good. Job.
         //Don't even bother trying to understand what I did. Just trust the force, Luke.
         if (window.location.href.indexOf("Sign-Up") > -1) {
@@ -166,11 +166,12 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
-        var doJakesStyles = addOption("mygcc-plus--jake-flag", "Use Jake's Custom Styling", false);
-        var doIansStyles = addOption("mygcc-plus--ian-flag", "Use Ian's Custom Styling", true);
+        var shortenHeader = addOption("mygcc-plus--jake-flag", "Shorten Header", true);
+        var addShadows = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
+	var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
 
         // Handle custom css differences via custom overrides
-        if (doJakesStyles) {
+        if (shortenHeader) {
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
@@ -198,7 +199,7 @@ body #masthead {
 			`).appendTo(document.body);
         }
 
-        if (doIansStyles) {
+        if (addShadows) {
 			$("<style>").text(`
 .portlet {
     box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
@@ -237,10 +238,6 @@ body #masthead {
 *          Special
 * -------------------------
 */
-#TargetedMessage { /* MyGCC ad, this makes it show over the sidebar. It is deleted on all but the root page */
-    z-index: 2;
-}
-
 @media screen and (min-width: 1026px) {
     .targeted-message {
         right: -135px;
@@ -248,6 +245,9 @@ body #masthead {
     }
 }
 
+#mainCrumbs { /* Hide the breadcrums.... TODO: reconsider */
+    display: none;
+}
 
 
 
@@ -270,6 +270,8 @@ h1, h2, h3, h4, h5, h6 {
 
 #mainLayout {
     margin-top: 46px;
+    padding-bottom: 0;
+    margin-bottom: -1px;
 }
 
 .page-title,
@@ -528,6 +530,10 @@ li.quick-links-with-sub-nav #myPages,
 *         PORTLETS
 * -------------------------
 */
+.portlet {
+    border: 1px solid #ddd !important;
+    border-radius: 3px;
+}
 
 .proper-iframe-borders {
     width: 100% !important;
@@ -554,6 +560,7 @@ li.quick-links-with-sub-nav #myPages,
     }
 }
 
+<<<<<<< HEAD
 /* -------------------------
 *     HOMEWORK SUBMISSION
 * -------------------------
@@ -605,10 +612,12 @@ a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
     background-position: 15px 20px;
 }
 
+=======
+>>>>>>> 904acde6cd9b11231148dede72578d4d515d8d58
 /* -------------------------
-*           FOOTER
-* -------------------------
-*/
+ *           FOOTER
+ * -------------------------
+ */
 .footer {
         background: #222;
 }
@@ -673,52 +682,23 @@ a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
 
                 // CSS
                 if (doStyling) {
-                    var bodyBG = "";
-                    var sidebarColor = "white";//rgb(240, 240, 240)";
-                    var sidebarText = "#515151";
-                    var sidebarBorder = "1px solid #adadad";
-
                     /// ---------------------
                     //  Legacy CSS changes...
                     //    for better perforcance these should be removed/migrated to css rules
                     //    please do not add new styles using JQuery!
                     /// ---------------------
-                    $("#headerTabs").css({ "border-bottom-right-radius": 0, "border-bottom-left-radius": 0, "background": "#98002e", "box-shadow": "black 0px 2px 6px 0px" });
-                    $("#headerTabs .selected").attr({ "style": "background:#69152e!important" });
-                    $("#sideBar div.sideSection, #sideBar div#quickLinks").css({ border: "none", "border-radius": 0 });
-                    $("#pageTitleButtons, #mainCrumbs").hide();
-                    $("#headerTabs").css({ position: "sticky", top: -1, "z-index":7999 });
-                    $("#sideBar div.sideSection, #sideBar div#quickLinks").css({ "background": sidebarColor, "border-right": sidebarBorder, "margin": "0", "color": sidebarText })
-                        .last().css({ "border-bottom": sidebarBorder });
-                    $(".assignmentTitle").css({"border": "1px dashed #003471", "border-bottom": "none"});
                     $("#userWelcome, #ltlLabel, #sideBar h2, #sideBar h2 a, #sideBar h3, #sideBar h3 a, #sideBar div#quickLinks h3, #sideBar h2, #sideBar div#quickLinks h3, #quickLinks li a, #thisContext a").attr({ "style": "color:" + "#111" + " !important" });
                     $("#sideBar h2, #sideBar div#quickLinks h3").css({ "border-bottom": "1px solid black", "margin-bottom": "0", "margin": "10px 0 0 0", "padding-left": "7px" });
                     $("#txtInput").css({ "border-radius": "4px", "border": "1px solid #ccc", "margin-top": "5px" });
-                    $("#btnClear").attr("style", "font-size: 11px");
-                    $("body[data-gr-c-s-loaded]").css({"background-image": bodyBG, "min-width": "initial"});
-                    $("div.postItem").css({ "background-image": bodyBG });
-                    $(".portlet").css({ "border": "1px solid #ddd", "border-radius": "3px" });
-                    $(".one_column .pColumn1 .portlet").css({"border": "none"});
-                    $(".buttonBar").css({ "background-color": "transparent" });
-                    $("#pageTitle, #pageTitle h2").css({ "margin": 0 });
-                    $(".pHead").css({ "border-radius": 0, "padding-top": "7px", "border-bottom": "none", "padding-bottom": "7px", "margin-top": "0", "background": "none", "font-size": "18px", "box-shadow": "none", "background-color": "#ddd" });
-                    $(".pHead a, .pHead h3").css({ "color": "rgb(60, 61, 62)", "text-align": "center" });
-                    $(".pHead h3").css({ "padding": 0 });
-                    $("#contextPages li.currentPage").css({ "background": "#ececec", "border-left": "3px solid #69152e" });
-                    $("#sideBar .searchControls").css({ "padding-top": "0", "padding-left": "10px" });
-                    $("#footer_wrap").css({ "border-top": sidebarBorder });
-                    $("#mainLayout").css({ "padding-bottom": 0, "margin-bottom": "-1px" });
                     $(".pToolbar:empty").css({"display": "none"});
                     $(".hint, .tabbox").css({ "background-color": "white" });
                     $(".CS .GrayBordered, .CS .GrayBordered th, .CS .GrayBordered td").css({ "background-color": "white" });
+
+                    // I think these are from the Add/Drop course page
                     $(".contentTabs li a").css({ "font-size": "13px", "padding": "0 22px" });
                     $(".contentTabs li").css({ "padding-bottom": "4px", "padding-top": 8 });
                     $(".contentTabs li:first").remove();
-                    $("#calendar").css({"background-color": "white"});
-
-                    // Styles with special case handling
-                    if ($("#sideBar").length)
-                        $("#portlets").css({"margin-top": "10px"});
+                    $(".gradeGroupSidebar").css({ "background-color": "white" });
 
                     // Table stuff
                     $(".gradeItemGrid, .groupedGrid").css({ "border-collapse": "collapse", "width": "100%", "border": "1px solid #bbbec3" });
@@ -727,13 +707,10 @@ a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
                     $(".gradeItemGrid td:not(:first-child), .groupedGrid td:not(:first-child)").css({ "border-left": "1px solid #ececee" });
                     $(".gradeItemGrid th, .groupedGrid .header td, .groupedGrid th").css({ "text-align": "left", "height": "28px", "font-size": "13px", "padding": "0 7px", "color": "#4b535e", "background-color": "#ebecee", "white-space": "nowrap" });
                     $(".gradeItemGrid th:not(:first-child), .groupedGrid th:not(:first-child)").css({ "border-left": "1px solid #bbbec3" });
-                    $(".gradeGroupSidebar").css({ "background-color": "white" });
-
-                    // Delete stuff
-                    $("#DivStaff").remove();
 
                     // Leave the "ad" on the home page ONLY
-                    if (location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life")
+		    //  also check setting flag!
+                    if (hideAds && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life")
                         $("#TargetedMessage").remove();
                 }
 
