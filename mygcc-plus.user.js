@@ -628,10 +628,6 @@ li.quick-links-with-sub-nav #myPages,
 
                 // CSS
                 if (doStyling) {
-                    var sidebarColor = "white";//rgb(240, 240, 240)";
-                    var sidebarText = "#515151";
-                    var sidebarBorder = "1px solid #adadad";
-
                     /// ---------------------
                     //  Legacy CSS changes...
                     //    for better perforcance these should be removed/migrated to css rules
