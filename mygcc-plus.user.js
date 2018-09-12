@@ -266,9 +266,11 @@ Features:
             document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
             document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
             //replace paper icon next to your submitted homework file
-            document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src='https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
-            document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height='18px';
-            document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight='5px';
+            if (document.getElementsByClassName('imageAndText')[0] !== undefined) {
+                document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src='https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
+                document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height='18px';
+                document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight='5px';
+            }
         }
 
         //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
@@ -694,8 +696,15 @@ li.quick-links-with-sub-nav #myPages,
 * -------------------------
 */
 
+
+//TODO change these values
+div.overrideDisplay:hover {
+    background-color: #EAF1FE;
+    border: 1px solid #144799;
+}
+
 .formatUpload {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_info_black_18dp-2x.png?raw=true);
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true);
     background-size: 20px;
 }
 
@@ -788,7 +797,7 @@ div.openAssignment div.statusDisplay {
 div.overrideInstructions {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_info_black_18dp-2x.png?raw=true);
     background-size: 20px;
-    padding-left: 31px;
+    padding-left: 25px;
 }
 
 div.fileDisplay {
