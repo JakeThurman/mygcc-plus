@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.1
+// @version      1.11
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -175,7 +175,8 @@ Features:
         if (doStyling) {
 
             //Who uses these assignment navigation buttons anyway? And why is there two of these?!
-            $('.detailHeader').remove();
+            //TODO Make only 1 be removed using an array
+            //$('.detailHeader').remove();
 
             //Change individual assignment score background
             if (document.querySelector('#pg0_V_GeneralAssignmentInfo__panAssignment') !== null) {
@@ -241,65 +242,70 @@ Features:
                 }
             }
 
-        if (document.querySelector('.uploadFilePanelHeader') !== null) {
-            //shift the "upload a file" text in the popup window for uploading an assignment
-            document.getElementsByClassName('uploadFilePanelHeader')[0].getElementsByTagName('div')[1].style.padding='2px';
-            //replace close button in the popup window for uploading an assignment
-            document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_imgClose').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_close_black_18dp-2x.png?raw=true";
-        }
+                //Make the ICS Server Error page more friendly :)
+            if ((document.documentElement.textContent || document.documentElement.innerText).indexOf('Server Error in \'/ICS\' Application.') > -1) {
+                $('body').remove();
+            }
 
-        if (window.location.href.indexOf("Gradebook") > -1) {
-            document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
-            document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
-        }
+            if (document.querySelector('.uploadFilePanelHeader') !== null) {
+                //shift the "upload a file" text in the popup window for uploading an assignment
+                document.getElementsByClassName('uploadFilePanelHeader')[0].getElementsByTagName('div')[1].style.padding='2px';
+                //replace close button in the popup window for uploading an assignment
+                document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_imgClose').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_close_black_18dp-2x.png?raw=true";
+            }
 
-        //replace feedback icon for all homeworks (if they exis)
-        var num = 0;
-        while (document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify') !== null && document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0] !== undefined) {
-            document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_feedback_black_18dp-2x.png?raw=true";
-            document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].style.height='20px';
-            num++;
-        }
-        
-        if (window.location.href.indexOf("StudentAssignmentDetailView") > -1) {
-            //replace 'add comment' icon
-            document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
-            document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
-            //replace paper icon next to your submitted homework file
-            if (document.getElementsByClassName('imageAndText')[0] !== undefined) {
-                document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src='https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
-                document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height='18px';
-                document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight='5px';
+            if (window.location.href.indexOf("Gradebook") > -1) {
+                document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
+                document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
+            }
+
+            //replace feedback icon for all homeworks (if they exist)
+            var num = 0;
+            while (document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify') !== null && document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0] !== undefined) {
+                document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_feedback_black_18dp-2x.png?raw=true";
+                document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].style.height='20px';
+                num++;
+            }
+            
+            if (window.location.href.indexOf("StudentAssignmentDetailView") > -1) {
+                //replace 'add comment' icon
+                document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
+                document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
+                //replace paper icon next to your submitted homework file
+                if (document.getElementsByClassName('imageAndText')[0] !== undefined) {
+                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src='https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
+                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height='18px';
+                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight='5px';
+                }
+            }
+
+            //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
+            if (document.querySelector('.lateAssignment') !== null) {
+                $("<style>").text(`
+
+                    a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
+                        background-color: #ff97a1 !important;
+                    }
+
+                    a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
+                        color: #733a3a !important;
+                    }
+
+                    .uploadFile {
+                        background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_black_18dp-2x.png?raw=true) !important;
+                    }
+
+                    a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
+                        color: #733a3a !important;
+                    }
+                    
+                    a.turnInAssignment {
+                        background-color: #FFCDD2 !important;
+                    }
+
+                `).appendTo(document.body);
             }
         }
-
-        //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
-        if (document.querySelector('.lateAssignment') !== null) {
-            $("<style>").text(`
-
-                a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
-                    background-color: #ff97a1 !important;
-                }
-
-                a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
-                    color: #733a3a !important;
-                }
-
-                .uploadFile {
-                    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_black_18dp-2x.png?raw=true) !important;
-                }
-
-                a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
-                    color: #733a3a !important;
-                }
-                
-                a.turnInAssignment {
-                    background-color: #FFCDD2 !important;
-                }
-
-            `).appendTo(document.body);
-        }
-    }
 
         // Handle custom css differences via custom overrides
         if (shortenHeader) {
@@ -696,6 +702,32 @@ li.quick-links-with-sub-nav #myPages,
 * -------------------------
 */
 
+div.assignmentUnitCollapsible.itemHover:hover,
+table.assignmentGrid.itemHover tr:hover,
+table.assignmentGrid.itemHover tr:hover td,
+table.cwkTableDisplay.itemHover tr:hover td,
+table.reorder.itemHover tr:hover,
+table.reorder.itemHover tr:hover td,
+div.assignmentTitle {
+    border: 0px;
+}
+
+div.dueNext {
+    background-color: #B3E5FC;
+    border: 0px;
+    border-radius: 13px;
+}
+
+div.assignmentDisplay {
+    background-color: #f3f3f3;
+    border-radius: 13px;
+    padding: 6px 20px 10px 25px;
+}
+
+div.assignmentDisplay:hover {
+    border-color: transparent;
+    background-color: #e5f7ff;
+}
 
 //TODO change these values
 div.overrideDisplay:hover {
@@ -748,10 +780,23 @@ div.feedbackDisplay div.feedbackWedgeOutline, div.feedbackDisplay div.choiceWedg
     border-right: 6px solid #B3E5FC;
 }
 
+div.feedbackDisplay div.commentWedgeOutline {
+    border-left: 6px solid #B3E5FC;
+    margin-top: 25px;
+}
+
+img.commentImage, img.feedbackImage {
+    border: 0px;
+}
+
 div.feedbackDisplay {
     background-color: #B3E5FC;
     border: 0px;
     border-radius: 8px;
+}
+
+div.commentWedge {
+    border: 0px;
 }
 
 div.feedbackDisplay span.author {
@@ -957,7 +1002,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         .insertAfter($("#pg0_V_tabAddCourse_divSearch input[type=submit]"));
 
                 //Make Course links link to "Cousework" page
-                var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Cousrework Page", true);
+                var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Coursework Page", true);
 
                 // Handle coursework linking
                 if (doLinkToCoursework) {
