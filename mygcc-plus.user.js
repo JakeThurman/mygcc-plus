@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.11
+// @version      1.12
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -183,7 +183,7 @@ Features:
             try {
                 $('.detailHeader')[0].remove();
             } catch (err) {
-                
+
             }
 
             //Change individual assignment score background
