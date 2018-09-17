@@ -180,7 +180,11 @@ Features:
             $(".amc-header").remove();
 
             //Who uses these assignment navigation buttons anyway? And why is there two of these?!
-            $('.detailHeader')[0].remove();
+            try {
+                $('.detailHeader')[0].remove();
+            } catch (err) {
+                
+            }
 
             //Change individual assignment score background
             if (document.querySelector('#pg0_V_GeneralAssignmentInfo__panAssignment') !== null) {
@@ -426,7 +430,8 @@ footer {
 }
 
 contact-info-footer {
-
+    padding: 0px 10px 10px 0px;
+    float: right;
 }
 
 a.btn-primary {
