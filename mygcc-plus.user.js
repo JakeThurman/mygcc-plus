@@ -174,7 +174,7 @@ Features:
 
         if (doStyling) {
             //Insert feedback option at bottom of page
-            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank" id="contact-info-footer">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
+            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
 
             //Remove redundant repetition of text in Academics --> All My Courses (portlet)
             $(".amc-header").remove();
@@ -429,10 +429,6 @@ footer {
     position: relative;
 }
 
-contact-info-footer {
-    padding: 0px 10px 10px 0px;
-    float: right;
-}
 
 a.btn-primary {
     color: white;
