@@ -173,10 +173,14 @@ Features:
 	    var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
 
         if (doStyling) {
+            //Insert feedback option at bottom of page
+            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank" id="contact-info-footer">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
+
+            //Remove redundant repetition of text in Academics --> All My Courses (portlet)
+            $(".amc-header").remove();
 
             //Who uses these assignment navigation buttons anyway? And why is there two of these?!
-            //TODO Make only 1 be removed using an array
-            //$('.detailHeader').remove();
+            $('.detailHeader')[0].remove();
 
             //Change individual assignment score background
             if (document.querySelector('#pg0_V_GeneralAssignmentInfo__panAssignment') !== null) {
@@ -421,12 +425,22 @@ footer {
     position: relative;
 }
 
+contact-info-footer {
+
+}
+
 a.btn-primary {
     color: white;
 }
 
 a.btn-primary:hover {
     background-color: #940909;
+}
+
+div.detailHeader {
+    padding: 15px 45px 0px 0px;
+    background-color: transparent;
+    border-bottom: transparent:
 }
 
 
@@ -695,6 +709,25 @@ li.quick-links-with-sub-nav #myPages,
     .portlet-max-width {
         width: 100%;
     }
+}
+
+/* -------------------------
+*        ACADEMICS
+* -------------------------
+*/
+
+/* All My Courses Portlet */
+
+.AllMyCourses table.amcGenericTable td, .AllMyCourses table.amcGenericTable th {
+    padding: 12px 4px 12px 4px;
+}
+
+.portlet-grid .alt {
+    background-color: #efefef;
+}
+
+.trHighlight {
+    background-color: #B3E5FC;
 }
 
 /* -------------------------
