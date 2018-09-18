@@ -7,7 +7,11 @@
   2. Navigate to: [https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js](https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js)
 
 #### How To Update
-Navigate to [https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js](https://github.com/JakeThurman/mygcc-plus/raw/master/mygcc-plus.user.js), or use the tampermonkey "Check for userscript updates" feature;
+UPDATES ARE AUTOMATIC!
+The plugin will automatically check for updates after 24-hours. 
+So every day you should get all the updates automatically.
+
+If you want updates now, just click the install link above.
 
 
 ## Features
