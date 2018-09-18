@@ -305,52 +305,77 @@ Features:
             function gradeColor (gradeValue, gradeBackground) {
                 var grade = document.getElementById(gradeValue).innerHTML;
                 var gradeText = document.getElementById(gradeValue);
-                var gradeBackground;
-                if (document.getElementById(gradeBackground) !== null) {
-                    gradeBackground = document.getElementById(gradeBackground);
-                } else {
+                var gradeBackground = document.getElementById(gradeBackground);
+
+                if (gradeBackground === null) {
                     gradeBackground = document.getElementsByClassName(gradeBackground)[0];
                 }
-                if (grade.includes("A+")) {
-                    gradeBackground.style.backgroundColor='#00c853';
-                    gradeText.style.color='#004e20';
-                } else if (grade.includes("A-")) {
-                    gradeBackground.style.backgroundColor='#57d154';
-                    gradeText.style.color='#245423';
-                } else if (grade.includes("A")) {
-                    gradeBackground.style.backgroundColor='#36c246';
-                    gradeText.style.color='#195920';
-                } else if (grade.includes("B+")) {
-                    gradeBackground.style.backgroundColor='#8bc34a';
-                    gradeText.style.color='#3d5620';
-                } else if (grade.includes("B-")) {
-                    gradeBackground.style.backgroundColor='#a0cb6e';
-                    gradeText.style.color='#40502d';
-                } else if (grade.includes("B")) {
-                    gradeBackground.style.backgroundColor='#9ccc65';
-                    gradeText.style.color='#32451d';
-                } else if (grade.includes("C+")) {
-                    gradeBackground.style.backgroundColor='#cddc39';
-                    gradeText.style.color='#5a611a';
-                } else if (grade.includes("C-")) {
-                    gradeBackground.style.backgroundColor='#fbc02d';
-                    gradeText.style.color='#544112';
-                } else if (grade.includes("C")) {
-                    gradeText.style.backgroundColor='#d4e157';
-                    gradeText.style.color='#5d6325';
-                } else if (grade.includes("D+")) {
-                    gradeBackground.style.backgroundColor='#ffa726';
-                    gradeText.style.color='#67430f';
-                } else if (grade.includes("D-")) {
-                    gradeBackground.style.backgroundColor='#e65100';
-                    gradeText.style.color='#592001';
-                } else if (grade.includes("D")) {
-                    gradeBackground.style.backgroundColor='#f57c00';
-                    gradeText.style.color='#623200';
-                } else if (grade.includes("F")) {
-                    gradeBackground.style.backgroundColor='#f44336';
-                    gradeText.style.color='#7e231d';
-                }
+
+                var colors =  {
+                    "A+": {
+                        background: "#00c853",
+                        text: "#004e20"
+                    },
+                    "A-": {
+                        backgroundColor: "#57d154",
+                        text:"#245423"
+                    }, 
+                    "A": {
+                        background: "#36c246",
+                        text: "#195920"
+                    },
+                    "B+": {
+                        background: "#8bc34a",
+                        text: "#3d5620"
+                    },
+                    "B-": {
+                        background: "#a0cb6e",
+                        text: "#40502d"
+                    },
+                    "B": {
+                        background: "#9ccc65",
+                        text: "#32451d"
+                    },
+                    "C+": {
+                        background: "#cddc39",
+                        text: "#5a611a"
+                    },
+                    "C-": {
+                        background: "#fbc02d",
+                        text: "#544112"
+                    },
+                    "C": {
+                        background: "#d4e157",
+                        text: "#5d6325"
+                    },
+                    "D+": {
+                        background: "#ffa726",
+                        text: "#67430f"
+                    },
+                    "D-": {
+                        background:"#e65100",
+                        text: "#592001"
+                    },
+                    "D": {
+                        background: "#f57c00",
+                        text:"#623200"
+                    },
+                    "F": {
+                        background: "#f44336",
+                        text: "#7e231d"
+                    },
+                    default: {
+                        background: "#edf4ff",
+                        text: "#003375"
+                    }
+                };
+
+                grade = grade.match(/([A-F]{1}[+\-]?)/);
+                grade = grade ? grade[0] : "default";
+
+                gradeBackground.style.backgroundColor = colors[grade].background;
+                gradeText.style.color = colors[grade].text;
+           
             }
 
                 //Make the ICS Server Error page more friendly :)
