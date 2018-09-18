@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.13
+// @version      1.14
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -207,10 +207,6 @@ Features:
                         height: 74px !important;
                     }
 
-                    .top-nav-bar a {
-                        padding: 10px 25px 10px 25px !important;
-                    }
-
                     #hamburger-menu-section ul li.selected {
                         background: transparent !important;
                     }
@@ -226,13 +222,7 @@ Features:
                     #space {
                         height: 20px;
                     }
-               } 
-               
-            @media screen and (max-width: 1025px) {
-                ul:not(.withBullets) {
-                    margin: 16px 0px 0px 0px !important;
-                }
-            }
+               }
 
             #top-nav-bar a {
                 border-right: transparent !important;
