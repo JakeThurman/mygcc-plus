@@ -571,6 +571,10 @@ div.detailHeader {
     .top-nav-bar .nav-container .main-nav-submenu-container {
         background: #222;
     }
+
+    #main-nav a {
+        width: 100%;
+    }
 }
 
 #top-nav-bar {
