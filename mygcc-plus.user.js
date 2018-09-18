@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.12
+// @version      1.13
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -168,11 +168,114 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
-        var shortenHeader = addOption("mygcc-plus--jake-flag", "Shorten Header", true);
+        var headerSize = addMultiOption("mygcc-plus--header-height", "Header Height", [ 
+            { key: "tall", text: "Tall" },
+            { key: "short", text: "Default" },
+            { key: "shortest", text: "Shortest"}
+         ], "short");
         var addShadows = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
-	    var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
+        var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
+
+        if (headerSize === "shortest") {
+            $("<div>", { "id": "space" }).insertAfter($("#masthead"));
+            $("#masthead").remove();
+
+            $("<style>").text(`
+
+               @media screen and (min-width: 1026px) {
+
+                    #top-nav-bar {
+                        top: 0px !important;
+                    }
+
+                    #siteNavBar_SearchButton {
+                        top: 15px !important;
+                        right: 60px !important;
+                    }
+
+                    #siteNavBar_loginToggle {
+                        top: 15px !important;
+                        right: 0px !important;
+                    }
+
+                    .top-nav-bar .nav-container .user-btn .user-image {
+                        height: 36px !important;
+                        width: 36px !important;
+                    }
+
+                    #top-nav-bar {
+                        height: 74px !important;
+                    }
+
+                    .top-nav-bar a {
+                        padding: 10px 25px 10px 25px !important;
+                    }
+
+                    #hamburger-menu-section ul li.selected {
+                        background: transparent !important;
+                    }
+
+                    #user-login-section .arrow {
+                        left: 85% !important;
+                    }
+
+                    #search-section {
+                        margin-right: 45px !important;
+                    }
+
+                    #space {
+                        height: 20px;
+                    }
+               } 
+               
+            @media screen and (max-width: 1025px) {
+                ul:not(.withBullets) {
+                    margin: 16px 0px 0px 0px !important;
+                }
+            }
+
+            #top-nav-bar a {
+                border-right: transparent !important;
+            }
+
+            .top-nav-bar .more-links-div {
+                margin-top: 30px;
+            }
+
+            .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .search-section {
+                top: 88px;
+            }
+
+            .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
+                top: 88px !important;
+            }
+
+            #main-nav a {
+                border-right: none !important;
+                padding: 24px 25px 23px 25px !important;
+            }
+
+            .top-nav-bar .nav-container .link-scroll .navbar-nav {
+                overflow: initial !important;
+            }
+
+               .logged-in .top-nav-bar .nav-container .search-btn {
+                   background-color: transparent !important;
+               }
+
+               .top-nav-bar .nav-container .search-btn {
+                    background-color: transparent !important;
+               }
+
+            `).appendTo(document.body);
+            //document.getElementById('siteNavBar_loginToggle').getElementsByTagName('span')[0].style.background="";
+            $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
+        }
 
         if (doStyling) {
+            $(".arrow")[0].style.left='89%';
+            $(".arrow")[1].style.left='75%';
+
             //Insert feedback option at bottom of page
             $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
 
@@ -316,7 +419,7 @@ Features:
         }
 
         // Handle custom css differences via custom overrides
-        if (shortenHeader) {
+        if (headerSize === "short") {
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
@@ -400,6 +503,11 @@ body #masthead {
 *          GLOBAL
 * -------------------------
 */
+
+.color-content-one {
+    color: #000;
+}
+
 a, a:link, a:visited, .link-btn, .link-btn span {
     color: #0b8092;
     text-decoration: none;
@@ -458,6 +566,10 @@ div.detailHeader {
 @media screen and (max-width: 1025px) {
     #top-nav-bar {
         border-bottom: transparent;
+    }
+
+    .top-nav-bar .nav-container .main-nav-submenu-container {
+        background: #222;
     }
 }
 
@@ -535,10 +647,6 @@ div.detailHeader {
         top: -170px;
         right: 80px;
     }
-
-	#user-login-section .arrow {
-		left: 72% !important;
-	}
 
 	#user-login-section a {
 		border-right: none !important;
@@ -1105,6 +1213,33 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                 .append(optionEl)
                 .append($("<label>", { "for": "my_gcc_plus_option__" + key }).text(text).css({ "color": "white", "font-weight": "normal" }))
                 .appendTo(getOptionContainer());
+
+            return currentVal;
+        }
+
+        // options: [{ key: String, text: String }]
+        function addMultiOption(key, text, options, defaultValue) {
+            var currentVal = JSON.parse(localStorage.getItem(key) || JSON.stringify(defaultValue));
+
+            var container = $("<div>").appendTo(getOptionContainer())
+                .css({ "color": "white" })
+                .text(text + ": ");
+
+            var name = "my_gcc_plus_option__" + key;
+            options.forEach(function (option) {
+                var optionEl = $("<input>", { id: name + "_" + option.key, name: name, type: "radio" })
+                    .css({ "margin": "0 4px 0 0" })
+                    .prop("checked", currentVal === option.key)
+                    .change(function () {
+                        localStorage.setItem(key, JSON.stringify(option.key));
+                        location.href = location.href;
+                    });
+
+                $("<div>").css({ "display": "inline-block", "padding-right": "7px" })
+                    .append(optionEl)
+                    .append($("<label>", { "for": name + "_" + option.key }).text(option.text).css({"font-weight": "normal"}))
+                    .appendTo(container);
+            });
 
             return currentVal;
         }
