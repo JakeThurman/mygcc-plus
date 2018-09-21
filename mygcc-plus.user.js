@@ -465,7 +465,7 @@ body #masthead {
         if (addShadows) {
 			$("<style>").text(`
 .portlet {
-    box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
+    box-shadow: 0px 0px 6px 0px #bbb;
 }
 			`).appendTo(document.body);
         }
