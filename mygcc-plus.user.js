@@ -186,6 +186,7 @@ Features:
 
                     #top-nav-bar {
                         top: 0px !important;
+                        padding-right: 105px;
                     }
 
                     #siteNavBar_SearchButton {
@@ -260,11 +261,14 @@ Features:
             `).appendTo(document.body);
             //document.getElementById('siteNavBar_loginToggle').getElementsByTagName('span')[0].style.background="";
             $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
+
+            // Trigger a resize even to correct the "More" dropdown in the header.
+            jenzabar.framework.topNavAndSidebarSlideMenu.trigger.resize();
         }
 
         if (doStyling) {
-            $(".arrow")[0].style.left='89%';
-            $(".arrow")[1].style.left='75%';
+            $(".arrow").css({ "left": '89%' });
+            $(".arrow").css({ "left": '75%' });
 
             //Insert feedback option at bottom of page
             $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
@@ -309,7 +313,7 @@ Features:
                     "A-": {
                         backgroundColor: "#57d154",
                         text:"#245423"
-                    }, 
+                    },
                     "A": {
                         background: "#36c246",
                         text: "#195920"
@@ -365,7 +369,6 @@ Features:
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
                 gradeText.style.color = colors[grade].text;
-           
             }
 
                 //Make the ICS Server Error page more friendly :)
