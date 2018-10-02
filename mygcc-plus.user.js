@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.15
+// @version      1.16
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -306,12 +306,6 @@ Features:
                 } else {
                     gradeBackground = document.getElementsByClassName(gradeBackground)[0];
                 }
-
-                // var gradeBackground = document.getElementById(gradeBackground);
-
-                // if (gradeBackground == null) {
-                //     gradeBackground = document.getElementsByClassName(gradeBackground)[0];
-                // }
 
                 var colors =  {
                     "A+": {
