@@ -72,7 +72,8 @@ Features:
             local_storage_goto_coursework_key = "mygccplus_goto_coursework",
             ss_just_logged_in = "mygccplus_justloggedin",
             ss_last_page = "mygccplus_lastpage",
-            ss_just_logged_in_2 = "mygccplus_justloggedin_noloop";
+            ss_just_logged_in_2 = "mygccplus_justloggedin_noloop",
+            anonymous_user_key = "mygccplus_anonymous_user_key";
 
         // Fix redirect on login
         var justLoggedIn = JSON.parse(sessionStorage[ss_just_logged_in] || "false");
@@ -326,7 +327,7 @@ Features:
                     gradeBackground.style.backgroundColor='#fbc02d';
                     gradeText.style.color='#544112';
                 } else if (grade.includes("C")) {
-                    gradeText.style.backgroundColor='#d4e157';
+                    gradeBackground.style.backgroundColor='#d4e157';
                     gradeText.style.color='#5d6325';
                 } else if (grade.includes("D+")) {
                     gradeBackground.style.backgroundColor='#ffa726';
@@ -978,7 +979,7 @@ div.overrideInstructions {
 }
 
 div.fileDisplay {
-    background-image: url(2);
+    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true);
     background-size: 20px;
     padding: 0px 0px 0px 27px;
     margin-left: 5px;
