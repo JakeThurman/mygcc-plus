@@ -187,6 +187,7 @@ Features:
 
                     #top-nav-bar {
                         top: 0px !important;
+                        padding-right: 105px;
                     }
 
                     #siteNavBar_SearchButton {
@@ -261,11 +262,14 @@ Features:
             `).appendTo(document.body);
             //document.getElementById('siteNavBar_loginToggle').getElementsByTagName('span')[0].style.background="";
             $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
+
+            // Trigger a resize even to correct the "More" dropdown in the header.
+            jenzabar.framework.topNavAndSidebarSlideMenu.trigger.resize();
         }
 
         if (doStyling) {
-            $(".arrow")[0].style.left='89%';
-            $(".arrow")[1].style.left='75%';
+            $(".arrow").css({ "left": '89%' });
+            $(".arrow").css({ "left": '75%' });
 
             //Insert feedback option at bottom of page
             $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
@@ -296,12 +300,12 @@ Features:
             function gradeColor (gradeValue, gradeBackground) {
                 var grade = document.getElementById(gradeValue).innerHTML;
                 var gradeText = document.getElementById(gradeValue);
-                var gradeBackground;
-                if (document.getElementById(gradeBackground) !== null) {
-                    gradeBackground = document.getElementById(gradeBackground);
-                } else {
+                var gradeBackground = document.getElementById(gradeBackground);
+
+                if (gradeBackground === null) {
                     gradeBackground = document.getElementsByClassName(gradeBackground)[0];
                 }
+<<<<<<< HEAD
                 if (grade.includes("A+")) {
                     gradeBackground.style.backgroundColor='#00c853';
                     gradeText.style.color='#004e20';
@@ -342,6 +346,73 @@ Features:
                     gradeBackground.style.backgroundColor='#f44336';
                     gradeText.style.color='#7e231d';
                 }
+=======
+
+                var colors =  {
+                    "A+": {
+                        background: "#00c853",
+                        text: "#004e20"
+                    },
+                    "A-": {
+                        backgroundColor: "#57d154",
+                        text:"#245423"
+                    },
+                    "A": {
+                        background: "#36c246",
+                        text: "#195920"
+                    },
+                    "B+": {
+                        background: "#8bc34a",
+                        text: "#3d5620"
+                    },
+                    "B-": {
+                        background: "#a0cb6e",
+                        text: "#40502d"
+                    },
+                    "B": {
+                        background: "#9ccc65",
+                        text: "#32451d"
+                    },
+                    "C+": {
+                        background: "#cddc39",
+                        text: "#5a611a"
+                    },
+                    "C-": {
+                        background: "#fbc02d",
+                        text: "#544112"
+                    },
+                    "C": {
+                        background: "#d4e157",
+                        text: "#5d6325"
+                    },
+                    "D+": {
+                        background: "#ffa726",
+                        text: "#67430f"
+                    },
+                    "D-": {
+                        background:"#e65100",
+                        text: "#592001"
+                    },
+                    "D": {
+                        background: "#f57c00",
+                        text:"#623200"
+                    },
+                    "F": {
+                        background: "#f44336",
+                        text: "#7e231d"
+                    },
+                    default: {
+                        background: "#edf4ff",
+                        text: "#003375"
+                    }
+                };
+
+                grade = grade.match(/([A-F]{1}[+\-]?)/);
+                grade = grade ? grade[0] : "default";
+
+                gradeBackground.style.backgroundColor = colors[grade].background;
+                gradeText.style.color = colors[grade].text;
+>>>>>>> c4a95cc7447ad2572599be4e2ad29d06ec40cf5d
             }
 
                 //Make the ICS Server Error page more friendly :)
@@ -441,7 +512,7 @@ body #masthead {
         if (addShadows) {
 			$("<style>").text(`
 .portlet {
-    box-shadow: 0px 5px 20px 0px #bbb; //0px 5px 30px 1px #8888;
+    box-shadow: 0px 0px 6px 0px #bbb;
 }
 			`).appendTo(document.body);
         }
@@ -561,6 +632,10 @@ div.detailHeader {
 
     .top-nav-bar .nav-container .main-nav-submenu-container {
         background: #222;
+    }
+
+    #main-nav a {
+        width: 100%;
     }
 }
 
