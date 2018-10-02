@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.14
+// @version      1.15
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -72,8 +72,7 @@ Features:
             local_storage_goto_coursework_key = "mygccplus_goto_coursework",
             ss_just_logged_in = "mygccplus_justloggedin",
             ss_last_page = "mygccplus_lastpage",
-            ss_just_logged_in_2 = "mygccplus_justloggedin_noloop",
-            anonymous_user_key = "mygccplus_anonymous_user_key";
+            ss_just_logged_in_2 = "mygccplus_justloggedin_noloop";
 
         // Fix redirect on login
         var justLoggedIn = JSON.parse(sessionStorage[ss_just_logged_in] || "false");
@@ -305,48 +304,6 @@ Features:
                 if (gradeBackground === null) {
                     gradeBackground = document.getElementsByClassName(gradeBackground)[0];
                 }
-<<<<<<< HEAD
-                if (grade.includes("A+")) {
-                    gradeBackground.style.backgroundColor='#00c853';
-                    gradeText.style.color='#004e20';
-                } else if (grade.includes("A-")) {
-                    gradeBackground.style.backgroundColor='#57d154';
-                    gradeText.style.color='#245423';
-                } else if (grade.includes("A")) {
-                    gradeBackground.style.backgroundColor='#36c246';
-                    gradeText.style.color='#195920';
-                } else if (grade.includes("B+")) {
-                    gradeBackground.style.backgroundColor='#8bc34a';
-                    gradeText.style.color='#3d5620';
-                } else if (grade.includes("B-")) {
-                    gradeBackground.style.backgroundColor='#a0cb6e';
-                    gradeText.style.color='#40502d';
-                } else if (grade.includes("B")) {
-                    gradeBackground.style.backgroundColor='#9ccc65';
-                    gradeText.style.color='#32451d';
-                } else if (grade.includes("C+")) {
-                    gradeBackground.style.backgroundColor='#cddc39';
-                    gradeText.style.color='#5a611a';
-                } else if (grade.includes("C-")) {
-                    gradeBackground.style.backgroundColor='#fbc02d';
-                    gradeText.style.color='#544112';
-                } else if (grade.includes("C")) {
-                    gradeBackground.style.backgroundColor='#d4e157';
-                    gradeText.style.color='#5d6325';
-                } else if (grade.includes("D+")) {
-                    gradeBackground.style.backgroundColor='#ffa726';
-                    gradeText.style.color='#67430f';
-                } else if (grade.includes("D-")) {
-                    gradeBackground.style.backgroundColor='#e65100';
-                    gradeText.style.color='#592001';
-                } else if (grade.includes("D")) {
-                    gradeBackground.style.backgroundColor='#f57c00';
-                    gradeText.style.color='#623200';
-                } else if (grade.includes("F")) {
-                    gradeBackground.style.backgroundColor='#f44336';
-                    gradeText.style.color='#7e231d';
-                }
-=======
 
                 var colors =  {
                     "A+": {
@@ -412,7 +369,6 @@ Features:
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
                 gradeText.style.color = colors[grade].text;
->>>>>>> c4a95cc7447ad2572599be4e2ad29d06ec40cf5d
             }
 
                 //Make the ICS Server Error page more friendly :)
