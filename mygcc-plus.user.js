@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.16
+// @version      1.17
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -170,9 +170,9 @@ Features:
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
         var headerSize = addMultiOption("mygcc-plus--header-height", "Header Height", [ 
             { key: "tall", text: "Tall" },
-            { key: "short", text: "Default" },
-            { key: "shortest", text: "Shortest"}
-         ], "short");
+            { key: "normal", text: "Normal" },
+            { key: "shortest", text: "Short"}
+         ], "shortest");
         var addShadows = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
         var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
 
@@ -182,7 +182,20 @@ Features:
 
             $("<style>").text(`
 
+            .top-nav-bar .nav-container .main-nav-submenu-container .user-login .forgot-password-link {
+                margin: 0px -40px 0px 0px;
+            }
+
                @media screen and (min-width: 1026px) {
+
+                    .top-nav-bar .nav-container .main-nav-submenu-container .user-login {
+                        top: 20px;
+                        left: 250px;
+                    }
+
+                    #siteNavBar_lnkForgot {
+                        padding: 7px 16px !important;
+                    }
 
                     #top-nav-bar {
                         top: 0px !important;
@@ -260,7 +273,9 @@ Features:
 
             `).appendTo(document.body);
             //document.getElementById('siteNavBar_loginToggle').getElementsByTagName('span')[0].style.background="";
-            $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
+            if ($(window).width() > 1025) {
+                $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
+            }
 
             // Trigger a resize even to correct the "More" dropdown in the header.
             jenzabar.framework.topNavAndSidebarSlideMenu.trigger.resize();
@@ -439,7 +454,7 @@ Features:
         }
 
         // Handle custom css differences via custom overrides
-        if (headerSize === "short") {
+        if (headerSize === "normal") {
 			$("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
