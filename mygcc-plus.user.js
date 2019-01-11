@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.17
+// @version      1.18
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -254,7 +254,7 @@ Features:
                 top: 88px !important;
             }
 
-            #main-nav a {
+            #main-nav a, .more-toggle-link button {
                 border-right: none !important;
                 padding: 24px 25px 23px 25px !important;
             }
@@ -670,6 +670,10 @@ div.detailHeader {
 .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
     left: unset;
     right: 0px;
+}
+
+.more-toggle-link button {
+    font-size: 14px;
 }
 
 @media screen and (min-width: 1026px) {
