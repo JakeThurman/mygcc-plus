@@ -673,7 +673,7 @@ div.detailHeader {
 }
 
 .more-toggle-link button {
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 @media screen and (min-width: 1026px) {
