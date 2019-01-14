@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.18
+// @version      1.19
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -27,7 +27,8 @@ Features:
   3. Keeps you logged in (usually)
   4. Looks better (OPTIONAL)
   5. Courses links go to Coursework page (OPTIONAL)
-  6. Stupid random bugs of MyGCC are fixed (sorry, doesn't include ICS error)
+  6. CTRL+, to jump to courses
+  7. The "Low Hanging Fruit" bugs of MyGCC are fixed
     a. examples: page jumps down to the bottom when you laod the page
                  portlets on sign-up page are no longer cut off
 
@@ -36,27 +37,44 @@ Features:
 (function() {
     'use strict';
 
-    function onError(e) {
-        console.error(e);
-    }
+    var util = (function () {
+        function getMostCommonEl(arr){
+            return arr.sort((a,b) =>
+                arr.filter(v => v===a).length
+                - arr.filter(v => v===b).length
+            ).pop();
+        }
 
-    function getNow() {
-        return (new Date()).toISOString();
-    }
+        // Source taken from _.once
+        function memoize(func) {
+            var ran = false, memo;
+            return function() {
+                if (ran) return memo;
+                ran = true;
+                memo = func.apply(this, arguments);
+                func = null;
+                return memo;
+            };
+        }
 
-    // Source taken from _.once
-    function memoize(func) {
-        var ran = false, memo;
-        return function() {
-            if (ran) return memo;
-            ran = true;
-            memo = func.apply(this, arguments);
-            func = null;
-            return memo;
+        function urlCombine(a, b) {
+            a = a.endsWith("/") ? a.slice(0, -1) : a;
+            return a + b;
+        }
+
+        function onError(e) {
+            console.error(e);
+        }
+
+        return {
+            getMostCommonEl,
+            memoize,
+            urlCombine,
+            onError,
         };
-    };
+    })();
 
-    var getOptionContainer = memoize(function () {
+    var getOptionContainer = util.memoize(function () {
         return $("<div>")
             .appendTo($("#GRCbottombar"))
             .css({ "padding-left": "20%" });
@@ -91,7 +109,7 @@ Features:
                 }
             }
             catch(e) {
-                onError(e);
+                util.onError(e);
             }
         }
 
@@ -106,7 +124,7 @@ Features:
                 });
             }
             catch(e) {
-                onError(e);
+                util.onError(e);
             }
         }, interval);
 
@@ -168,7 +186,7 @@ Features:
 
         // Add option in footer for styling
         var doStyling = addOption(local_storage_restyle_key, "Restyle Site", true);
-        var headerSize = addMultiOption("mygcc-plus--header-height", "Header Height", [ 
+        var headerSize = addMultiOption("mygcc-plus--header-height", "Header Height", [
             { key: "tall", text: "Tall" },
             { key: "normal", text: "Normal" },
             { key: "shortest", text: "Short"}
@@ -412,7 +430,7 @@ Features:
                 document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].style.height='20px';
                 num++;
             }
-            
+
             if (window.location.href.indexOf("StudentAssignmentDetailView") > -1) {
                 //replace 'add comment' icon
                 document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
@@ -444,7 +462,7 @@ Features:
                     a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
                         color: #733a3a !important;
                     }
-                    
+
                     a.turnInAssignment {
                         background-color: #FFCDD2 !important;
                     }
@@ -1147,11 +1165,12 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
             try {
                 var t_style0 = performance.now();
 
-                // Stop mygcc from scrolling halfway down the page when it loads. Why would you ever want that anyway????
+                // Stop mygcc from scrolling halfway down the page when it loads.
                 window.onload = function () {
                     window.scrollTo(0, 0);
                 }
 
+                // TODO: I think this is unused/broken
                 if (!justLoggedIn && justLoggedIn2) {
                     // Clear secondary flag if we obviously aren't looping
                     sessionStorage.setItem(ss_just_logged_in_2, JSON.stringify(false));
@@ -1194,7 +1213,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     $("#myCourses a")
                     .each(function (i, el) {
                         var $el = $(el);
-                        $el.attr("href", urlCombine($el.attr("href"), "/Coursework.jnz"));
+                        $el.attr("href", util.urlCombine($el.attr("href"), "/Coursework.jnz"));
                     });
                 }
 
@@ -1227,10 +1246,120 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     $(".gradeItemGrid th:not(:first-child), .groupedGrid th:not(:first-child)").css({ "border-left": "1px solid #bbbec3" });
 
                     // Leave the "ad" on the home page ONLY
-		    //  also check setting flag!
+                    //  also check setting flag!
                     if (hideAds && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life")
                         $("#TargetedMessage").remove();
                 }
+
+                // Enable CTRL+, search
+                (function () {
+                    var subpages = {
+                        "g": "Gradebook.jnz",
+                        "grade": "Gradebook.jnz",
+                        "grades": "Gradebook.jnz",
+                        "coursework": "Coursework.jnz",
+                        "cw": "Coursework.jnz",
+                        "c": "Coursework.jnz",
+                        "w": "Coursework.jnz",
+                        "hw": "Coursework.jnz",
+                        "h": "Coursework.jnz",
+                        "homework": "Coursework.jnz",
+                        "work": "Coursework.jnz",
+                        "m": "Main_Page.jnz",
+                        "main": "Main_Page.jnz",
+                        "mainpage": "Main_Page.jnz",
+                        "home": "Main_Page.jnz",
+                        "i": "Course_Information.jnz",
+                        "info": "Course_Information.jnz"
+                    };
+
+                    var getOptions = util.memoize(function () {
+                        var options = [];
+
+                        // Grab all of the options up the first time they're needed (memoized!)
+                        $("#myCourses a").each(function (i, el) {
+                            var $el = $(el);
+                            var url = $el.attr("href");
+
+                            // Make sure this isn't the corsework page
+                            var courseworkIndex = url.indexOf("Coursework.jnz");
+                            if (courseworkIndex != -1) {
+                                url = url.substring(0, courseworkIndex);
+                            }
+
+                            options.push({
+                                text: $el.text().toLowerCase(),
+                                url: url
+                            });
+                        });
+
+                        return options;
+                    });
+
+                    $(document).keydown(function(e){
+                        if(e.key === "," && e.ctrlKey) {
+                        var container = $("<div>").appendTo(document.body);
+
+                        $("<div>CTRL+, search: Enter a class name or partial name and a page<br/>For Example:<ul><li>civ lit grade</li><li>calc home</li><li>bio hw</li></ul></div>")
+                            .appendTo(container)
+                            .css({
+                                "z-index": 1000,
+                                "position": "fixed",
+                                "top": "calc(50vh + 20px)",
+                                "left": "calc(50vw - 140px)",
+                                "width": "280px",
+                                "padding": "7px",
+                                "font-size": "14px",
+                                "background-color": "#edf4ff",
+                                "color": "#003375",
+                                "border-radius": "0 0 5px 5px",
+                            })
+
+                        var textbox = $("<input>", { "placeholder": "civ lit grade..." })
+                            .appendTo(container)
+                            .css({
+                                "z-index": 1000,
+                                "position": "fixed",
+                                "top": "calc(50vh - 20px)",
+                                "left": "calc(50vw - 140px)",
+                                "width": "280px",
+                                "height": "40px",
+                                "padding": "7px",
+                                "font-size": "16px",
+                                "background-color": "white",
+                                "border": "1px solid #ddd",
+                                "border-radius": "5px 5px 0 0",
+                            })
+                            .blur(function () { container.remove() })
+                            .focus()
+                            .keydown(function (e2) {
+                                if (e2.which == 13) {//Enter
+                                var parts = textbox.val().trim().toLowerCase().split(" ");
+                                var myMatches = [];
+                                var pageMatch = null;
+                                var options = getOptions();
+
+                                parts.forEach(function (myText) {
+                                    myMatches = myMatches.concat(options.filter(function(o) {
+                                        return o.text.indexOf(myText) != -1;
+                                    }))
+
+                                    pageMatch = pageMatch || subpages[myText];
+                                });
+
+                                if (myMatches.length) {
+                                    location.href = util.getMostCommonEl(myMatches).url + (pageMatch || subpages["c"]);
+                                }
+                                else {
+                                    alert("No class found.");
+                                }
+                                } else if (e2.which == 27) { //esc
+                                    container.remove();
+                                }
+                            });
+                        }
+                    });
+                })();
 
                 var t_style1 = performance.now();
                 var t_sum = ((t_jq1 - t_jq0) + (t_style1 - t_style0));
@@ -1238,7 +1367,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                 console[t_sum > 100 ? "error" : "log"]("Jake's custom script took " + t_sum + " milliseconds.");
             }
             catch (e) {
-                onError(e);
+                util.onError(e);
             }
         });
 
@@ -1286,23 +1415,8 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
 
             return currentVal;
         }
-
-        function urlCombine(a, b) {
-            a = a.endsWith("/") ? a.slice(0, -1) : a;
-            return a + b;
-        }
-
-        //POLYFILL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-        if (!String.prototype.endsWith) {
-            String.prototype.endsWith = function(search, this_len) {
-                if (this_len === undefined || this_len > this.length) {
-                    this_len = this.length;
-                }
-                return this.substring(this_len - search.length, this_len) === search;
-            };
-        }
     }
     catch (e) {
-        onError(e);
+        util.onError(e);
     }
 })();
