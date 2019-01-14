@@ -1288,7 +1288,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                             }
 
                             options.push({
-                                text: $el.text().toLowerCase(),
+                                text: $el.parent().text().toLowerCase(),
                                 url: url
                             });
                         });
@@ -1300,7 +1300,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         if(e.key === "," && e.ctrlKey) {
                         var container = $("<div>").appendTo(document.body);
 
-                        $("<div>CTRL+, search: Enter a class name or partial name and a page<br/>For Example:<ul><li>civ lit grade</li><li>calc home</li><li>bio hw</li></ul></div>")
+                        $("<div><b>CTRL+Comma quick nav</b><br/>Enter a couse whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
                             .appendTo(container)
                             .css({
                                 "z-index": 1000,
