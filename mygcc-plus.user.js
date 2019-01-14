@@ -1270,7 +1270,10 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         "mainpage": "Main_Page.jnz",
                         "home": "Main_Page.jnz",
                         "i": "Course_Information.jnz",
-                        "info": "Course_Information.jnz"
+                        "info": "Course_Information.jnz",
+			"who": "Collaboration.jnz?portlet=Coursemates",
+			"collab": "Collaboration.jnz",
+			"collaboration": "Collaboration.jnz",
                     };
 
                     var getOptions = util.memoize(function () {
