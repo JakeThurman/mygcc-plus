@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.19
+// @version      1.20
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -1205,7 +1205,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         .text("\"Don't click this until registration starts!\" -Jake")
                         .insertAfter($("#pg0_V_tabAddCourse_divSearch input[type=submit]"));
 
-                //Make Course links link to "Cousework" page
+                //Make Course links link to "Coursework" page
                 var doLinkToCoursework = addOption(local_storage_goto_coursework_key, "Make Class Links go to Coursework Page", true);
 
                 // Handle coursework linking
@@ -1303,7 +1303,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         if(e.key === "," && e.ctrlKey) {
                         var container = $("<div>").appendTo(document.body);
 
-                        $("<div><b>CTRL+Comma quick nav</b><br/>Enter a couse whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
+                        $("<div><b>CTRL+Comma quick nav</b><br/>Enter a whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
                             .appendTo(container)
                             .css({
                                 "z-index": 1000,
