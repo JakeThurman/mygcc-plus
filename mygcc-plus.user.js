@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.20
+// @version      1.21
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -66,11 +66,16 @@ Features:
             console.error(e);
         }
 
+        function getStringAcronym(str) {
+            return str.match(/\b(\w)/g).join("");
+        }
+
         return {
             getMostCommonEl,
             memoize,
             urlCombine,
             onError,
+            getStringAcronym,
         };
     })();
 
@@ -1271,9 +1276,9 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         "home": "Main_Page.jnz",
                         "i": "Course_Information.jnz",
                         "info": "Course_Information.jnz",
-			"who": "Collaboration.jnz?portlet=Coursemates",
-			"collab": "Collaboration.jnz",
-			"collaboration": "Collaboration.jnz",
+                        "who": "Collaboration.jnz?portlet=Coursemates",
+                        "collab": "Collaboration.jnz",
+                        "collaboration": "Collaboration.jnz",
                     };
 
                     var getOptions = util.memoize(function () {
@@ -1290,9 +1295,11 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                                 url = url.substring(0, courseworkIndex);
                             }
 
+                            var text = $el.text().toLowerCase();
                             options.push({
-                                text: $el.parent().text().toLowerCase(),
-                                url: url
+                                text,
+                                url,
+                                acronym: util.getStringAcronym(text),
                             });
                         });
 
@@ -1303,6 +1310,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         if(e.key === "," && e.ctrlKey) {
                         var container = $("<div>").appendTo(document.body);
 
+                        // Htlp text
                         $("<div><b>CTRL+Comma quick nav</b><br/>Enter a whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
                             .appendTo(container)
                             .css({
@@ -1344,7 +1352,8 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
 
                                 parts.forEach(function (myText) {
                                     myMatches = myMatches.concat(options.filter(function(o) {
-                                        return o.text.indexOf(myText) != -1;
+                                        return o.text.indexOf(myText) != -1
+                                            || o.acronym.indexOf(myText) != -1;
                                     }))
 
                                     pageMatch = pageMatch || subpages[myText];
