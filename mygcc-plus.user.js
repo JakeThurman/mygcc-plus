@@ -1279,6 +1279,9 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         "who": "Collaboration.jnz?portlet=Coursemates",
                         "collab": "Collaboration.jnz",
                         "collaboration": "Collaboration.jnz",
+                        "slides":" Main_Page.jnz?portlet=Handouts",
+                        "handouts":" Main_Page.jnz?portlet=Handouts",
+                        "handout":" Main_Page.jnz?portlet=Handouts",
                     };
 
                     var getOptions = util.memoize(function () {
