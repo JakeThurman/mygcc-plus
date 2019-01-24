@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.21
+// @version      1.22
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -67,7 +67,7 @@ Features:
         }
 
         function getStringAcronym(str) {
-            return str.match(/\b(\w)/g).join("");
+            return (str.match(/\b(\w)/g) || []).join("");
         }
 
         return {
@@ -1299,10 +1299,14 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                             }
 
                             var text = $el.text().toLowerCase();
+
+                            // Get an acronym of the part of the text after the course code
+                            var acronym = util.getStringAcronym(text.split("-")[1] || "");
+
                             options.push({
                                 text,
                                 url,
-                                acronym: util.getStringAcronym(text),
+                                acronym,
                             });
                         });
 
