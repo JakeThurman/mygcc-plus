@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.22
+// @version      1.23
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -1313,70 +1313,13 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                         return options;
                     });
 
-                    $(document).keydown(function(e){
-                        if(e.key === "," && e.ctrlKey) {
-                        var container = $("<div>").appendTo(document.body);
+                    $("<a>", { "href": "#", "class": "glyphicons glyphicons-search" })
+                        .css({ "text-decoration": "none", "color": "#494949", "float": "right" })
+                        .appendTo($("#quick-links .sidebar-link-title"))
+                        .click(showQuickNav);
 
-                        // Htlp text
-                        $("<div><b>CTRL+Comma quick nav</b><br/>Enter a whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
-                            .appendTo(container)
-                            .css({
-                                "z-index": 1000,
-                                "position": "fixed",
-                                "top": "calc(50vh + 20px)",
-                                "left": "calc(50vw - 140px)",
-                                "width": "280px",
-                                "padding": "7px",
-                                "font-size": "14px",
-                                "background-color": "#edf4ff",
-                                "color": "#003375",
-                                "border-radius": "0 0 5px 5px",
-                            })
-
-                        var textbox = $("<input>", { "placeholder": "civ lit grade..." })
-                            .appendTo(container)
-                            .css({
-                                "z-index": 1000,
-                                "position": "fixed",
-                                "top": "calc(50vh - 20px)",
-                                "left": "calc(50vw - 140px)",
-                                "width": "280px",
-                                "height": "40px",
-                                "padding": "7px",
-                                "font-size": "16px",
-                                "background-color": "white",
-                                "border": "1px solid #ddd",
-                                "border-radius": "5px 5px 0 0",
-                            })
-                            .blur(function () { container.remove() })
-                            .focus()
-                            .keydown(function (e2) {
-                                if (e2.which == 13) {//Enter
-                                var parts = textbox.val().trim().toLowerCase().split(" ");
-                                var myMatches = [];
-                                var pageMatch = null;
-                                var options = getOptions();
-
-                                parts.forEach(function (myText) {
-                                    myMatches = myMatches.concat(options.filter(function(o) {
-                                        return o.text.indexOf(myText) != -1
-                                            || o.acronym.indexOf(myText) != -1;
-                                    }))
-
-                                    pageMatch = pageMatch || subpages[myText];
-                                });
-
-                                if (myMatches.length) {
-                                    location.href = util.getMostCommonEl(myMatches).url + (pageMatch || subpages["c"]);
-                                }
-                                else {
-                                    alert("No class found.");
-                                }
-                                } else if (e2.which == 27) { //esc
-                                    container.remove();
-                                }
-                            });
-                        }
+                    $(document).keydown(function(e) {
+                        if (e.key === "," && e.ctrlKey) showQuickNav();
                     });
                 })();
 
@@ -1389,6 +1332,70 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                 util.onError(e);
             }
         });
+
+        function showQuickNav() {
+            var container = $("<div>").appendTo(document.body);
+
+            // Htlp text
+            $("<div><b>CTRL+Comma quick nav</b><br/>Enter a whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
+                .appendTo(container)
+                .css({
+                "z-index": 1000,
+                "position": "fixed",
+                "top": "calc(50vh + 20px)",
+                "left": "calc(50vw - 140px)",
+                "width": "280px",
+                "padding": "7px",
+                "font-size": "14px",
+                "background-color": "#edf4ff",
+                "color": "#003375",
+                "border-radius": "0 0 5px 5px",
+            })
+
+            var textbox = $("<input>", { "placeholder": "civ lit grade..." })
+            .appendTo(container)
+            .css({
+                "z-index": 1000,
+                "position": "fixed",
+                "top": "calc(50vh - 20px)",
+                "left": "calc(50vw - 140px)",
+                "width": "280px",
+                "height": "40px",
+                "padding": "7px",
+                "font-size": "16px",
+                "background-color": "white",
+                "border": "1px solid #ddd",
+                "border-radius": "5px 5px 0 0",
+            })
+            .blur(function () { container.remove() })
+            .focus()
+            .keydown(function (e2) {
+                if (e2.which == 13) {//Enter
+                    var parts = textbox.val().trim().toLowerCase().split(" ");
+                    var myMatches = [];
+                    var pageMatch = null;
+                    var options = getOptions();
+
+                    parts.forEach(function (myText) {
+                        myMatches = myMatches.concat(options.filter(function(o) {
+                            return o.text.indexOf(myText) != -1
+                            || o.acronym.indexOf(myText) != -1;
+                        }))
+
+                        pageMatch = pageMatch || subpages[myText];
+                    });
+
+                    if (myMatches.length) {
+                        location.href = util.getMostCommonEl(myMatches).url + (pageMatch || subpages["c"]);
+                    }
+                    else {
+                        alert("No class found.");
+                    }
+                } else if (e2.which == 27) { //esc
+                    container.remove();
+                }
+            });
+        }
 
         function addOption(key, text, defaultValue) {
             var currentVal = JSON.parse(localStorage.getItem(key) || JSON.stringify(defaultValue));
