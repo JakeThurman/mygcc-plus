@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.23
+// @version      1.24
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -1258,65 +1258,13 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
 
                 // Enable CTRL+, search
                 (function () {
-                    var subpages = {
-                        "g": "Gradebook.jnz",
-                        "grade": "Gradebook.jnz",
-                        "grades": "Gradebook.jnz",
-                        "coursework": "Coursework.jnz",
-                        "cw": "Coursework.jnz",
-                        "c": "Coursework.jnz",
-                        "w": "Coursework.jnz",
-                        "hw": "Coursework.jnz",
-                        "h": "Coursework.jnz",
-                        "homework": "Coursework.jnz",
-                        "work": "Coursework.jnz",
-                        "m": "Main_Page.jnz",
-                        "main": "Main_Page.jnz",
-                        "mainpage": "Main_Page.jnz",
-                        "home": "Main_Page.jnz",
-                        "i": "Course_Information.jnz",
-                        "info": "Course_Information.jnz",
-                        "who": "Collaboration.jnz?portlet=Coursemates",
-                        "collab": "Collaboration.jnz",
-                        "collaboration": "Collaboration.jnz",
-                        "slides":" Main_Page.jnz?portlet=Handouts",
-                        "handouts":" Main_Page.jnz?portlet=Handouts",
-                        "handout":" Main_Page.jnz?portlet=Handouts",
-                    };
-
-                    var getOptions = util.memoize(function () {
-                        var options = [];
-
-                        // Grab all of the options up the first time they're needed (memoized!)
-                        $("#myCourses a").each(function (i, el) {
-                            var $el = $(el);
-                            var url = $el.attr("href");
-
-                            // Make sure this isn't the corsework page
-                            var courseworkIndex = url.indexOf("Coursework.jnz");
-                            if (courseworkIndex != -1) {
-                                url = url.substring(0, courseworkIndex);
-                            }
-
-                            var text = $el.text().toLowerCase();
-
-                            // Get an acronym of the part of the text after the course code
-                            var acronym = util.getStringAcronym(text.split("-")[1] || "");
-
-                            options.push({
-                                text,
-                                url,
-                                acronym,
-                            });
-                        });
-
-                        return options;
-                    });
-
                     $("<a>", { "href": "#", "class": "glyphicons glyphicons-search" })
                         .css({ "text-decoration": "none", "color": "#494949", "float": "right" })
                         .appendTo($("#quick-links .sidebar-link-title"))
-                        .click(showQuickNav);
+                        .click(function (e) {
+                            e.preventDefault();
+                            showQuickNav();
+                        });
 
                     $(document).keydown(function(e) {
                         if (e.key === "," && e.ctrlKey) showQuickNav();
@@ -1333,7 +1281,61 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
             }
         });
 
+        var getQuickNavOptions = util.memoize(function () {
+            var options = [];
+
+            // Grab all of the options up the first time they're needed (memoized!)
+            $("#myCourses a").each(function (i, el) {
+                var $el = $(el);
+                var url = $el.attr("href");
+
+                // Make sure this isn't the corsework page
+                var courseworkIndex = url.indexOf("Coursework.jnz");
+                if (courseworkIndex != -1)
+                    url = url.substring(0, courseworkIndex);
+
+                var text = $el.text().toLowerCase();
+
+                // Get an acronym of the part of the text after the course code
+                var acronym = util.getStringAcronym(text.split("-")[1] || "");
+
+                options.push({
+                    text,
+                    url,
+                    acronym,
+                });
+            });
+
+            return options;
+        });
+
         function showQuickNav() {
+            var subpages = {
+                "g": "Gradebook.jnz",
+                "grade": "Gradebook.jnz",
+                "grades": "Gradebook.jnz",
+                "coursework": "Coursework.jnz",
+                "cw": "Coursework.jnz",
+                "c": "Coursework.jnz",
+                "w": "Coursework.jnz",
+                "hw": "Coursework.jnz",
+                "h": "Coursework.jnz",
+                "homework": "Coursework.jnz",
+                "work": "Coursework.jnz",
+                "m": "Main_Page.jnz",
+                "main": "Main_Page.jnz",
+                "mainpage": "Main_Page.jnz",
+                "home": "Main_Page.jnz",
+                "i": "Course_Information.jnz",
+                "info": "Course_Information.jnz",
+                "who": "Collaboration.jnz?portlet=Coursemates",
+                "collab": "Collaboration.jnz",
+                "collaboration": "Collaboration.jnz",
+                "slides":" Main_Page.jnz?portlet=Handouts",
+                "handouts":" Main_Page.jnz?portlet=Handouts",
+                "handout":" Main_Page.jnz?portlet=Handouts",
+            };
+
             var container = $("<div>").appendTo(document.body);
 
             // Htlp text
@@ -1374,7 +1376,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     var parts = textbox.val().trim().toLowerCase().split(" ");
                     var myMatches = [];
                     var pageMatch = null;
-                    var options = getOptions();
+                    var options = getQuickNavOptions();
 
                     parts.forEach(function (myText) {
                         myMatches = myMatches.concat(options.filter(function(o) {
