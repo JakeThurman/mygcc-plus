@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.24
+// @version      1.25
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -196,8 +196,11 @@ Features:
             { key: "normal", text: "Normal" },
             { key: "shortest", text: "Short"}
          ], "shortest");
-        var addShadows = addOption("mygcc-plus--ian-flag", "Add Shadows", false);
         var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
+        var shadowsOrBorders = addMultiOption("mygcc-plus-shadow-border", "Choose shadows or borders for UI", [
+            {key: "shadows", text: "Shadows"},
+            {key: "borders", text: "Borders"}
+        ], "shadows");
 
         if (headerSize === "shortest") {
             $("<div>", { "id": "space" }).insertAfter($("#masthead"));
@@ -253,11 +256,15 @@ Features:
                     }
 
                     #search-section {
-                        margin-right: 45px !important;
+                        margin-right: -95px;
                     }
 
                     #space {
                         height: 20px;
+                    }
+
+                    .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
+                        right: 0px;
                     }
                }
 
@@ -269,12 +276,9 @@ Features:
                 margin-top: 30px;
             }
 
-            .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .search-section {
-                top: 88px;
-            }
-
             .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
                 top: 88px !important;
+                right: -105px !important;
             }
 
             #main-nav a, .more-toggle-link button {
@@ -294,6 +298,10 @@ Features:
                     background-color: transparent !important;
                }
 
+               .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .search-section {
+                   top: 88px;
+               }
+
             `).appendTo(document.body);
             //document.getElementById('siteNavBar_loginToggle').getElementsByTagName('span')[0].style.background="";
             if ($(window).width() > 1025) {
@@ -305,8 +313,7 @@ Features:
         }
 
         if (doStyling) {
-            $(".arrow").css({ "left": '89%' });
-            $(".arrow").css({ "left": '75%' });
+            $(".arrow").css({ "left": '79%' });
 
             //Insert feedback option at bottom of page
             $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
@@ -497,18 +504,22 @@ body #masthead {
     #siteNavBar_loginToggle .user-image {
         top: 0;
     }
+
+    #search-section {
+		margin-right: 30px;
+    }
+    .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .search-section {
+        top: -10px;
+    }
+
+    .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
+        top: -4px !important;
+        right: 0px;
+    }
 }
 
 #siteNavBar_SearchButton {
     top: -97px !important;
-}
-			`).appendTo(document.body);
-        }
-
-        if (addShadows) {
-			$("<style>").text(`
-.portlet {
-    box-shadow: 0px 0px 6px 0px #bbb;
 }
 			`).appendTo(document.body);
         }
@@ -605,9 +616,9 @@ a.btn-primary:hover {
 }
 
 div.detailHeader {
-    padding: 15px 45px 0px 0px;
+    padding: 15px 15px 15px 0px;
     background-color: transparent;
-    border-bottom: transparent:
+    border-bottom: transparent;
 }
 
 
@@ -692,7 +703,6 @@ div.detailHeader {
 
 .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .user-login.popover {
     left: unset;
-    right: 0px;
 }
 
 .more-toggle-link button {
@@ -704,10 +714,6 @@ div.detailHeader {
         top: -185px;
         right: 10px;
     }
-
-	#search-section {
-		margin-right: 65px;
-	}
 
     #siteNavBar_SearchButton {
         top: -170px;
@@ -783,8 +789,6 @@ div.detailHeader {
     #sideBar {
     width: 270px;
     padding-top: 60px;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
     padding-right: 0;
     margin-bottom: -1px;
     padding-bottom: 20px;
@@ -857,8 +861,7 @@ li.quick-links-with-sub-nav #myPages,
 * -------------------------
 */
 .portlet {
-    border: 1px solid #ddd !important;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 .proper-iframe-borders {
@@ -873,7 +876,8 @@ li.quick-links-with-sub-nav #myPages,
 
 .portlet-grid .portlet-header-bar {
     padding: 13px 20px 10px 20px;
-    background-color: #ececec;
+    background-color: #efefef;
+    text-align: center;
 }
 
 .portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
@@ -1254,6 +1258,36 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     //  also check setting flag!
                     if (hideAds && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life/" && location.href.toLowerCase() !== "https://my.gcc.edu/ics/campus_life")
                         $("#TargetedMessage").remove();
+                }
+
+                if (shadowsOrBorders === "borders") {
+
+                    $("<style>").text(`
+                        @media screen and (min-width: 1026px) {
+                            #sideBar {
+                                border-right: 1px solid #ccc;
+                                border-bottom: 1px solid #ccc;
+                            }
+                        .portlet {
+                            border: 1px solid #ddd !important;
+                        }
+                    `).appendTo(document.body);
+
+                } else if (shadowsOrBorders === "shadows") {
+
+                    $("<style>").text(`
+                        @media screen and (min-width: 1026px) {
+                            #sideBar {
+                                box-shadow: 0px 5px 20px 0px #ddd;
+                            }
+                        .portlet {
+                            box-shadow: 0px 5px 10px 0px #ddd;
+                        }
+                        .portlet-grid .portlet-header-bar {
+                            border-bottom: 0px;
+                        }
+                    `).appendTo(document.body);
+
                 }
 
                 // Enable CTRL+, search
