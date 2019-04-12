@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.25
+// @version      1.26
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -33,6 +33,7 @@ Features:
                  portlets on sign-up page are no longer cut off
 
 */
+
 
 (function() {
     'use strict';
@@ -167,6 +168,7 @@ Features:
             $(".portlet-column").addClass("portlet-max-width");
         }
 
+        
         //Fix portlets going beyond their alotted space when your screen is too tiny
         $("iframe").addClass("proper-iframe-borders");
 
@@ -564,6 +566,10 @@ body #masthead {
 
 #mainCrumbs { /* Hide the breadcrums.... TODO: reconsider */
     display: none;
+}
+
+#pg0_V_divEmailAdvisor {
+    position: inherit !important;
 }
 
 
@@ -1172,6 +1178,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
 
         $(function () {
             try {
+
                 var t_style0 = performance.now();
 
                 // Stop mygcc from scrolling halfway down the page when it loads.
