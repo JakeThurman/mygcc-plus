@@ -31,3 +31,8 @@ Credit where credit is due...
 Shout out to @davidcorbin for his [mygcc-plus chrome plugin](https://github.com/davidcorbin/mygcc-plus) as a source for some of the original login code.
 
 
+## Before
+
+![Screenshot of my.gcc.edu without the plugin running](./references/before.png)
+
+
