@@ -627,7 +627,6 @@ div.detailHeader {
     border-bottom: transparent;
 }
 
-
 /* -------------------------
 *            NAV
 * -------------------------
@@ -860,6 +859,10 @@ li.quick-links-with-sub-nav #myPages,
 
 #myCourses {
     padding: 10px 0;
+}
+
+.slide-menu-right .navbar li #myCourses a {
+    text-indent: -80px
 }
 
 /* -------------------------
