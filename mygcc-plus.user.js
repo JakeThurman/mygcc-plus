@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.26
+// @version      1.27
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -1303,7 +1303,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     $("<style>").text(`
                         @media screen and (min-width: 1026px) {
                             #sideBar {
-                                box-shadow: 15px 15px 20px -10px #ddd;
+                                box-shadow: 15px 15px 15px -10px #ddd;
                                 
                             }
                         .portlet {
