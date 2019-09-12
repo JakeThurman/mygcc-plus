@@ -425,6 +425,9 @@ Features:
                 $('body').remove();
             }
 
+            //Since we hide page-title at the top, we need to extract the error message if it exists so the user can still see that
+            $('.alert-container').insertBefore("#PageBar_pageTitle")
+
             if (document.querySelector('.uploadFilePanelHeader') !== null) {
                 //shift the "upload a file" text in the popup window for uploading an assignment
                 document.getElementsByClassName('uploadFilePanelHeader')[0].getElementsByTagName('div')[1].style.padding='2px';
@@ -433,8 +436,11 @@ Features:
             }
 
             if (window.location.href.indexOf("Gradebook") > -1) {
-                document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
-                document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
+                var ele = document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback');
+                if (ele) {
+                    ele.src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
+                    ele.style.height='20px';
+                }
             }
 
             //replace feedback icon for all homeworks (if they exist)
@@ -1157,14 +1163,23 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
  * -------------------------
  */
 
-.gradebookPortlet .studentDetailScreen .finalGradePanel {
+.gradebookPortlet .studentDetailScreen .finalGradePanel,
+.gradebookPortlet .studentDetailScreen .gradeGroupItemList {
     border: 0px;
     border-radius: 13px;
     color: #444;
 }
 
+.student-detail-layout-container {
+    margin-left: -170px;
+}
+
+.gradeColumn, .gradeNameColumn {
+    padding: 15px !important;
+}
+
 .gradebookPortlet .gradeList .uploadAssignment {
-    background: transparent url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true) no-repeat 0 0
+    background: transparent url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true) no-repeat 0 0;
     background-size: 18px;
 }
 
@@ -1288,7 +1303,8 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     $("<style>").text(`
                         @media screen and (min-width: 1026px) {
                             #sideBar {
-                                box-shadow: 0px 5px 20px 0px #ddd;
+                                box-shadow: 15px 15px 20px -10px #ddd;
+                                
                             }
                         .portlet {
                             box-shadow: 0px 5px 10px 0px #ddd;
