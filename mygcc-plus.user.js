@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.28
+// @version      1.29
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -337,22 +337,15 @@ Features:
 
             //Change gradebook background
             if (document.querySelector('#pg0_V_FinalGradeText') !== null) {
-                gradeColor('pg0_V_FinalGradeText', 'finalGradePanel');
+                gradeColor('gradeLetter', 'finalGradePanel');
             }
 
             /**
              * Dynamically change color of elements depending on the grade given
              */
             function gradeColor (gradeValue, gradeBackground) {
-                var grade = document.getElementById(gradeValue).innerHTML;
-                var gradeText = document.getElementById(gradeValue);
-
-                var gradeBackground;
-                if (document.getElementById(gradeBackground) !== null) {
-                    gradeBackground = document.getElementById(gradeBackground);
-                } else {
-                    gradeBackground = document.getElementsByClassName(gradeBackground)[0];
-                }
+                var grade = document.getElementById(gradeValue) ? document.getElementById(gradeValue).innerHTML : document.getElementsByClassName(gradeValue)[0].innerHTML;
+                var gradeBackground = document.getElementById(gradeBackground) ? document.getElementById(gradeBackground) : gradeBackground = document.getElementsByClassName(gradeBackground)[0];
 
                 var colors =  {
                     "A+": {
@@ -412,12 +405,11 @@ Features:
                         text: "#003375"
                     }
                 };
-
-                grade = grade.match(/(^[A-F]{1}[+\-]?$)/);
+                grade = grade.match(/([A-F][+\-]?(?![\w]+))/);
                 grade = grade ? grade[0] : "default";
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
-                gradeText.style.color = colors[grade].text;
+                gradeBackground.style.color = colors[grade].text;
             }
 
                 //Make the ICS Server Error page more friendly :)
