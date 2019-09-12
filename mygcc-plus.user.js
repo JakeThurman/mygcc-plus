@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.27
+// @version      1.28
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -413,7 +413,7 @@ Features:
                     }
                 };
 
-                grade = grade.match(/([A-F]{1}[+\-]?)/);
+                grade = grade.match(/(^[A-F]{1}[+\-]?$)/);
                 grade = grade ? grade[0] : "default";
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
