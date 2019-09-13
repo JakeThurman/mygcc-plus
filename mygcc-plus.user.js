@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.29
+// @version      1.30
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman
@@ -344,7 +344,12 @@ Features:
              * Dynamically change color of elements depending on the grade given
              */
             function gradeColor (gradeValue, gradeBackground) {
-                var grade = document.getElementById(gradeValue) ? document.getElementById(gradeValue).innerHTML : document.getElementsByClassName(gradeValue)[0].innerHTML;
+                var grade = "default";
+                if (document.getElementById(gradeValue) !== null) {
+                    grade = document.getElementById(gradeValue).innerHTML;
+                } else if (document.getElementsByClassName(gradeValue).length > 0) {
+                    grade = document.getElementsByClassName(gradeValue)[0].innerHTML;
+                }
                 var gradeBackground = document.getElementById(gradeBackground) ? document.getElementById(gradeBackground) : gradeBackground = document.getElementsByClassName(gradeBackground)[0];
 
                 var colors =  {
