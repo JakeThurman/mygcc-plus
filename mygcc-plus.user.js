@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.30
+// @version      1.31
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
-// @author       Jake Thurman
+// @author       Jake Thurman and Ian Spryn
 // @match        https://my.gcc.edu/ICS**
 // @match        https://my.gcc.edu/ics**
 // ==/UserScript==
@@ -305,7 +305,6 @@ Features:
                }
 
             `).appendTo(document.body);
-            //document.getElementById('siteNavBar_loginToggle').getElementsByTagName('span')[0].style.background="";
             if ($(window).width() > 1025) {
                 $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
             }
@@ -317,8 +316,11 @@ Features:
         if (doStyling) {
             $(".arrow").css({ "left": '79%' });
 
-            //Insert feedback option at bottom of page
-            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
+            //Insert feedback option at bottom left of page
+            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank" style="float: left">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
+
+            //Insert changes log at bottom right of page
+            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://github.com/JakeThurman/mygcc-plus/commits/master" target="_blank" style="float: right">Click here to view MyGCC-Plus changelog!</a>')
 
             //Remove redundant repetition of text in Academics --> All My Courses (portlet)
             $(".amc-header").remove();
@@ -422,7 +424,7 @@ Features:
                 $('body').remove();
             }
 
-            //Since we hide page-title at the top, we need to extract the error message if it exists so the user can still see that
+            //Since we hide page-title at the top of each page, we need to extract the error message if it exists so the user can still see that
             $('.alert-container').insertBefore("#PageBar_pageTitle")
 
             if (document.querySelector('.uploadFilePanelHeader') !== null) {
@@ -437,6 +439,61 @@ Features:
                 if (ele) {
                     ele.src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
                     ele.style.height='20px';
+                }
+            }
+
+            //remove "rectanuglar button at the bottom of all cards"
+            var cards = document.getElementsByClassName("card");
+            if (cards.length > 0) {
+                for (let card of cards) {
+                    //reposition the title a little bit
+                    card.getElementsByClassName('col-xs-10')[0].style.width = "100%";
+                    card.getElementsByClassName('col-xs-10')[0].style.paddingLeft = "15px";
+                    card.getElementsByClassName('col-xs-10')[0].style.paddingRight = "15px";
+
+                    //push down the title a little bit
+                    card.getElementsByClassName('col-xs-12')[0].style.paddingTop = "10px"
+
+                    var aTags = card.getElementsByTagName("a");
+                    var URL = aTags[0].getAttribute("href"); //retrieve URL
+                    aTags[0].removeAttribute("href"); //make it not clickable  because the entire box will be clickable
+                    aTags[0].style.textDecoration = "none"; //don't underline the text when mousing over
+                    var linkTemp = aTags[1].innerText.toLowerCase();
+
+                    if (card.getElementsByClassName("sub-info").length > 0) {
+                        var subInfo = card.getElementsByClassName("sub-info")[0];
+                        var newSubInfo = document.createElement("span");
+                        newSubInfo.classList = "sub-info";
+                        newSubInfo.style.paddingBottom = "5px";
+                        selectIcon(newSubInfo, linkTemp, "left center");
+                        newSubInfo.innerHTML = subInfo.innerHTML;
+                        subInfo.parentElement.appendChild(newSubInfo)
+                        subInfo.parentNode.removeChild(subInfo);
+                    } else {
+                        var icon = document.createElement("div");
+                        icon.style.minHeight = "20px";
+                        selectIcon(icon, linkTemp, "center")
+                        card.getElementsByClassName('col-sm-12')[0].appendChild(icon);
+                    }
+
+                    //remove the bottom button because we don't need it TODO: what about professors where there might be an 'edit' button? What then?
+                    aTags[1].remove();
+
+                    //insert an a-tag so that the entire button is clickable
+                    var a = document.createElement("a");
+                    a.href = URL;
+                    card.parentNode.insertBefore(a, card, "center");
+                    a.appendChild(card); //make the card a child so that it's clickable
+                }
+            }
+
+            function selectIcon(icon, linkText, position) {
+                if (linkText.includes("download")) {
+                    icon.style.background = "transparent url('https://fonts.gstatic.com/s/i/materialiconsoutlined/cloud_download/v1/24px.svg') no-repeat " + position;
+                } else if (linkText.includes("visit")) {
+                    icon.style.background = "transparent url('https://fonts.gstatic.com/s/i/materialiconsoutlined/link/v1/24px.svg') no-repeat " + position;
+                } else {
+                    icon.style.background = "transparent url('https://fonts.gstatic.com/s/i/materialiconsoutlined/info/v1/24px.svg') no-repeat " + position;
                 }
             }
 
@@ -554,6 +611,10 @@ body #masthead {
 
 .popover.bottom {
     margin-top: -20px;
+}
+
+.pShortcut {
+    display: none;
 }
 
 /* -------------------------
@@ -963,6 +1024,40 @@ div.overrideDisplay:hover {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true);
     background-size: 20px;
 }
+
+/* -------------------------
+*     Course Main Page
+* -------------------------
+*/
+
+.card-layout .masonry .card {
+    background-color: #fffbfb;
+    box-shadow: 0px 5px 7px #FFCDD2;
+    border-radius: 30px;
+    text-align: center;
+    height: 120px;
+    max-height: 120px;
+}
+
+.card-layout .masonry .card:hover {
+    background-color: #fef2f2;
+}
+
+.card-layout .masonry .card .title {
+    color: #E57373 !important;
+    padding: 0px 15px 0px 15px;
+    font-size: 20px;
+}
+
+.card.row.class-xs-10 {
+    width: 100%
+}
+
+.card-layout .masonry .card .sub-info {
+    padding: 5px 14px 0px 30px;
+    display: inline;
+}
+
 
 /* -------------------------
 *     HOMEWORK RESULTS
