@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.32
+// @version      1.33
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -96,26 +96,30 @@ Features:
             local_storage_goto_coursework_key = "mygccplus_goto_coursework",
             ss_just_logged_in = "mygccplus_justloggedin",
             ss_last_page = "mygccplus_lastpage",
-            ss_just_logged_in_2 = "mygccplus_justloggedin_noloop";
+            ss_just_logged_in_2 = "mygccplus_justloggedin_noloop",
+            ss_should_auto_log_in = "mygccplus_auto_log_in";
 
         // Fix redirect on login
         var justLoggedIn = JSON.parse(sessionStorage[ss_just_logged_in] || "false");
         var justLoggedIn2 = JSON.parse(sessionStorage[ss_just_logged_in_2] || "false");
+        var autoLogIn = JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false");
         var lastPage = sessionStorage[ss_last_page];
 
-        if (justLoggedIn && !justLoggedIn2 && (!document.refferer || document.referrer.indexOf("my.gcc.edu") >= 0)) {
-            // Clear loggin flag so we don't infinity loop
-            sessionStorage.setItem(ss_just_logged_in, JSON.stringify(false));
-            sessionStorage.setItem(ss_just_logged_in_2, JSON.stringify(true));
-
-            try {
-                //Go back if we can!
-                if (lastPage) {
-                    history.back();
+        if (autoLogIn) {
+            if (justLoggedIn && !justLoggedIn2 && (!document.refferer || document.referrer.indexOf("my.gcc.edu") >= 0)) {
+                // Clear loggin flag so we don't infinity loop
+                sessionStorage.setItem(ss_just_logged_in, JSON.stringify(false));
+                sessionStorage.setItem(ss_just_logged_in_2, JSON.stringify(true));
+    
+                try {
+                    //Go back if we can!
+                    if (lastPage) {
+                        history.back();
+                    }
                 }
-            }
-            catch(e) {
-                util.onError(e);
+                catch(e) {
+                    util.onError(e);
+                }
             }
         }
 
@@ -135,31 +139,32 @@ Features:
         }, interval);
 
         lastPage = location.href;
-
-        // If username and password are in local storage
-        if (localStorage.getItem(local_storage_username_key) !== null && localStorage.getItem(local_storage_password_key) !== null) {
-            // If username and password DOM inputs are in DOM
-            if (document.getElementsByName("userName")[0] && document.getElementsByName("password")[0]) {
-                // Set username and password inputs with username and password already in local storage
-                document.getElementsByName("userName")[0].value = localStorage.getItem(local_storage_username_key);
-                document.getElementsByName("password")[0].value = localStorage.getItem(local_storage_password_key);
-
-                sessionStorage.setItem(ss_just_logged_in, JSON.stringify(true));
-
-                // Click the submit button
-                $("#siteNavBar_btnLogin").click();
-            }
-        } else {
-            // Capture click on submit button to get username and password
-            $("#siteNavBar_btnLogin").click(function () {
-                try {
-                    localStorage.setItem(local_storage_username_key, document.getElementsByName("userName")[0].value);
-                    localStorage.setItem(local_storage_password_key, document.getElementsByName("password")[0].value);
-                } catch (e) {
-                    alert(e);
+        if (autoLogIn) {
+            // If username and password are in local storage
+            if (localStorage.getItem(local_storage_username_key) !== null && localStorage.getItem(local_storage_password_key) !== null) {
+                // If username and password DOM inputs are in DOM
+                if (document.getElementsByName("userName")[0] && document.getElementsByName("password")[0]) {
+                    // Set username and password inputs with username and password already in local storage
+                    document.getElementsByName("userName")[0].value = localStorage.getItem(local_storage_username_key);
+                    document.getElementsByName("password")[0].value = localStorage.getItem(local_storage_password_key);
+    
+                    sessionStorage.setItem(ss_just_logged_in, JSON.stringify(true));
+    
+                    // Click the submit button
+                    $("#siteNavBar_btnLogin").click();
                 }
-                return true;
-            });
+            } else {
+                // Capture click on submit button to get username and password
+                $("#siteNavBar_btnLogin").click(function () {
+                    try {
+                        localStorage.setItem(local_storage_username_key, document.getElementsByName("userName")[0].value);
+                        localStorage.setItem(local_storage_password_key, document.getElementsByName("password")[0].value);
+                    } catch (e) {
+                        alert(e);
+                    }
+                    return true;
+                });
+            }
         }
         var t_jq1 = performance.now();
 
@@ -203,6 +208,7 @@ Features:
             {key: "shadows", text: "Shadows"},
             {key: "borders", text: "Borders"}
         ], "shadows");
+        var autoLoginPref = addOption(ss_should_auto_log_in, "Automatically log you in", true, true);
 
         if (headerSize === "shortest") {
             $("<div>", { "id": "space" }).insertAfter($("#masthead"));
@@ -1065,6 +1071,10 @@ div.overrideDisplay:hover {
     display: inline;
 }
 
+.card-layout .card-set-wrapper {
+    border-width: 1px 0 0 0;
+}
+
 
 /* -------------------------
 *     HOMEWORK RESULTS
@@ -1558,14 +1568,25 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
             });
         }
 
-        function addOption(key, text, defaultValue) {
+        function addOption(key, text, defaultValue, logout=false) {
             var currentVal = JSON.parse(localStorage.getItem(key) || JSON.stringify(defaultValue));
             var optionEl = $("<input>", { id: "my_gcc_plus_option__" + key, type: "checkbox" })
                 .css({ "margin": "0 4px 0 0" })
                 .prop("checked", currentVal)
                 .change(function () {
-                    localStorage.setItem(key, JSON.stringify(optionEl.is(":checked")));
-                    location.href = location.href;
+                    if (logout && document.getElementById("logout")) {
+                        if (confirm("This will log you out to apply the change. Press okay to continue.")) {
+                            localStorage.setItem(key, JSON.stringify(optionEl.is(":checked")));
+                            document.getElementById("logout").click(); //logout user
+                        } else {
+                            //revert checkbox if user canceled
+                            document.getElementById("my_gcc_plus_option__" + key).checked = !document.getElementById("my_gcc_plus_option__" + key).checked;
+                        }
+                    }
+                    if (!logout) {
+                        localStorage.setItem(key, JSON.stringify(optionEl.is(":checked")));
+                        location.href = location.href; //refresh page
+                    }
                 });
 
             $("<div>")
