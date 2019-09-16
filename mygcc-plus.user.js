@@ -1060,6 +1060,8 @@ div.overrideDisplay:hover {
     color: #00579B !important;
     padding: 0px 15px 0px 15px;
     font-size: 20px;
+    max-height: 55px;
+    overflow: hidden;
 }
 
 .card.row.class-xs-10 {
