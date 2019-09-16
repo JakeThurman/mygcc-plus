@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.33
+// @version      1.34
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -102,7 +102,8 @@ Features:
         // Fix redirect on login
         var justLoggedIn = JSON.parse(sessionStorage[ss_just_logged_in] || "false");
         var justLoggedIn2 = JSON.parse(sessionStorage[ss_just_logged_in_2] || "false");
-        var autoLogIn = JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false");
+        //default autoLogIn to true if localStorage is null
+        var autoLogIn = JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false") ? JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false") : true;
         var lastPage = sessionStorage[ss_last_page];
 
         if (autoLogIn) {
@@ -208,7 +209,7 @@ Features:
             {key: "shadows", text: "Shadows"},
             {key: "borders", text: "Borders"}
         ], "shadows");
-        var autoLoginPref = addOption(ss_should_auto_log_in, "Automatically log you in", true, true);
+        addOption(ss_should_auto_log_in, "Automatically log you in", true, true);
 
         if (headerSize === "shortest") {
             $("<div>", { "id": "space" }).insertAfter($("#masthead"));
@@ -1585,8 +1586,8 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                             document.getElementById("my_gcc_plus_option__" + key).checked = !document.getElementById("my_gcc_plus_option__" + key).checked;
                         }
                     }
+                    localStorage.setItem(key, JSON.stringify(optionEl.is(":checked")));
                     if (!logout) {
-                        localStorage.setItem(key, JSON.stringify(optionEl.is(":checked")));
                         location.href = location.href; //refresh page
                     }
                 });
