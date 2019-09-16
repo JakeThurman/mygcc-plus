@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.31
+// @version      1.32
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -1031,20 +1031,27 @@ div.overrideDisplay:hover {
 */
 
 .card-layout .masonry .card {
-    background-color: #fffbfb;
-    box-shadow: 0px 5px 7px #FFCDD2;
+    background-color: #fafafa;
+    box-shadow: 0px 5px 7px #e1e1e1;
     border-radius: 30px;
     text-align: center;
     height: 120px;
     max-height: 120px;
+    -webkit-transition: background-color 300ms;
+    -ms-transition: background-color 300ms;
+    transition: background-color 300ms;
+    -webkit-transition: box-shadow 300ms;
+    -ms-transition: box-shadow 300ms;
+    transition: box-shadow 300ms;
 }
 
 .card-layout .masonry .card:hover {
-    background-color: #fef2f2;
+    background-color: #f2fbff;
+    box-shadow: 0px 5px 7px #E1F5FE;
 }
 
 .card-layout .masonry .card .title {
-    color: #E57373 !important;
+    color: #00579B !important;
     padding: 0px 15px 0px 15px;
     font-size: 20px;
 }
@@ -1395,7 +1402,7 @@ div.uploadAssignmentInfo, div.onlineAssignmentInfo {
                     $("<style>").text(`
                         @media screen and (min-width: 1026px) {
                             #sideBar {
-                                box-shadow: 15px 15px 15px -10px #ddd;
+                                box-shadow: 15px 15px 15px -13px #ddd;
                                 
                             }
                         .portlet {
