@@ -488,6 +488,7 @@ Features:
                     //insert an a-tag so that the entire button is clickable
                     var a = document.createElement("a");
                     a.href = URL;
+                    a.target = "_blank" //open in new tab
                     card.parentNode.insertBefore(a, card, "center");
                     a.appendChild(card); //make the card a child so that it's clickable
                 }
