@@ -103,7 +103,7 @@ Features:
         var justLoggedIn = JSON.parse(sessionStorage[ss_just_logged_in] || "false");
         var justLoggedIn2 = JSON.parse(sessionStorage[ss_just_logged_in_2] || "false");
         //default autoLogIn to true if localStorage is null
-        var autoLogIn = JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false") ? JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false") : true;
+        var autoLogIn = JSON.parse(localStorage.getItem(ss_should_auto_log_in)) != null ? JSON.parse(localStorage.getItem(ss_should_auto_log_in) || "false") : true;
         var lastPage = sessionStorage[ss_last_page];
 
         if (autoLogIn) {
