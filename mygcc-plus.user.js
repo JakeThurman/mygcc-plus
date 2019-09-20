@@ -464,36 +464,47 @@ Features:
 
 
                 /*
-                Files
+                Assignment Files
                 */
-                var filesText = document.getElementById('pg0_V__stuAssgnInfo__lblFiles');
+                //add style to text
+                var assignmentFilesText = document.getElementById('pg0_V__stuAssgnInfo__lblFiles');
+                assignmentFilesText.classList.add('my-gcc-plus-section-text')
 
-                var filesContainer = filesText.parentNode;
-                filesContainer.classList.add("my-gcc-plus-files-container")
-                master.appendChild(filesContainer)
+                var assignmentFilesContainer = assignmentFilesText.parentNode;
+                assignmentFilesContainer.classList.add("my-gcc-plus-files-container")
+                master.appendChild(assignmentFilesContainer)
 
-                var files = filesContainer.getElementsByClassName('fileDisplay'); //files to download
-                filesText.classList.add('my-gcc-plus-section-text')
-                filesText.style.marginBottom = "-15px";
+                var assignmentFiles = assignmentFilesContainer.getElementsByClassName('fileDisplay'); //files to download
 
-                switch (files.length) {
+                switch (assignmentFiles.length) {
                     case 0:
-                        filesText.innerText = "There are no files to download";
+                        assignmentFilesText.innerText = "There are no files to download";
                     case 1:
-                        filesText.innerText = "Assignment File for Download:";
+                        assignmentFilesText.innerText = "Assignment File for Download:";
                         break;
                     default:
-                        filesText.innerText = "Assignment Files for Download:";
+                        assignmentFilesText.innerText = "Assignment Files for Download:";
                 }
+
+                /*
+                User Files
+                */
+                var userFilesContainer = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList');
+                var userFiles = userFilesContainer.getElementsByClassName('fileDisplay');
+                
+                var userFilesText = document.createElement('span');
+                userFilesText.id = 'pg0_V_UploadAssignmentDetails__lblYourFiles';
+                userFilesText.innerText = "Your uploaded files"
+
 
 
 
                 var container = document.createElement('div');
                 container.classList = "my-gcc-plus-buttons-container";
-                filesContainer.appendChild(container);
+                assignmentFilesContainer.appendChild(container);
 
-                if (files.length > 0) {
-                    for (let file of files) {
+                if (assignmentFiles.length > 0) {
+                    for (let file of assignmentFiles) {
                         var a = file.getElementsByTagName('a')[0];
                         var newA = createButton('a', a.id, a.innerText, "insert_drive_file", true, null, a.href);
                         container.appendChild(newA);
@@ -908,6 +919,7 @@ body #masthead {
 }
 
 .my-gcc-plus-section-text {
+    margin-bottom: -15px;
     text-align: center;
     font-size: 20px;
     font-family: 'Raleway', sans-serif;
