@@ -35,21 +35,21 @@ Features:
 */
 
 
-(function() {
+(function () {
     'use strict';
 
     var util = (function () {
-        function getMostCommonEl(arr){
-            return arr.sort((a,b) =>
-                arr.filter(v => v===a).length
-                - arr.filter(v => v===b).length
+        function getMostCommonEl(arr) {
+            return arr.sort((a, b) =>
+                arr.filter(v => v === a).length
+                - arr.filter(v => v === b).length
             ).pop();
         }
 
         // Source taken from _.once
         function memoize(func) {
             var ran = false, memo;
-            return function() {
+            return function () {
                 if (ran) return memo;
                 ran = true;
                 memo = func.apply(this, arguments);
@@ -98,7 +98,7 @@ Features:
         element.appendChild(iconElement);
     }
 
-    function convertToButton(element, text, icon, shadow=true) {
+    function convertToButton(element, text, icon, shadow = true) {
         element.classList.add('my-gcc-plus-button');
         if (shadow) element.classList.add('my-gcc-plus-button-shadow')
         element.innerHTML = null
@@ -106,20 +106,23 @@ Features:
         return element;
     }
 
-    function createButton(type, id, text, icon, shadow=true, onclick=null, href=null) {
+    function createButton(type, id, text, icon, shadow = true, onclick = null, href = null) {
         var element = document.createElement(type)
         element.id = id;
         element.classList = "my-gcc-plus-button";
 
         addTextAndIcon(element, text, icon)
 
+        if (type == 'button') {
+            element.setAttribute("type", "button");
+        } else if (type == 'a') {
+            element.target = "_blank" //open in new tab
+        }
+        if (shadow) element.classList.add('my-gcc-plus-button-shadow')
         if (onclick != null) element.setAttribute('onclick', onclick);
         if (href != null) {
             element.href = href;
-        } else {
-            element.setAttribute("type","button");
         }
-        if (shadow) element.classList.add('my-gcc-plus-button-shadow')
         return element;
     }
 
@@ -148,14 +151,14 @@ Features:
                 // Clear loggin flag so we don't infinity loop
                 sessionStorage.setItem(ss_just_logged_in, JSON.stringify(false));
                 sessionStorage.setItem(ss_just_logged_in_2, JSON.stringify(true));
-    
+
                 try {
                     //Go back if we can!
                     if (lastPage) {
                         history.back();
                     }
                 }
-                catch(e) {
+                catch (e) {
                     util.onError(e);
                 }
             }
@@ -171,7 +174,7 @@ Features:
                     setTimeout(callback, interval);
                 });
             }
-            catch(e) {
+            catch (e) {
                 util.onError(e);
             }
         }, interval);
@@ -185,9 +188,9 @@ Features:
                     // Set username and password inputs with username and password already in local storage
                     document.getElementsByName("userName")[0].value = localStorage.getItem(local_storage_username_key);
                     document.getElementsByName("password")[0].value = localStorage.getItem(local_storage_password_key);
-    
+
                     sessionStorage.setItem(ss_just_logged_in, JSON.stringify(true));
-    
+
                     // Click the submit button
                     $("#siteNavBar_btnLogin").click();
                 }
@@ -206,11 +209,22 @@ Features:
         }
         var t_jq1 = performance.now();
 
+
+        var ralewayFont = document.createElement('link');
+        ralewayFont.href = 'https://fonts.googleapis.com/css?family=Raleway&display=swap'
+        ralewayFont.rel = 'stylesheet';
+        document.head.appendChild(ralewayFont);
+
         var manjariFont = document.createElement('link');
         manjariFont.href = 'https://fonts.googleapis.com/css?family=Manjari&display=swap'
         manjariFont.rel = 'stylesheet';
         document.head.appendChild(manjariFont);
-        
+
+        var manjariFont = document.createElement('link');
+        manjariFont.href = 'https://fonts.googleapis.com/css?family=Manjari&display=swap'
+        manjariFont.rel = 'stylesheet';
+        document.head.appendChild(manjariFont);
+
         var materialIcons = document.createElement('link');
         materialIcons.href = 'https://fonts.googleapis.com/icon?family=Material+Icons'
         materialIcons.rel = 'stylesheet';
@@ -221,7 +235,7 @@ Features:
             $(".portlet-column").addClass("portlet-max-width");
         }
 
-        
+
         //Fix portlets going beyond their alotted space when your screen is too tiny
         $("iframe").addClass("proper-iframe-borders");
 
@@ -231,14 +245,14 @@ Features:
             if (window.location.href.indexOf("Sign-Up") > -1) {
                 $("<div>", { "class": "portlet-grid-modified" })
                     .insertAfter($(".portlet-grid"))
-                    $("<div>", { "class": "row-modified" })
-                        .appendTo($(".portlet-grid-modified"))
-                        $("<div>", { "class": "new-portlets" })
-                            .appendTo($(".portlet-grid-modified"))
-                            $("<div>", { "class": "holder"})
-                                .appendTo($(".portlet-grid-modified"))
-                                .append($("#pg2_Universal"))
-                                .append($("#pg6_Universal"));
+                $("<div>", { "class": "row-modified" })
+                    .appendTo($(".portlet-grid-modified"))
+                $("<div>", { "class": "new-portlets" })
+                    .appendTo($(".portlet-grid-modified"))
+                $("<div>", { "class": "holder" })
+                    .appendTo($(".portlet-grid-modified"))
+                    .append($("#pg2_Universal"))
+                    .append($("#pg6_Universal"));
                 $(".portlet-grid-modified").addClass("portlet-grid");
                 $(".row-modified").addClass("row");
             }
@@ -249,12 +263,12 @@ Features:
         var headerSize = addMultiOption("mygcc-plus--header-height", "Header Height", [
             { key: "tall", text: "Tall" },
             { key: "normal", text: "Normal" },
-            { key: "shortest", text: "Short"}
-         ], "shortest");
+            { key: "shortest", text: "Short" }
+        ], "shortest");
         var hideAds = addOption("mygcc-plus--hide-ads", "Hide Ads (except on Home)", true);
         var shadowsOrBorders = addMultiOption("mygcc-plus-shadow-border", "Choose shadows or borders for UI", [
-            {key: "shadows", text: "Shadows"},
-            {key: "borders", text: "Borders"}
+            { key: "shadows", text: "Shadows" },
+            { key: "borders", text: "Borders" }
         ], "shadows");
         addOption(ss_should_auto_log_in, "Automatically log you in", true, true);
 
@@ -360,7 +374,7 @@ Features:
 
             `).appendTo(document.body);
             if ($(window).width() > 1025) {
-                $("#siteNavBar_loginToggle").children().eq(0).css({'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px'});
+                $("#siteNavBar_loginToggle").children().eq(0).css({ 'background': "url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_person_white_18dp-2x.png?raw=true') no-repeat top left/cover", 'background-size': '36px' });
             }
 
             // Trigger a resize even to correct the "More" dropdown in the header.
@@ -379,7 +393,7 @@ Features:
             //Remove redundant repetition of text in Academics --> All My Courses (portlet)
             $(".amc-header").remove();
 
-            //Who uses these assignment navigation buttons anyway? And why is there two of these?!
+            //Who uses these assignment my-gcc-plus-buttons-container anyway? And why is there two of these?!
             try {
                 $('.detailHeader')[0].remove();
             } catch (err) {
@@ -391,20 +405,24 @@ Features:
             /*
             Custom a-tag styling
             */
-           var portlets = document.getElementsByClassName('portlet')
-           for (let portlet of portlets) {
-               portlet.getElementsByClassName('portlet-header-bar')[0].getElementsByTagName('a')[0].classList = "cl-a-style cl-effect-1";
-           }
+            var portlets = document.getElementsByClassName('portlet')
+            for (let portlet of portlets) {
+                portlet.getElementsByClassName('portlet-header-bar')[0].getElementsByTagName('a')[0].classList = "cl-a-style cl-effect-1";
+            }
 
-           /*
-           Clean up the assignment coursework page a bit
-           */
+            /*
+            Clean up the assignment coursework page a bit
+            */
             //if we're on the coursework page and we're looking at a particular assignment for some class
             if (document.getElementById('pg0_V__updatePanel')) {
                 var gradeBar = document.getElementById('pg0_V__updatePanel');
+                var master = document.createElement('div');
+                master.classList = "my-gcc-plus-buttons-master";
+                gradeBar.parentNode.insertBefore(master, gradeBar.nextSibling);
+
                 var container = document.createElement('div');
-                container.id = "coursework-buttons"
-                gradeBar.parentNode.insertBefore(container, gradeBar.nextSibling);
+                container.classList = "my-gcc-plus-buttons-container";
+                master.appendChild(container);
 
                 /* Add Comment */
                 var oldAddComment = document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__addEditFeedbackButton');
@@ -442,6 +460,48 @@ Features:
                     container.appendChild(convertToButton(instructions, "View Instructions", "info"));
                     parent.removeChild(parent.getElementsByTagName('span')[0]);
                 }
+
+
+
+                /*
+                Files
+                */
+                var filesText = document.getElementById('pg0_V__stuAssgnInfo__lblFiles');
+
+                var filesContainer = filesText.parentNode;
+                filesContainer.classList.add("my-gcc-plus-files-container")
+                master.appendChild(filesContainer)
+
+                var files = filesContainer.getElementsByClassName('fileDisplay'); //files to download
+                filesText.classList.add('my-gcc-plus-section-text')
+                filesText.style.marginBottom = "-15px";
+
+                switch (files.length) {
+                    case 0:
+                        filesText.innerText = "There are no files to download";
+                    case 1:
+                        filesText.innerText = "Assignment File for Download:";
+                        break;
+                    default:
+                        filesText.innerText = "Assignment Files for Download:";
+                }
+
+
+
+                var container = document.createElement('div');
+                container.classList = "my-gcc-plus-buttons-container";
+                filesContainer.appendChild(container);
+
+                if (files.length > 0) {
+                    for (let file of files) {
+                        var a = file.getElementsByTagName('a')[0];
+                        var newA = createButton('a', a.id, a.innerText, "insert_drive_file", true, null, a.href);
+                        container.appendChild(newA);
+                    }
+                    $('.fileDisplay').remove()
+                }
+
+
             }
 
             //Change individual assignment score background
@@ -457,7 +517,7 @@ Features:
             /**
              * Dynamically change color of elements depending on the grade given
              */
-            function gradeColor (gradeValue, gradeBackground) {
+            function gradeColor(gradeValue, gradeBackground) {
                 var grade = "default";
                 if (document.getElementById(gradeValue)) {
                     grade = document.getElementById(gradeValue).innerHTML;
@@ -466,7 +526,7 @@ Features:
                 }
                 var gradeBackground = document.getElementById(gradeBackground) ? document.getElementById(gradeBackground) : document.getElementsByClassName(gradeBackground)[0];
 
-                var colors =  {
+                var colors = {
                     "A+": {
                         background: "#00c853",
                         text: "#004e20",
@@ -518,13 +578,13 @@ Features:
                         shadow: "#FFCC80"
                     },
                     "D-": {
-                        background:"#e65100",
+                        background: "#e65100",
                         text: "#592001",
                         shadow: "#FFAB91"
                     },
                     "D": {
                         background: "#f57c00",
-                        text:"#623200",
+                        text: "#623200",
                         shadow: "#ffbf7f"
                     },
                     "F": {
@@ -546,7 +606,7 @@ Features:
                 if (document.getElementById(gradeValue) !== null) document.getElementById(gradeValue).style.color = colors[grade].text;
             }
 
-                //Make the ICS Server Error page more friendly :)
+            //Make the ICS Server Error page more friendly :)
             if ((document.documentElement.textContent || document.documentElement.innerText).indexOf('Server Error in \'/ICS\' Application.') > -1) {
                 $('body').remove();
             }
@@ -556,7 +616,7 @@ Features:
 
             if (document.querySelector('.uploadFilePanelHeader') !== null) {
                 //shift the "upload a file" text in the popup window for uploading an assignment
-                document.getElementsByClassName('uploadFilePanelHeader')[0].getElementsByTagName('div')[1].style.padding='2px';
+                document.getElementsByClassName('uploadFilePanelHeader')[0].getElementsByTagName('div')[1].style.padding = '2px';
                 //replace close button in the popup window for uploading an assignment
                 document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_imgClose').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_close_black_18dp-2x.png?raw=true";
             }
@@ -565,7 +625,7 @@ Features:
                 var ele = document.getElementById('pg0_V_FeedbackDisplay__feedbackEditor__imgFeedback');
                 if (ele) {
                     ele.src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
-                    ele.style.height='20px';
+                    ele.style.height = '20px';
                 }
             }
 
@@ -629,16 +689,16 @@ Features:
             var num = 0;
             while (document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify') !== null && document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0] !== undefined) {
                 document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_feedback_black_18dp-2x.png?raw=true";
-                document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].style.height='20px';
+                document.getElementById('pg0_V__assignmentView__rptAssignments_ctl00__studentAssignBody__rptAssignments_ctl0' + num + '__panNotify').getElementsByTagName('img')[0].style.height = '20px';
                 num++;
             }
 
             if (window.location.href.indexOf("StudentAssignmentDetailView") > -1) {
                 //replace paper icon next to your submitted homework file
                 if (document.getElementsByClassName('imageAndText')[0] !== undefined) {
-                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src='https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
-                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height='18px';
-                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight='5px';
+                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src = 'https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
+                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height = '18px';
+                    document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight = '5px';
                 }
             }
 
@@ -668,7 +728,7 @@ Features:
 
         // Handle custom css differences via custom overrides
         if (headerSize === "normal") {
-			$("<style>").text(`
+            $("<style>").text(`
 /* These styles shorten the masthead even more than original */
 body #masthead {
     background-size: contain !important;
@@ -712,8 +772,8 @@ body #masthead {
             //Move side bar higher
             //Create div to hold the moved side bar (yes I know this is a nasty hack)
             $("<div>", { "class": "container-fluid-sidebar" })
-				.insertAfter($("#top-nav-bar"))
-				.append($("#sideBar"));
+                .insertAfter($("#top-nav-bar"))
+                .append($("#sideBar"));
 
 
             $("<style>").text(`
@@ -839,6 +899,19 @@ body #masthead {
 *          GLOBAL
 * -------------------------
 */
+
+.my-gcc-plus-files-container {
+    display: grid;
+    justify-content: center;
+    margin-top: 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.my-gcc-plus-section-text {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+}
 
 .my-gcc-plus-button {
     padding: 12px;
@@ -1273,13 +1346,17 @@ div.overrideDisplay:hover {
     background-size: 20px;
 }
 
-#coursework-buttons {
+.my-gcc-plus-buttons-master {
+    margin: 0 30px
+}
+
+.my-gcc-plus-buttons-container {
     display: flex;
     margin: 20px 0;
     justify-content: center;
 }
 
-#coursework-buttons p {
+.my-gcc-plus-buttons-container p {
     margin: 10px 0;
 }
 
@@ -1432,13 +1509,6 @@ div.overrideInstructions {
     background-image: none;
 }
 
-div.fileDisplay {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true);
-    background-size: 20px;
-    padding: 0px 0px 0px 27px;
-    margin-left: 5px;
-}
-
 div.uploadAssignmentInfo, div.onlineAssignmentInfo {
     background-position: 0px 0px;
 }
@@ -1579,9 +1649,9 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
                 }
 
                 // Open the "My Courses" sidebar section
-				//  This logic is duplicated in the css
-				//   it is only left here for the sake of
-				//   still being useful when css is off.
+                //  This logic is duplicated in the css
+                //   it is only left here for the sake of
+                //   still being useful when css is off.
                 setTimeout(function () {
                     $("#myCourses").addClass("in").css("height", "unset");
                 }, 300);
@@ -1599,10 +1669,10 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
                 // Handle coursework linking
                 if (doLinkToCoursework) {
                     $("#myCourses a")
-                    .each(function (i, el) {
-                        var $el = $(el);
-                        $el.attr("href", util.urlCombine($el.attr("href"), "/Coursework.jnz"));
-                    });
+                        .each(function (i, el) {
+                            var $el = $(el);
+                            $el.attr("href", util.urlCombine($el.attr("href"), "/Coursework.jnz"));
+                        });
                 }
 
                 // CSS
@@ -1615,7 +1685,7 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
                     $("#userWelcome, #ltlLabel, #sideBar h2, #sideBar h2 a, #sideBar h3, #sideBar h3 a, #sideBar div#quickLinks h3, #sideBar h2, #sideBar div#quickLinks h3, #quickLinks li a, #thisContext a").attr({ "style": "color:" + "#111" + " !important" });
                     $("#sideBar h2, #sideBar div#quickLinks h3").css({ "border-bottom": "1px solid black", "margin-bottom": "0", "margin": "10px 0 0 0", "padding-left": "7px" });
                     $("#txtInput").css({ "border-radius": "4px", "border": "1px solid #ccc", "margin-top": "5px" });
-                    $(".pToolbar:empty").css({"display": "none"});
+                    $(".pToolbar:empty").css({ "display": "none" });
                     $(".hint, .tabbox").css({ "background-color": "white" });
                     $(".CS .GrayBordered, .CS .GrayBordered th, .CS .GrayBordered td").css({ "background-color": "white" });
 
@@ -1680,14 +1750,14 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
                             showQuickNav();
                         });
 
-                    $(document).keydown(function(e) {
+                    $(document).keydown(function (e) {
                         if (e.key === "," && e.ctrlKey) showQuickNav();
                     });
                 })();
 
                 var t_style1 = performance.now();
                 var t_sum = ((t_jq1 - t_jq0) + (t_style1 - t_style0));
-                    console.log("Style overall took " + (t_style1 - t_style0) + " milliseconds.");
+                console.log("Style overall took " + (t_style1 - t_style0) + " milliseconds.");
                 console[t_sum > 100 ? "error" : "log"]("Jake's custom script took " + t_sum + " milliseconds.");
             }
             catch (e) {
@@ -1745,9 +1815,9 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
                 "who": "Collaboration.jnz?portlet=Coursemates",
                 "collab": "Collaboration.jnz",
                 "collaboration": "Collaboration.jnz",
-                "slides":" Main_Page.jnz?portlet=Handouts",
-                "handouts":" Main_Page.jnz?portlet=Handouts",
-                "handout":" Main_Page.jnz?portlet=Handouts",
+                "slides": " Main_Page.jnz?portlet=Handouts",
+                "handouts": " Main_Page.jnz?portlet=Handouts",
+                "handout": " Main_Page.jnz?portlet=Handouts",
             };
 
             var container = $("<div>").appendTo(document.body);
@@ -1756,64 +1826,64 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
             $("<div><b>CTRL+Comma quick nav</b><br/>Enter a whole or partial course name and a subpage<br/><br/>For Example:<br/>\"civ lit grade\", \"calc home\", or \"bio hw\"</div>")
                 .appendTo(container)
                 .css({
-                "z-index": 1000,
-                "position": "fixed",
-                "top": "calc(50vh + 20px)",
-                "left": "calc(50vw - 140px)",
-                "width": "280px",
-                "padding": "7px",
-                "font-size": "14px",
-                "background-color": "#edf4ff",
-                "color": "#003375",
-                "border-radius": "0 0 5px 5px",
-            })
+                    "z-index": 1000,
+                    "position": "fixed",
+                    "top": "calc(50vh + 20px)",
+                    "left": "calc(50vw - 140px)",
+                    "width": "280px",
+                    "padding": "7px",
+                    "font-size": "14px",
+                    "background-color": "#edf4ff",
+                    "color": "#003375",
+                    "border-radius": "0 0 5px 5px",
+                })
 
             var textbox = $("<input>", { "placeholder": "civ lit grade..." })
-            .appendTo(container)
-            .css({
-                "z-index": 1000,
-                "position": "fixed",
-                "top": "calc(50vh - 20px)",
-                "left": "calc(50vw - 140px)",
-                "width": "280px",
-                "height": "40px",
-                "padding": "7px",
-                "font-size": "16px",
-                "background-color": "white",
-                "border": "1px solid #ddd",
-                "border-radius": "5px 5px 0 0",
-            })
-            .blur(function () { container.remove() })
-            .focus()
-            .keydown(function (e2) {
-                if (e2.which == 13) {//Enter
-                    var parts = textbox.val().trim().toLowerCase().split(" ");
-                    var myMatches = [];
-                    var pageMatch = null;
-                    var options = getQuickNavOptions();
+                .appendTo(container)
+                .css({
+                    "z-index": 1000,
+                    "position": "fixed",
+                    "top": "calc(50vh - 20px)",
+                    "left": "calc(50vw - 140px)",
+                    "width": "280px",
+                    "height": "40px",
+                    "padding": "7px",
+                    "font-size": "16px",
+                    "background-color": "white",
+                    "border": "1px solid #ddd",
+                    "border-radius": "5px 5px 0 0",
+                })
+                .blur(function () { container.remove() })
+                .focus()
+                .keydown(function (e2) {
+                    if (e2.which == 13) {//Enter
+                        var parts = textbox.val().trim().toLowerCase().split(" ");
+                        var myMatches = [];
+                        var pageMatch = null;
+                        var options = getQuickNavOptions();
 
-                    parts.forEach(function (myText) {
-                        myMatches = myMatches.concat(options.filter(function(o) {
-                            return o.text.indexOf(myText) != -1
-                            || o.acronym.indexOf(myText) != -1;
-                        }))
+                        parts.forEach(function (myText) {
+                            myMatches = myMatches.concat(options.filter(function (o) {
+                                return o.text.indexOf(myText) != -1
+                                    || o.acronym.indexOf(myText) != -1;
+                            }))
 
-                        pageMatch = pageMatch || subpages[myText];
-                    });
+                            pageMatch = pageMatch || subpages[myText];
+                        });
 
-                    if (myMatches.length) {
-                        location.href = util.getMostCommonEl(myMatches).url + (pageMatch || subpages["c"]);
+                        if (myMatches.length) {
+                            location.href = util.getMostCommonEl(myMatches).url + (pageMatch || subpages["c"]);
+                        }
+                        else {
+                            alert("No class found.");
+                        }
+                    } else if (e2.which == 27) { //esc
+                        container.remove();
                     }
-                    else {
-                        alert("No class found.");
-                    }
-                } else if (e2.which == 27) { //esc
-                    container.remove();
-                }
-            });
+                });
         }
 
-        function addOption(key, text, defaultValue, logout=false) {
+        function addOption(key, text, defaultValue, logout = false) {
             var currentVal = JSON.parse(localStorage.getItem(key) || JSON.stringify(defaultValue));
             var optionEl = $("<input>", { id: "my_gcc_plus_option__" + key, type: "checkbox" })
                 .css({ "margin": "0 4px 0 0" })
@@ -1862,7 +1932,7 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
 
                 $("<div>").css({ "display": "inline-block", "padding-right": "7px" })
                     .append(optionEl)
-                    .append($("<label>", { "for": name + "_" + option.key }).text(option.text).css({"font-weight": "normal"}))
+                    .append($("<label>", { "for": name + "_" + option.key }).text(option.text).css({ "font-weight": "normal" }))
                     .appendTo(container);
             });
 
