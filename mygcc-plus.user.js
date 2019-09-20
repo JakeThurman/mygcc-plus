@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.36
+// @version      1.4
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -86,6 +86,43 @@ Features:
             .css({ "padding-left": "20%" });
     });
 
+    function addTextAndIcon(element, text, icon) {
+        var textElement = document.createElement('p');
+        textElement.textContent = text;
+        element.appendChild(textElement)
+
+        var iconElement = document.createElement('i');
+        iconElement.style.fontSize = "40px";
+        iconElement.classList = "material-icons"
+        iconElement.textContent = icon;
+        element.appendChild(iconElement);
+    }
+
+    function convertToButton(element, text, icon, shadow=true) {
+        element.classList.add('my-gcc-plus-button');
+        if (shadow) element.classList.add('my-gcc-plus-button-shadow')
+        element.innerHTML = null
+        addTextAndIcon(element, text, icon)
+        return element;
+    }
+
+    function createButton(type, id, text, icon, shadow=true, onclick=null, href=null) {
+        var element = document.createElement(type)
+        element.id = id;
+        element.classList = "my-gcc-plus-button";
+
+        addTextAndIcon(element, text, icon)
+
+        if (onclick != null) element.setAttribute('onclick', onclick);
+        if (href != null) {
+            element.href = href;
+        } else {
+            element.setAttribute("type","button");
+        }
+        if (shadow) element.classList.add('my-gcc-plus-button-shadow')
+        return element;
+    }
+
     try {
         var t_jq0 = performance.now();
 
@@ -168,6 +205,16 @@ Features:
             }
         }
         var t_jq1 = performance.now();
+
+        var manjariFont = document.createElement('link');
+        manjariFont.href = 'https://fonts.googleapis.com/css?family=Manjari&display=swap'
+        manjariFont.rel = 'stylesheet';
+        document.head.appendChild(manjariFont);
+        
+        var materialIcons = document.createElement('link');
+        materialIcons.href = 'https://fonts.googleapis.com/icon?family=Material+Icons'
+        materialIcons.rel = 'stylesheet';
+        document.head.appendChild(materialIcons);
 
         //Make the courswork portlet 100% wide instead of 50% wide
         if ((window.location.href.indexOf("Attendance") > -1) || (window.location.href.indexOf("Course_Information") > -1) || (window.location.href.indexOf("Coursework") > -1) || (window.location.href.indexOf("Gradebook") > -1)) {
@@ -339,8 +386,66 @@ Features:
 
             }
 
+            $('#pg0_V_UploadAssignmentDetails_pnlUploadAssignmentDetails').remove();
+
+            /*
+            Custom a-tag styling
+            */
+           var portlets = document.getElementsByClassName('portlet')
+           for (let portlet of portlets) {
+               portlet.getElementsByClassName('portlet-header-bar')[0].getElementsByTagName('a')[0].classList = "cl-a-style cl-effect-1";
+           }
+
+           /*
+           Clean up the assignment coursework page a bit
+           */
+            //if we're on the coursework page and we're looking at a particular assignment for some class
+            if (document.getElementById('pg0_V__updatePanel')) {
+                var gradeBar = document.getElementById('pg0_V__updatePanel');
+                var container = document.createElement('div');
+                container.id = "coursework-buttons"
+                gradeBar.parentNode.insertBefore(container, gradeBar.nextSibling);
+
+                /* Add Comment */
+                var oldAddComment = document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__addEditFeedbackButton');
+                if (oldAddComment) {
+                    var newAddComment = createButton("button", oldAddComment.id, "Add a coment", "add_comment", true, oldAddComment.getAttribute('onclick'));
+                    container.appendChild(newAddComment);
+                    oldAddComment.parentNode.removeChild(oldAddComment);
+                }
+
+                /* Full History */
+                var fullHistory = document.getElementById('pg0_V__historyModal__historyLink');
+                if (fullHistory) {
+                    var parent = fullHistory.parentNode;
+                    container.appendChild(convertToButton(fullHistory, "View Full History", "history"));
+                    parent.removeChild(parent.getElementsByTagName('span')[0]);
+                }
+                /* Assignment Points */
+                //if full history doesn't exist, then that means the assignment has NOT been graded, and we should show the grade
+                //if it wasn't null, then there's no need to show the assignment's points twice
+                if (fullHistory == null) {
+                    var oldPointsText = document.getElementsByClassName('studentAssignStatus')[0]
+                    if (oldPointsText) {
+                        var points = oldPointsText.innerText.match('[0-9]+')[0];
+                        var pointsSentence = "Assignment is worth " + points + " points"
+                        var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description", false);
+                        container.appendChild(newPointsText);
+                        oldPointsText.parentNode.removeChild(oldPointsText);
+                    }
+                }
+
+                /* Instructions */
+                var instructions = document.getElementById('pg0_V__stuAssgnInfo__hypShow');
+                if (instructions) {
+                    var parent = instructions.parentNode;
+                    container.appendChild(convertToButton(instructions, "View Instructions", "info"));
+                    parent.removeChild(parent.getElementsByTagName('span')[0]);
+                }
+            }
+
             //Change individual assignment score background
-            if (document.querySelector('#pg0_V_GeneralAssignmentInfo__panAssignment') !== null) {
+            if (document.getElementById('pg0_V_GeneralAssignmentInfo__panAssignment')) {
                 gradeColor('pg0_V_GeneralAssignmentInfo_lblGrade', 'pg0_V_GeneralAssignmentInfo__panAssignment');
             }
 
@@ -354,65 +459,78 @@ Features:
              */
             function gradeColor (gradeValue, gradeBackground) {
                 var grade = "default";
-                if (document.getElementById(gradeValue) !== null) {
+                if (document.getElementById(gradeValue)) {
                     grade = document.getElementById(gradeValue).innerHTML;
                 } else if (document.getElementsByClassName(gradeValue).length > 0) {
                     grade = document.getElementsByClassName(gradeValue)[0].innerHTML;
                 }
-                var gradeBackground = document.getElementById(gradeBackground) ? document.getElementById(gradeBackground) : gradeBackground = document.getElementsByClassName(gradeBackground)[0];
+                var gradeBackground = document.getElementById(gradeBackground) ? document.getElementById(gradeBackground) : document.getElementsByClassName(gradeBackground)[0];
 
                 var colors =  {
                     "A+": {
                         background: "#00c853",
-                        text: "#004e20"
+                        text: "#004e20",
+                        shadow: "#A5D6A7"
                     },
                     "A-": {
                         backgroundColor: "#57d154",
-                        text:"#245423"
+                        text: "#245423",
+                        shadow: "#b3ffb1"
                     },
                     "A": {
                         background: "#36c246",
-                        text: "#195920"
+                        text: "#195920",
+                        shadow: "#a9ffb3"
                     },
                     "B+": {
                         background: "#8bc34a",
-                        text: "#3d5620"
+                        text: "#3d5620",
+                        shadow: "#9CCC65"
                     },
                     "B-": {
                         background: "#a0cb6e",
-                        text: "#40502d"
+                        text: "#40502d",
+                        shadow: "#9CCC65"
                     },
                     "B": {
                         background: "#9ccc65",
-                        text: "#32451d"
+                        text: "#32451d",
+                        shadow: "#9CCC65"
                     },
                     "C+": {
                         background: "#cddc39",
-                        text: "#5a611a"
+                        text: "#5a611a",
+                        shadow: "#DCE775"
                     },
                     "C-": {
                         background: "#fbc02d",
-                        text: "#544112"
+                        text: "#544112",
+                        shadow: "#FFE0B2"
                     },
                     "C": {
                         background: "#d4e157",
-                        text: "#5d6325"
+                        text: "#5d6325",
+                        shadow: "#DCE775"
                     },
                     "D+": {
                         background: "#ffa726",
-                        text: "#67430f"
+                        text: "#67430f",
+                        shadow: "#FFCC80"
                     },
                     "D-": {
                         background:"#e65100",
-                        text: "#592001"
+                        text: "#592001",
+                        shadow: "#FFAB91"
                     },
                     "D": {
                         background: "#f57c00",
-                        text:"#623200"
+                        text:"#623200",
+                        shadow: "#ffbf7f"
                     },
                     "F": {
                         background: "#f44336",
-                        text: "#7e231d"
+                        text: "#7e231d",
+                        shadow: "#ffc5c0"
                     },
                     default: {
                         background: "#edf4ff",
@@ -424,6 +542,8 @@ Features:
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
                 gradeBackground.style.color = colors[grade].text;
+                gradeBackground.style.boxShadow = "0px 5px 12px" + colors[grade].shadow
+                if (document.getElementById(gradeValue) !== null) document.getElementById(gradeValue).style.color = colors[grade].text;
             }
 
                 //Make the ICS Server Error page more friendly :)
@@ -514,9 +634,6 @@ Features:
             }
 
             if (window.location.href.indexOf("StudentAssignmentDetailView") > -1) {
-                //replace 'add comment' icon
-                document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').src = "https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_add_comment_black_18dp-2x.png?raw=true";
-                document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__imgFeedback').style.height='20px';
                 //replace paper icon next to your submitted homework file
                 if (document.getElementsByClassName('imageAndText')[0] !== undefined) {
                     document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].src='https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_insert_drive_file_black_18dp-2x.png?raw=true';
@@ -535,10 +652,6 @@ Features:
 
                     a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
                         color: #733a3a !important;
-                    }
-
-                    .uploadFile {
-                        background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_black_18dp-2x.png?raw=true) !important;
                     }
 
                     a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
@@ -608,6 +721,82 @@ body #masthead {
 *          ???
 * -------------------------
 */
+
+.cl-a-style {
+    position: relative;
+	display: inline-block;
+	outline: none;
+	text-decoration: none;
+}
+
+/* Effect 1: Brackets */
+.cl-effect-1::before,
+.cl-effect-1::after {
+	display: inline-block;
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
+	transition: transform 0.3s, opacity 0.2s;
+}
+
+.cl-effect-1::before {
+	margin-right: 10px;
+	content: '[';
+	-webkit-transform: translateX(20px);
+	-moz-transform: translateX(20px);
+	transform: translateX(20px);
+}
+
+.cl-effect-1::after {
+	margin-left: 10px;
+	content: ']';
+	-webkit-transform: translateX(-20px);
+	-moz-transform: translateX(-20px);
+	transform: translateX(-20px);
+}
+
+.cl-effect-1:hover::before,
+.cl-effect-1:hover::after,
+.cl-effect-1:focus::before,
+.cl-effect-1:focus::after {
+	opacity: 1;
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
+}
+
+
+/* Effect 3: bottom line slides/fades in */
+.cl-effect-3 {
+	padding: 8px 0;
+}
+
+.cl-effect-3::after {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: rgba(0,0,0,0.1);
+	content: '';
+	opacity: 0;
+	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
+	transition: opacity 0.3s, transform 0.3s;
+	-webkit-transform: translateY(10px);
+	-moz-transform: translateY(10px);
+	transform: translateY(10px);
+}
+
+.cl-effect-3:hover::after,
+.cl-effect-3:focus::after {
+	opacity: 1;
+	-webkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	transform: translateY(0px);
+}
+
+
 .feedbackMessage {
     font-size: 1em;
     background-color: white;
@@ -650,6 +839,57 @@ body #masthead {
 *          GLOBAL
 * -------------------------
 */
+
+.my-gcc-plus-button {
+    padding: 12px;
+}
+
+.my-gcc-plus-button-shadow {
+    box-shadow: 0px 5px 7px #e1e1e1;
+}
+
+.my-gcc-plus-button {
+    background-color: #fafafa;
+    font-family: 'Manjari', sans-serif;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none !important;
+    border: none;
+    border-radius: 15px;
+    color: #505050 !important;
+    font-size: 16px;
+    margin: 0 20px;
+    -webkit-transition: all 200ms;
+    -ms-transition: all 200ms;
+    transition: all 200ms;
+}
+
+a.my-gcc-plus-button:hover, button.my-gcc-plus-button:hover {
+    cursor: pointer;
+    background-color: #f2fbff;
+    box-shadow: 0px 5px 7px #E1F5FE;
+}
+
+a.my-gcc-plus-button:hover *, button.my-gcc-plus-button:hover * {
+    color: rgb(0, 120, 175);
+}
+
+a.my-gcc-plus-button:active, button.my-gcc-plus-button:active {
+    cursor: pointer;
+    background-color: #edfaff;
+    transform: scale(0.98);
+    box-shadow: 0px 1px 7px #E1F5FE;
+}
+
+
+button.my-gcc-plus-button:active {
+    outline: none;
+    border: none;
+}
+
+a.my-gcc-plus-button:focus, button.my-gcc-plus-button:focus {
+    outline: 0;
+}
 
 .color-content-one {
     color: #000;
@@ -1033,6 +1273,16 @@ div.overrideDisplay:hover {
     background-size: 20px;
 }
 
+#coursework-buttons {
+    display: flex;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+#coursework-buttons p {
+    margin: 10px 0;
+}
+
 /* -------------------------
 *     Course Main Page
 * -------------------------
@@ -1103,8 +1353,7 @@ div.gradedAssignment div.statusDisplay, div.gradedAssignment.lateAssignment div.
 }
 
 div.overrideHistory {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_info_black_18dp-2x.png?raw=true);
-    background-size: 20px;
+    background-image: none;
 }
 
 div.studentCommentLink {
@@ -1180,9 +1429,7 @@ div.openAssignment div.statusDisplay {
 }
 
 div.overrideInstructions {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_info_black_18dp-2x.png?raw=true);
-    background-size: 20px;
-    padding-left: 25px;
+    background-image: none;
 }
 
 div.fileDisplay {
@@ -1234,12 +1481,6 @@ a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
     color: #003958;
 }
 
-div.uploadAssignmentInfo, div.onlineAssignmentInfo {
-    padding: 5px 5px 5px 33px;
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_black_18dp-2x.png?raw=true);
-    background-position: 5px 5px !important;
-    background-size: 20px;
-}
 
 /* -------------------------
  *   UPLOAD HOMEWORK POPUP
