@@ -87,15 +87,51 @@ Features:
     });
 
     function addTextAndIcon(element, text, icon) {
-        var textElement = document.createElement('p');
-        textElement.textContent = text;
-        element.appendChild(textElement)
+        if (text !== null) {
+            var textElement = document.createElement('p');
+            textElement.textContent = text;
+            element.appendChild(textElement)
+        }
+        if (icon !== null) {
+            var iconElement = document.createElement('i');
+            iconElement.style.fontSize = "40px";
+            iconElement.classList = "material-icons"
+            iconElement.textContent = icon;
+            element.appendChild(iconElement);
+        }
+    }
 
-        var iconElement = document.createElement('i');
-        iconElement.style.fontSize = "40px";
-        iconElement.classList = "material-icons"
-        iconElement.textContent = icon;
-        element.appendChild(iconElement);
+    function createButtonTable(inputs) {
+        let elePerLine = 2;
+        var table = document.createElement('table');
+        table.style.margin = "0 auto"; //center it
+        
+        var tr, i = 0;
+        //I spent an hour trying to get this to work with a for-loop
+        //Apparently, tr.appendChild(input) removes the element from the inputs array. WHYYYY
+        while (inputs.length > 0) {
+            let input = inputs[0]
+            if (i % elePerLine == 0) {
+                tr = document.createElement('tr');
+                table.appendChild(tr)
+            }
+            input.classList.add('my-gcc-plus-button')
+            input.classList.add('my-gcc-plus-button-shadow')
+
+            if (input.id.includes('btnEdit')) {
+                input.classList.add("my-gcc-plus-button");
+                input.src = "https://fonts.gstatic.com/s/i/materialicons/edit/v1/24px.svg";
+            } else if (input.id.includes('btnDelete')) {
+                input.classList.add("my-gcc-plus-button-delete");
+                input.src = "https://fonts.gstatic.com/s/i/materialicons/delete_outline/v1/24px.svg";
+            }
+
+            var td = document.createElement('td')
+            td.appendChild(input);
+            tr.appendChild(td);
+            i++;
+        }
+        return table;
     }
 
     function convertToButton(element, text, icon, shadow = true) {
@@ -106,9 +142,9 @@ Features:
         return element;
     }
 
-    function createButton(type, id, text, icon, shadow = true, onclick = null, href = null) {
+    function createButton(type, id = null, text = null, icon = null, onclick = null, href = null, inputs = null) {
         var element = document.createElement(type)
-        element.id = id;
+        if (id != null) element.id = id;
         element.classList = "my-gcc-plus-button";
 
         addTextAndIcon(element, text, icon)
@@ -118,11 +154,21 @@ Features:
         } else if (type == 'a') {
             element.target = "_blank" //open in new tab
         }
-        if (shadow) element.classList.add('my-gcc-plus-button-shadow')
+        if (onclick != null || href != null) element.classList.add('my-gcc-plus-button-shadow')
         if (onclick != null) element.setAttribute('onclick', onclick);
         if (href != null) {
             element.href = href;
         }
+
+        if (inputs !== null) {
+            var container = document.createElement('div');
+
+            element.style.marginBottom = "20px";
+            container.appendChild(element);
+            container.appendChild(createButtonTable(inputs));
+            return container;
+        }
+
         return element;
     }
 
@@ -415,20 +461,22 @@ Features:
             */
             //if we're on the coursework page and we're looking at a particular assignment for some class
             if (document.getElementById('pg0_V__updatePanel')) {
+
+
                 var gradeBar = document.getElementById('pg0_V__updatePanel');
                 var master = document.createElement('div');
                 master.classList = "my-gcc-plus-buttons-master";
                 gradeBar.parentNode.insertBefore(master, gradeBar.nextSibling);
 
-                var container = document.createElement('div');
-                container.classList = "my-gcc-plus-buttons-container";
-                master.appendChild(container);
+                var filesContainer = document.createElement('div');
+                filesContainer.classList = "my-gcc-plus-buttons-container";
+                master.appendChild(filesContainer);
 
                 /* Add Comment */
                 var oldAddComment = document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__addEditFeedbackButton');
                 if (oldAddComment) {
-                    var newAddComment = createButton("button", oldAddComment.id, "Add a coment", "add_comment", true, oldAddComment.getAttribute('onclick'));
-                    container.appendChild(newAddComment);
+                    var newAddComment = createButton("button", oldAddComment.id, "Add a coment", "add_comment", oldAddComment.getAttribute('onclick'));
+                    filesContainer.appendChild(newAddComment);
                     oldAddComment.parentNode.removeChild(oldAddComment);
                 }
 
@@ -436,7 +484,7 @@ Features:
                 var fullHistory = document.getElementById('pg0_V__historyModal__historyLink');
                 if (fullHistory) {
                     var parent = fullHistory.parentNode;
-                    container.appendChild(convertToButton(fullHistory, "View Full History", "history"));
+                    filesContainer.appendChild(convertToButton(fullHistory, "View Full History", "history"));
                     parent.removeChild(parent.getElementsByTagName('span')[0]);
                 }
                 /* Assignment Points */
@@ -447,8 +495,8 @@ Features:
                     if (oldPointsText) {
                         var points = oldPointsText.innerText.match('[0-9]+')[0];
                         var pointsSentence = "Assignment is worth " + points + " points"
-                        var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description", false);
-                        container.appendChild(newPointsText);
+                        var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description");
+                        filesContainer.appendChild(newPointsText);
                         oldPointsText.parentNode.removeChild(oldPointsText);
                     }
                 }
@@ -457,62 +505,102 @@ Features:
                 var instructions = document.getElementById('pg0_V__stuAssgnInfo__hypShow');
                 if (instructions) {
                     var parent = instructions.parentNode;
-                    container.appendChild(convertToButton(instructions, "View Instructions", "info"));
+                    filesContainer.appendChild(convertToButton(instructions, "View Instructions", "info"));
                     parent.removeChild(parent.getElementsByTagName('span')[0]);
                 }
 
 
-
-                /*
-                Assignment Files
-                */
-                //add style to text
-                var assignmentFilesText = document.getElementById('pg0_V__stuAssgnInfo__lblFiles');
-                assignmentFilesText.classList.add('my-gcc-plus-section-text')
-
-                var assignmentFilesContainer = assignmentFilesText.parentNode;
-                assignmentFilesContainer.classList.add("my-gcc-plus-files-container")
-                master.appendChild(assignmentFilesContainer)
-
-                var assignmentFiles = assignmentFilesContainer.getElementsByClassName('fileDisplay'); //files to download
-
-                switch (assignmentFiles.length) {
-                    case 0:
-                        assignmentFilesText.innerText = "There are no files to download";
-                    case 1:
-                        assignmentFilesText.innerText = "Assignment File for Download:";
-                        break;
-                    default:
-                        assignmentFilesText.innerText = "Assignment Files for Download:";
-                }
+                /**
+                 * Assignment Files and User Files
+                 */
+                var assignmentAndUserFiles = document.createElement('div');
+                assignmentAndUserFiles.classList = "my-gcc-plus-buttons-container my-gcc-plus-extra-margin my-gcc-plus-bottom-divider";
+                master.appendChild(assignmentAndUserFiles);
 
                 /*
                 User Files
                 */
-                var userFilesContainer = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList');
-                var userFiles = userFilesContainer.getElementsByClassName('fileDisplay');
-                
-                var userFilesText = document.createElement('span');
-                userFilesText.id = 'pg0_V_UploadAssignmentDetails__lblYourFiles';
-                userFilesText.innerText = "Your uploaded files"
-
-
-
-
-                var container = document.createElement('div');
-                container.classList = "my-gcc-plus-buttons-container";
-                assignmentFilesContainer.appendChild(container);
-
-                if (assignmentFiles.length > 0) {
-                    for (let file of assignmentFiles) {
-                        var a = file.getElementsByTagName('a')[0];
-                        var newA = createButton('a', a.id, a.innerText, "insert_drive_file", true, null, a.href);
-                        container.appendChild(newA);
+               var userFiles = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList').getElementsByClassName('fileDisplay');
+               if (userFiles.length > 0) {
+                   var userFilesAndTextContainer = document.createElement('div'); //PARENT
+                   userFilesAndTextContainer.style.textAlign = "center";
+                   assignmentAndUserFiles.appendChild(userFilesAndTextContainer)
+    
+                   
+                   var userFilesText = document.createElement('span');
+                   userFilesAndTextContainer.appendChild(userFilesText);
+                   userFilesText.id = 'pg0_V_UploadAssignmentDetails__lblYourFiles';
+                   userFilesText.classList = "my-gcc-plus-section-text";
+                    switch (userFiles.length) {
+                        case 0:
+                            userFilesText.innerText = "You did not upload any files";
+                        case 1:
+                            userFilesText.innerText = "Your Uploaded File:";
+                            break;
+                        default:
+                            userFilesText.innerText = "Your Uploaded Files:";
                     }
-                    $('.fileDisplay').remove()
-                }
+    
+                    var filesContainer = document.createElement('div');
+                    userFilesAndTextContainer.appendChild(filesContainer);
+                    filesContainer.classList = "my-gcc-plus-buttons-container";
+    
+                    if (userFiles.length > 0) {
+                        for (let file of userFiles) {
+                            var a = file.getElementsByTagName('a')[0];
+                            var inputs = file.getElementsByTagName('input');
+                            var newA = createButton('a', a.id, a.innerText, "cloud_download", null, a.href, inputs);
+                            newA.getElementsByTagName('a')[0].classList.add('my-gcc-plus-assignment')
+                            filesContainer.appendChild(newA);
+                        }
+                    }
+               }
+
+                /*
+                Assignment Files
+                */
+               var assignmentFiles = document.getElementById('pg0_V__stuAssgnInfo__lblFiles').parentNode.getElementsByClassName('fileDisplay'); //files to download
+               if (assignmentFiles.length > 0) {
+                   var assignmentAndTextContainer = document.createElement('div'); //PARENT
+                   assignmentAndTextContainer.style.textAlign = "center";
+                   assignmentAndUserFiles.appendChild(assignmentAndTextContainer)
+                   
+                   //add style to text
+                    var assignmentFilesText = document.createElement('span');
+                    assignmentAndTextContainer.appendChild(assignmentFilesText);
+                    assignmentFilesText.classList.add('my-gcc-plus-section-text');
+                    switch (assignmentFiles.length) {
+                        case 0:
+                            assignmentFilesText.innerText = "There are no files to download";
+                        case 1:
+                            assignmentFilesText.innerText = "Assignment File for Download:";
+                            break;
+                        default:
+                            assignmentFilesText.innerText = "Assignment Files for Download:";
+                    }
+    
+                    var filesContainer = document.createElement('div');
+                    filesContainer.id = "my-gcc-plus-assignment-files-container"
+                    filesContainer.classList = "my-gcc-plus-buttons-container";
+                    assignmentAndTextContainer.appendChild(filesContainer);
+    
+                    if (assignmentFiles.length > 0) {
+                        for (let file of assignmentFiles) {
+                            var a = file.getElementsByTagName('a')[0];
+                            var newA = createButton('a', a.id, a.innerText, "cloud_download", null, a.href);
+                            filesContainer.appendChild(newA);
+                        }
+                    }
+
+                    var oldFilesContainer = document.getElementById('pg0_V__stuAssgnInfo__lblFiles').parentNode;
+                    oldFilesContainer.parentNode.removeChild(oldFilesContainer);
+               }
 
 
+
+
+
+                $('.fileDisplay').remove()
             }
 
             //Change individual assignment score background
@@ -925,12 +1013,42 @@ body #masthead {
     font-family: 'Raleway', sans-serif;
 }
 
-.my-gcc-plus-button {
-    padding: 12px;
+.my-gcc-plus-buttons-master {
+    margin: 0 30px;
+}
+
+.my-gcc-plus-bottom-divider {
+    border-bottom: 1px solid #eee;
+}
+
+.my-gcc-plus-extra-margin > * {
+    margin: 40px 40px 0 40px;
+}
+
+.my-gcc-plus-buttons-container {
+    display: flex;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.my-gcc-plus-buttons-container p {
+    margin: 10px 0;
+}
+
+.my-gcc-plus-assignment {
+    background-color
 }
 
 .my-gcc-plus-button-shadow {
     box-shadow: 0px 5px 7px #e1e1e1;
+}
+
+:not(input).my-gcc-plus-button {
+    min-width: 150px;
+}
+
+.my-gcc-plus-button:focus {
+    outline: 0;
 }
 
 .my-gcc-plus-button {
@@ -939,6 +1057,7 @@ body #masthead {
     display: inline-block;
     text-align: center;
     text-decoration: none !important;
+    padding: 12px;
     border: none;
     border-radius: 15px;
     color: #505050 !important;
@@ -949,31 +1068,39 @@ body #masthead {
     transition: all 200ms;
 }
 
-a.my-gcc-plus-button:hover, button.my-gcc-plus-button:hover {
+input.my-gcc-plus-button-delete {
+    background-color: #EF9A9A;
+    box-shadow: 0 5px 7px #FFCDD2;
+}
+
+input.my-gcc-plus-button-delete:hover {
+    background-color: #E57373 !important;
+    box-shadow: 0 5px 7px #FFCDD2 !important;
+}
+
+input.my-gcc-plus-button-delete:active {
+    box-shadow: 0px 1px 7px #FFCDD2 !important;
+}
+
+
+:not(div).my-gcc-plus-button:active {
+    cursor: pointer;
+    transform: scale(0.98);
+}
+
+:not(div).my-gcc-plus-button:hover {
     cursor: pointer;
     background-color: #f2fbff;
     box-shadow: 0px 5px 7px #E1F5FE;
 }
 
-a.my-gcc-plus-button:hover *, button.my-gcc-plus-button:hover * {
+:not(div).my-gcc-plus-button:hover * {
     color: rgb(0, 120, 175);
 }
 
-a.my-gcc-plus-button:active, button.my-gcc-plus-button:active {
-    cursor: pointer;
+:not(div).my-gcc-plus-button:active {
     background-color: #edfaff;
-    transform: scale(0.98);
     box-shadow: 0px 1px 7px #E1F5FE;
-}
-
-
-button.my-gcc-plus-button:active {
-    outline: none;
-    border: none;
-}
-
-a.my-gcc-plus-button:focus, button.my-gcc-plus-button:focus {
-    outline: 0;
 }
 
 .color-content-one {
@@ -1320,6 +1447,26 @@ li.quick-links-with-sub-nav #myPages,
 * -------------------------
 */
 
+/*
+Hide things we no longer need
+*/
+.facAssignmentDetailSection #pg0_V_UploadAssignmentDetails__lblYourFiles,
+#pg0_V_UploadAssignmentDetails__lblFileInfo {
+    display: none;
+}
+
+/*
+If you click edit, and then close it, it will bring back old stuff
+that we purposely deleted.
+So, hide them. ¯\_(ツ)_/¯
+*/
+#pg0_V__stuAssgnInfo__panOverride #pg0_V__stuAssgnInfo__lblShow,
+#pg0_V__stuAssgnInfo__panOverride #pg0_V__stuAssgnInfo__hypShow,
+#pg0_V_UploadAssignmentDetails_pnlUploadAssignmentDetails,
+#pg0_V_UploadAssignmentDetails__panFileContainer .fileDisplay {
+    display: none;
+}
+
 div.assignmentUnitCollapsible.itemHover:hover,
 table.assignmentGrid.itemHover tr:hover,
 table.assignmentGrid.itemHover tr:hover td,
@@ -1358,18 +1505,9 @@ div.overrideDisplay:hover {
     background-size: 20px;
 }
 
-.my-gcc-plus-buttons-master {
-    margin: 0 30px
-}
-
-.my-gcc-plus-buttons-container {
-    display: flex;
-    margin: 20px 0;
-    justify-content: center;
-}
-
-.my-gcc-plus-buttons-container p {
-    margin: 10px 0;
+.my-gcc-plus-assignment:not(:hover) {
+    background-color: #E8F5E9;
+    box-shadow: 0px 5px 7px #e0f3e2;
 }
 
 /* -------------------------
