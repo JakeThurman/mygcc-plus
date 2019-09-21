@@ -88,9 +88,17 @@ Features:
 
     function addTextAndIcon(element, text, icon) {
         if (text !== null) {
-            var textElement = document.createElement('p');
-            textElement.textContent = text;
-            element.appendChild(textElement)
+            if (text instanceof Array) {
+                for (let str of text) {
+                    var textElement = document.createElement('p');
+                    textElement.textContent = str;
+                    element.appendChild(textElement)
+                }
+            } else {
+                var textElement = document.createElement('p');
+                textElement.textContent = text;
+                element.appendChild(textElement)
+            }
         }
         if (icon !== null) {
             var iconElement = document.createElement('i');
@@ -493,7 +501,7 @@ Features:
                 if (fullHistory == null) {
                     var oldPointsText = document.getElementsByClassName('studentAssignStatus')[0]
                     if (oldPointsText) {
-                        var points = oldPointsText.innerText.match('[0-9]+')[0];
+                        var points = oldPointsText.innerText.match('\d+')[0];
                         var pointsSentence = "Assignment is worth " + points + " points"
                         var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description");
                         filesContainer.appendChild(newPointsText);
@@ -549,7 +557,12 @@ Features:
                         for (let file of userFiles) {
                             var a = file.getElementsByTagName('a')[0];
                             var inputs = file.getElementsByTagName('input');
-                            var newA = createButton('a', a.id, a.innerText, "cloud_download", null, a.href, inputs);
+                            var innerText = [];
+                            innerText.push(a.innerText);
+                            //https://regex101.com/r/Brv8Mv/1
+                            var fileInfo = file.innerText.match(/(\(\.\w+, \d+\w+, \d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}\s+(PM|AM)\))/)
+                            if (fileInfo) innerText.push(fileInfo[0]);
+                            var newA = createButton('a', a.id, innerText, "cloud_download", null, a.href, inputs);
                             newA.getElementsByTagName('a')[0].classList.add('my-gcc-plus-assignment')
                             filesContainer.appendChild(newA);
                         }
