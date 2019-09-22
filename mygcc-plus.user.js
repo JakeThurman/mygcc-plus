@@ -501,7 +501,7 @@ Features:
                 if (fullHistory == null) {
                     var oldPointsText = document.getElementsByClassName('studentAssignStatus')[0]
                     if (oldPointsText) {
-                        var points = oldPointsText.innerText.match('\d+')[0];
+                        var points = oldPointsText.innerText.match(/(\d+)/)[0];
                         var pointsSentence = "Assignment is worth " + points + " points"
                         var newPointsText = createButton("inactive", oldPointsText.id, pointsSentence, "description");
                         filesContainer.appendChild(newPointsText);
