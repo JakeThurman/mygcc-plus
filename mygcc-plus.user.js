@@ -113,7 +113,7 @@ Features:
         let elePerLine = 2;
         var table = document.createElement('table');
         table.style.margin = "0 auto"; //center it
-        
+
         var tr, i = 0;
         //I spent an hour trying to get this to work with a for-loop
         //Apparently, tr.appendChild(input) removes the element from the inputs array. WHYYYY
@@ -470,6 +470,18 @@ Features:
             //if we're on the coursework page and we're looking at a particular assignment for some class
             if (document.getElementById('pg0_V__updatePanel')) {
 
+                /*
+                Upload button
+                */
+                var uploadButton = document.getElementById('pg0_V_UploadAssignmentDetails__hypUploadFile');
+                if (uploadButton) {
+                    uploadButton.classList.add('my-gcc-plus-button')
+                    uploadButton.classList.add('my-gcc-plus-button-shadow')
+                    
+                    //allign the upload button
+                    uploadButton.parentNode.style.margin = "0 auto 30px auto"
+                    uploadButton.parentNode.parentNode.style.display = "flex"
+                }
 
                 var gradeBar = document.getElementById('pg0_V__updatePanel');
                 var master = document.createElement('div');
@@ -528,17 +540,17 @@ Features:
                 /*
                 User Files
                 */
-               var userFiles = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList').getElementsByClassName('fileDisplay');
-               if (userFiles.length > 0) {
-                   var userFilesAndTextContainer = document.createElement('div'); //PARENT
-                   userFilesAndTextContainer.style.textAlign = "center";
-                   assignmentAndUserFiles.appendChild(userFilesAndTextContainer)
-    
-                   
-                   var userFilesText = document.createElement('span');
-                   userFilesAndTextContainer.appendChild(userFilesText);
-                   userFilesText.id = 'pg0_V_UploadAssignmentDetails__lblYourFiles';
-                   userFilesText.classList = "my-gcc-plus-section-text";
+                var userFiles = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList').getElementsByClassName('fileDisplay');
+                if (userFiles.length > 0) {
+                    var userFilesAndTextContainer = document.createElement('div'); //PARENT
+                    userFilesAndTextContainer.style.textAlign = "center";
+                    assignmentAndUserFiles.appendChild(userFilesAndTextContainer)
+
+
+                    var userFilesText = document.createElement('span');
+                    userFilesAndTextContainer.appendChild(userFilesText);
+                    userFilesText.id = 'pg0_V_UploadAssignmentDetails__lblYourFiles';
+                    userFilesText.classList = "my-gcc-plus-section-text";
                     switch (userFiles.length) {
                         case 0:
                             userFilesText.innerText = "You did not upload any files";
@@ -548,11 +560,11 @@ Features:
                         default:
                             userFilesText.innerText = "Your Uploaded Files:";
                     }
-    
+
                     var filesContainer = document.createElement('div');
                     userFilesAndTextContainer.appendChild(filesContainer);
                     filesContainer.classList = "my-gcc-plus-buttons-container";
-    
+
                     if (userFiles.length > 0) {
                         for (let file of userFiles) {
                             var a = file.getElementsByTagName('a')[0];
@@ -567,18 +579,18 @@ Features:
                             filesContainer.appendChild(newA);
                         }
                     }
-               }
+                }
 
                 /*
                 Assignment Files
                 */
-               var assignmentFiles = document.getElementById('pg0_V__stuAssgnInfo__lblFiles').parentNode.getElementsByClassName('fileDisplay'); //files to download
-               if (assignmentFiles.length > 0) {
-                   var assignmentAndTextContainer = document.createElement('div'); //PARENT
-                   assignmentAndTextContainer.style.textAlign = "center";
-                   assignmentAndUserFiles.appendChild(assignmentAndTextContainer)
-                   
-                   //add style to text
+                var assignmentFiles = document.getElementById('pg0_V__stuAssgnInfo__lblFiles').parentNode.getElementsByClassName('fileDisplay'); //files to download
+                if (assignmentFiles.length > 0) {
+                    var assignmentAndTextContainer = document.createElement('div'); //PARENT
+                    assignmentAndTextContainer.style.textAlign = "center";
+                    assignmentAndUserFiles.appendChild(assignmentAndTextContainer)
+
+                    //add style to text
                     var assignmentFilesText = document.createElement('span');
                     assignmentAndTextContainer.appendChild(assignmentFilesText);
                     assignmentFilesText.classList.add('my-gcc-plus-section-text');
@@ -591,12 +603,12 @@ Features:
                         default:
                             assignmentFilesText.innerText = "Assignment Files for Download:";
                     }
-    
+
                     var filesContainer = document.createElement('div');
                     filesContainer.id = "my-gcc-plus-assignment-files-container"
                     filesContainer.classList = "my-gcc-plus-buttons-container";
                     assignmentAndTextContainer.appendChild(filesContainer);
-    
+
                     if (assignmentFiles.length > 0) {
                         for (let file of assignmentFiles) {
                             var a = file.getElementsByTagName('a')[0];
@@ -607,7 +619,7 @@ Features:
 
                     var oldFilesContainer = document.getElementById('pg0_V__stuAssgnInfo__lblFiles').parentNode;
                     oldFilesContainer.parentNode.removeChild(oldFilesContainer);
-               }
+                }
 
 
 
@@ -1062,6 +1074,7 @@ body #masthead {
     outline: 0;
 }
 
+a.my-gcc-plus-button,
 .card-layout .masonry .my-gcc-plus-button,
 .my-gcc-plus-button {
     background-color: #f5f5f5;
@@ -1645,7 +1658,7 @@ div.openAssignment {
 div.lateAssignment div.statusDisplay,
 div.openAssignment div.statusDisplay {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_calendar_today_black_18dp-2x.png?raw=true);
-    background-size: 25px;
+    background-size: 25px; /* TODO COME BACK TO THIS */
     background-position: 10px;
 }
 
@@ -1662,19 +1675,13 @@ a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.st
 }
 
 a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
-    background-color: #eee;
-    padding: 25px 25px 25px 55px;
-    margin: 0px 0px 25px 25px;
+    padding: 25px 5px 25px 55px;
     border: 0px;
-    border-radius: 13px;
-    text-decoration: none;
-    box-shadow: 0px 5px 20px 0px #ccc;
 }
 
 .uploadFile {
     background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_blue_18dp-2x.png?raw=true);
-    background-position: 17px 22px;
-    background-size: 25px;
+    background-position: 28px 17px;
 }
 
 a.turnInAssignment {
