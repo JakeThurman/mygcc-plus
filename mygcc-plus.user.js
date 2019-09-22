@@ -503,7 +503,7 @@ Features:
                     if (oldPointsText) {
                         var points = oldPointsText.innerText.match('\d+')[0];
                         var pointsSentence = "Assignment is worth " + points + " points"
-                        var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description");
+                        var newPointsText = createButton("inactive", oldPointsText.id, pointsSentence, "description");
                         filesContainer.appendChild(newPointsText);
                         oldPointsText.parentNode.removeChild(oldPointsText);
                     }
@@ -705,9 +705,9 @@ Features:
                         shadow: "#ffc5c0"
                     },
                     default: {
-                        background: "#edf4ff",
+                        background: "#E0F7FA",
                         text: "#003375",
-                        shadow: "#ebf9ff"
+                        shadow: "#ecf8f9"
                     }
                 };
                 grade = grade.match(/([A-F][+\-]?(?![\w]+))/);
@@ -746,13 +746,10 @@ Features:
             var cards = document.getElementsByClassName("card");
             if (cards.length > 0) {
                 for (let card of cards) {
+                    card.classList.add('my-gcc-plus-button')
+                    card.classList.add('my-gcc-plus-button-shadow')
                     //reposition the title a little bit
                     card.getElementsByClassName('col-xs-10')[0].style.width = "100%";
-                    card.getElementsByClassName('col-xs-10')[0].style.paddingLeft = "15px";
-                    card.getElementsByClassName('col-xs-10')[0].style.paddingRight = "15px";
-
-                    //push down the title a little bit
-                    card.getElementsByClassName('col-xs-12')[0].style.paddingTop = "10px"
 
                     var aTags = card.getElementsByTagName("a");
                     var URL = aTags[0].getAttribute("href"); //retrieve URL
@@ -1065,8 +1062,9 @@ body #masthead {
     outline: 0;
 }
 
+.card-layout .masonry .my-gcc-plus-button,
 .my-gcc-plus-button {
-    background-color: #fafafa;
+    background-color: #f5f5f5;
     font-family: 'Manjari', sans-serif;
     display: inline-block;
     text-align: center;
@@ -1080,6 +1078,30 @@ body #masthead {
     -webkit-transition: all 200ms;
     -ms-transition: all 200ms;
     transition: all 200ms;
+}
+
+.card-layout .masonry .my-gcc-plus-button:active,
+:not(inactive).my-gcc-plus-button:active {
+    cursor: pointer;
+    transform: scale(0.98);
+}
+
+.card-layout .masonry .my-gcc-plus-button:hover,
+:not(inactive).my-gcc-plus-button:hover {
+    cursor: pointer;
+    background-color: #f2fbff;
+    box-shadow: 0px 5px 7px #E1F5FE;
+}
+
+.card-layout .masonry .my-gcc-plus-button:hover *,
+:not(inactive).my-gcc-plus-button:hover * {
+    color: rgb(0, 120, 175);
+}
+
+.card-layout .masonry .my-gcc-plus-button:active,
+:not(inactive).my-gcc-plus-button:active {
+    background-color: #edfaff;
+    box-shadow: 0px 1px 7px #E1F5FE;
 }
 
 input.my-gcc-plus-button-delete {
@@ -1096,26 +1118,6 @@ input.my-gcc-plus-button-delete:active {
     box-shadow: 0px 1px 7px #FFCDD2 !important;
 }
 
-
-:not(div).my-gcc-plus-button:active {
-    cursor: pointer;
-    transform: scale(0.98);
-}
-
-:not(div).my-gcc-plus-button:hover {
-    cursor: pointer;
-    background-color: #f2fbff;
-    box-shadow: 0px 5px 7px #E1F5FE;
-}
-
-:not(div).my-gcc-plus-button:hover * {
-    color: rgb(0, 120, 175);
-}
-
-:not(div).my-gcc-plus-button:active {
-    background-color: #edfaff;
-    box-shadow: 0px 1px 7px #E1F5FE;
-}
 
 .color-content-one {
     color: #000;
@@ -1528,25 +1530,6 @@ div.overrideDisplay:hover {
 *     Course Main Page
 * -------------------------
 */
-
-.card-layout .masonry .card {
-    background-color: #fafafa;
-    box-shadow: 0px 5px 7px #e1e1e1;
-    border-radius: 30px;
-    text-align: center;
-    min-height: 120px;
-    -webkit-transition: background-color 300ms;
-    -ms-transition: background-color 300ms;
-    transition: background-color 300ms;
-    -webkit-transition: box-shadow 300ms;
-    -ms-transition: box-shadow 300ms;
-    transition: box-shadow 300ms;
-}
-
-.card-layout .masonry .card:hover {
-    background-color: #f2fbff;
-    box-shadow: 0px 5px 7px #E1F5FE;
-}
 
 .card-layout .masonry .card .title {
     color: #00579B !important;
