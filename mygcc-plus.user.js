@@ -642,47 +642,47 @@ Features:
                     "A+": {
                         background: "#00c853",
                         text: "#004e20",
-                        shadow: "#A5D6A7"
+                        shadow: "#C8E6C9"
                     },
                     "A-": {
                         backgroundColor: "#57d154",
                         text: "#245423",
-                        shadow: "#b3ffb1"
+                        shadow: "#DCEDC8"
                     },
                     "A": {
                         background: "#36c246",
                         text: "#195920",
-                        shadow: "#a9ffb3"
+                        shadow: "#C8E6C9"
                     },
                     "B+": {
                         background: "#8bc34a",
                         text: "#3d5620",
-                        shadow: "#9CCC65"
+                        shadow: "#DCEDC8"
                     },
                     "B-": {
                         background: "#a0cb6e",
                         text: "#40502d",
-                        shadow: "#9CCC65"
+                        shadow: "#DCEDC8"
                     },
                     "B": {
                         background: "#9ccc65",
                         text: "#32451d",
-                        shadow: "#9CCC65"
+                        shadow: "#DCEDC8"
                     },
                     "C+": {
                         background: "#cddc39",
                         text: "#5a611a",
-                        shadow: "#DCE775"
+                        shadow: "#F0F4C3"
                     },
                     "C-": {
                         background: "#fbc02d",
                         text: "#544112",
-                        shadow: "#FFE0B2"
+                        shadow: "#FFD180"
                     },
                     "C": {
                         background: "#d4e157",
                         text: "#5d6325",
-                        shadow: "#DCE775"
+                        shadow: "#E6EE9C"
                     },
                     "D+": {
                         background: "#ffa726",
@@ -697,7 +697,7 @@ Features:
                     "D": {
                         background: "#f57c00",
                         text: "#623200",
-                        shadow: "#ffbf7f"
+                        shadow: "#FFAB91"
                     },
                     "F": {
                         background: "#f44336",
@@ -706,7 +706,8 @@ Features:
                     },
                     default: {
                         background: "#edf4ff",
-                        text: "#003375"
+                        text: "#003375",
+                        shadow: "#ebf9ff"
                     }
                 };
                 grade = grade.match(/([A-F][+\-]?(?![\w]+))/);
@@ -759,7 +760,7 @@ Features:
                     aTags[0].style.textDecoration = "none"; //don't underline the text when mousing over
                     var linkTemp = aTags[1].innerText.toLowerCase();
 
-                    if (card.getElementsByClassName("sub-info").length > 0) {
+                    if (card.getElementsByClassName("sub-info").length > 0) { //likely something you download
                         var subInfo = card.getElementsByClassName("sub-info")[0];
                         var newSubInfo = document.createElement("span");
                         newSubInfo.classList = "sub-info";
@@ -768,7 +769,7 @@ Features:
                         newSubInfo.innerHTML = subInfo.innerHTML;
                         subInfo.parentElement.appendChild(newSubInfo)
                         subInfo.parentNode.removeChild(subInfo);
-                    } else {
+                    } else { //like an external URL
                         var icon = document.createElement("div");
                         icon.style.minHeight = "20px";
                         selectIcon(icon, linkTemp, "center")
@@ -776,7 +777,7 @@ Features:
                     }
 
                     //remove the bottom button because we don't need it TODO: what about professors where there might be an 'edit' button? What then?
-                    aTags[1].remove();
+                    card.getElementsByClassName('card-action')[0].getElementsByTagName('a')[0].remove();
 
                     //insert an a-tag so that the entire button is clickable
                     var a = document.createElement("a");
@@ -1533,8 +1534,7 @@ div.overrideDisplay:hover {
     box-shadow: 0px 5px 7px #e1e1e1;
     border-radius: 30px;
     text-align: center;
-    height: 120px;
-    max-height: 120px;
+    min-height: 120px;
     -webkit-transition: background-color 300ms;
     -ms-transition: background-color 300ms;
     transition: background-color 300ms;
@@ -1552,8 +1552,6 @@ div.overrideDisplay:hover {
     color: #00579B !important;
     padding: 0px 15px 0px 15px;
     font-size: 20px;
-    max-height: 55px;
-    overflow: hidden;
 }
 
 .card.row.class-xs-10 {
