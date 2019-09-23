@@ -486,7 +486,8 @@ Features:
             */
             var portlets = document.getElementsByClassName('portlet')
             for (let portlet of portlets) {
-                portlet.getElementsByClassName('portlet-header-bar')[0].getElementsByTagName('a')[0].classList = "cl-a-style cl-effect-1";
+                var link = portlet.getElementsByClassName('portlet-header-bar')[0].getElementsByTagName('a');
+                if (link.length > 0) link[0].classList = "cl-a-style cl-effect-1";
             }
 
             /*
@@ -558,8 +559,9 @@ Features:
                 /*
                 User Files
                 */
-                var userFiles = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList').getElementsByClassName('fileDisplay');
-                if (userFiles.length > 0) {
+                var uploadList = document.getElementById('pg0_V_UploadAssignmentDetails_AssignmentFileUploader_upFileUploadList')
+                var userFiles = uploadList ? uploadList.getElementsByClassName('fileDisplay') : null;
+                if (userFiles && userFiles.length > 0) {
                     var userFilesAndTextContainer = document.createElement('div'); //PARENT
                     userFilesAndTextContainer.style.textAlign = "center";
                     assignmentAndUserFiles.appendChild(userFilesAndTextContainer)
