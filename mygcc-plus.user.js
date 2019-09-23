@@ -129,6 +129,7 @@ Features:
             if (input.id.includes('btnEdit')) {
                 input.classList.add("my-gcc-plus-button");
                 input.src = "https://fonts.gstatic.com/s/i/materialicons/edit/v1/24px.svg";
+
             } else if (input.id.includes('btnDelete')) {
                 input.classList.add("my-gcc-plus-button-delete");
                 input.src = "https://fonts.gstatic.com/s/i/materialicons/delete_outline/v1/24px.svg";
@@ -178,6 +179,30 @@ Features:
         }
 
         return element;
+    }
+
+    function updateUploadAndSubmitButtons() {
+        /*
+        Upload button
+        */
+        var uploadButton = document.getElementById('pg0_V_UploadAssignmentDetails__hypUploadFile');
+        if (uploadButton) {
+            uploadButton.classList.add('my-gcc-plus-button')
+            uploadButton.classList.add('my-gcc-plus-button-shadow')
+
+            //allign the upload button
+            uploadButton.parentNode.style.margin = "0 auto 30px auto"
+            uploadButton.parentNode.parentNode.style.display = "flex"
+        }
+
+        /*
+        Submit button
+        */
+        var submit = document.getElementById('pg0_V_UploadAssignmentDetails__lbtnTurnIn');
+        if (submit) {
+            submit.classList.add('my-gcc-plus-button')
+            submit.classList.add('my-gcc-plus-button-shadow')
+        }
     }
 
     try {
@@ -470,19 +495,12 @@ Features:
             //if we're on the coursework page and we're looking at a particular assignment for some class
             if (document.getElementById('pg0_V__updatePanel')) {
 
-                /*
-                Upload button
-                */
-                var uploadButton = document.getElementById('pg0_V_UploadAssignmentDetails__hypUploadFile');
-                if (uploadButton) {
-                    uploadButton.classList.add('my-gcc-plus-button')
-                    uploadButton.classList.add('my-gcc-plus-button-shadow')
-                    
-                    //allign the upload button
-                    uploadButton.parentNode.style.margin = "0 auto 30px auto"
-                    uploadButton.parentNode.parentNode.style.display = "flex"
-                }
+                updateUploadAndSubmitButtons();
 
+                /**
+                 * All other buttons, such as:
+                 * Add coumment, # assignment points, instructions, user-uploaded files, assignment files
+                 */
                 var gradeBar = document.getElementById('pg0_V__updatePanel');
                 var master = document.createElement('div');
                 master.classList = "my-gcc-plus-buttons-master";
@@ -1687,19 +1705,14 @@ a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
 a.turnInAssignment {
     background-color: #B3E5FC;
     padding: 12px 15px 12px 60px;
-    border-radius: 13px;
-    border: 0px;
-    margin: 0px 0px 0px 20px;
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_check_circle_black_18dp-2x.png?raw=true);
-    background-position: 14px 17px;
+    background-image: url(https://fonts.gstatic.com/s/i/materialicons/check_circle_outline/v1/24px.svg);
+    background-size: 35px;
+    background-position: 15px 18px;
+    text-align: left;
 }
 
 a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
     text-decoration: none;
-}
-
-a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
-    color: #003958;
 }
 
 
