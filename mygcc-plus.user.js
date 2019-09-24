@@ -529,7 +529,7 @@ Features:
                 /* Add Comment */
                 var oldAddComment = document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__addEditFeedbackButton');
                 if (oldAddComment) {
-                    var newAddComment = createButton("button", oldAddComment.id, "Add a coment", "add_comment", oldAddComment.getAttribute('onclick'));
+                    var newAddComment = createButton("button", oldAddComment.id, "Add a comment", "add_comment", oldAddComment.getAttribute('onclick'));
                     filesContainer.appendChild(newAddComment);
                     oldAddComment.parentNode.removeChild(oldAddComment);
                 }
