@@ -131,7 +131,7 @@ Features:
                 input.src = "https://fonts.gstatic.com/s/i/materialicons/edit/v1/24px.svg";
 
             } else if (input.id.includes('btnDelete')) {
-                input.classList.add("my-gcc-plus-button-delete");
+                input.classList.add("my-gcc-plus-button-red");
                 input.src = "https://fonts.gstatic.com/s/i/materialicons/delete_outline/v1/24px.svg";
             }
 
@@ -190,18 +190,33 @@ Features:
             uploadButton.classList.add('my-gcc-plus-button')
             uploadButton.classList.add('my-gcc-plus-button-shadow')
 
-            //allign the upload button
+            //allign the upload button and submit button
             uploadButton.parentNode.style.margin = "0 auto 30px auto"
+            uploadButton.parentNode.style.display = "flex"
             uploadButton.parentNode.parentNode.style.display = "flex"
         }
 
         /*
         Submit button
         */
-        var submit = document.getElementById('pg0_V_UploadAssignmentDetails__lbtnTurnIn');
-        if (submit) {
-            submit.classList.add('my-gcc-plus-button')
-            submit.classList.add('my-gcc-plus-button-shadow')
+        var submitButton = document.getElementById('pg0_V_UploadAssignmentDetails__lbtnTurnIn');
+        if (submitButton) {
+            submitButton.classList.add('my-gcc-plus-button')
+            submitButton.classList.add('my-gcc-plus-button-shadow')
+        }
+
+        //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
+        if (document.querySelector('.lateAssignment') !== null) {
+            if (uploadButton) {
+                uploadButton.classList.remove("uploadFile")
+                uploadButton.classList.add("upload-file-late")
+                uploadButton.classList.add("my-gcc-plus-button-red")
+            }
+            if (submitButton) {
+                submitButton.classList.remove("turnInAssignment")
+                submitButton.classList.add("turn-in-assignment-late")
+                submitButton.classList.add("my-gcc-plus-button-red")
+            }
         }
     }
 
@@ -641,10 +656,6 @@ Features:
                     oldFilesContainer.parentNode.removeChild(oldFilesContainer);
                 }
 
-
-
-
-
                 $('.fileDisplay').remove()
             }
 
@@ -736,6 +747,11 @@ Features:
                         text: "#7e231d",
                         shadow: "#ffc5c0"
                     },
+                    "late": {
+                        background: "#EF9A9A",
+                        text: "#505050",
+                        shadow: "#FFCDD2"
+                    },
                     default: {
                         background: "#E0F7FA",
                         text: "#003375",
@@ -744,6 +760,11 @@ Features:
                 };
                 grade = grade.match(/([A-F][+\-]?(?![\w]+))/);
                 grade = grade ? grade[0] : "default";
+
+                //edge case: late submission assignment, set to "late":
+                if (document.querySelector('.lateAssignment') !== null) {
+                    grade = "late"
+                }
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
                 gradeBackground.style.color = colors[grade].text;
@@ -842,29 +863,6 @@ Features:
                     document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.height = '18px';
                     document.getElementsByClassName('imageAndText')[0].getElementsByTagName('img')[0].style.paddingRight = '5px';
                 }
-            }
-
-            //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
-            if (document.querySelector('.lateAssignment') !== null) {
-                $("<style>").text(`
-
-                    a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
-                        background-color: #ff97a1 !important;
-                    }
-
-                    a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
-                        color: #733a3a !important;
-                    }
-
-                    a.turnInAssignment, a.turnInAssignment:link, a.turnInAssignment:visited {
-                        color: #733a3a !important;
-                    }
-
-                    a.turnInAssignment {
-                        background-color: #FFCDD2 !important;
-                    }
-
-                `).appendTo(document.body);
             }
         }
 
@@ -1137,20 +1135,24 @@ a.my-gcc-plus-button,
     box-shadow: 0px 1px 7px #E1F5FE;
 }
 
-input.my-gcc-plus-button-delete {
+.my-gcc-plus-button-red {
     background-color: #EF9A9A;
     box-shadow: 0 5px 7px #FFCDD2;
 }
 
-input.my-gcc-plus-button-delete:hover {
+.my-gcc-plus-button-red:hover {
     background-color: #E57373 !important;
     box-shadow: 0 5px 7px #FFCDD2 !important;
 }
 
-input.my-gcc-plus-button-delete:active {
+.my-gcc-plus-button-red:active {
     box-shadow: 0px 1px 7px #FFCDD2 !important;
 }
 
+.card-layout .masonry .my-gcc-plus-button-red:hover *,
+:not(inactive).my-gcc-plus-button-red:hover * {
+    color: #505050;
+}
 
 .color-content-one {
     color: #000;
@@ -1651,10 +1653,6 @@ div.feedbackDisplay span.author {
 * -------------------------
 */
 
-div.lateAssignment span.assignmentStatus strong {
-    color: #ff0000;
-}
-
 div.lateAssignment {
     border: 0px;
     margin: 0px;
@@ -1686,31 +1684,50 @@ div.overrideInstructions {
     background-image: none;
 }
 
-div.uploadAssignmentInfo, div.onlineAssignmentInfo {
-    background-position: 0px 0px;
+/* Upload button */
+#pg0_V_UploadAssignmentDetails__hypUploadFile {
+    background-image: url(https://fonts.gstatic.com/s/i/materialicons/cloud_upload/v1/24px.svg);
+    background-position: 28px 17px;
+    padding: 25px 5px 20px 55px;
+    background-repeat: no-repeat;
+    background-size: 35px;
 }
 
-a.uploadFile, a.uploadFile:link, a.uploadFile:visited, a.startAttempt span, a.startAttempt:visited span, a.startAttempt:link span {
+a.uploadFile, a.uploadFile:link, a.uploadFile:visited, #pg0_V_UploadAssignmentDetails__hypUploadFile span {
     color: #0288D1;
 }
 
-a.uploadFile, a.uploadFile:hover, a.startAttempt, span.waitAttempt {
-    padding: 25px 5px 25px 55px;
-    border: 0px;
+a.upload-file-late, a.upload-file-late:link, a.upload-file-late:visited {
+    background-color: #ff97a1;
+    color: #733a3a;
 }
 
-.uploadFile {
-    background-image: url(https://github.com/JakeThurman/mygcc-plus/blob/master/references/outline_cloud_upload_blue_18dp-2x.png?raw=true);
-    background-position: 28px 17px;
+a.turn-in-assignment-late, a.turn-in-assignment-late:link, a.turn-in-assignment-late:visited {
+    background-color: #FFCDD2;
+    color: #733a3a;
 }
 
-a.turnInAssignment {
-    background-color: #B3E5FC;
+/* Submit button */
+#pg0_V_UploadAssignmentDetails__lbtnTurnIn {
     padding: 12px 15px 12px 60px;
     background-image: url(https://fonts.gstatic.com/s/i/materialicons/check_circle_outline/v1/24px.svg);
     background-size: 35px;
     background-position: 15px 18px;
     text-align: left;
+    background-repeat: no-repeat;
+}
+
+#pg0_V_UploadAssignmentDetails__lbtnTurnIn .turnInLink {
+    display: block;
+}
+
+a.turnInAssignment {
+    background-color: #B3E5FC;
+}
+
+a.turn-in-assignment-late, a.turn-in-assignment-late:link, a.turn-in-assignment-late:visited {
+    color: #733a3a;
+    background-color: #FFCDD2;
 }
 
 a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
