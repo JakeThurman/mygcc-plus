@@ -124,10 +124,10 @@ Features:
                 table.appendChild(tr)
             }
             input.classList.add('my-gcc-plus-button')
-            input.classList.add('my-gcc-plus-button-shadow')
 
             if (input.id.includes('btnEdit')) {
                 input.classList.add("my-gcc-plus-button");
+                input.classList.add("my-gcc-plus-button-default");
                 input.src = "https://fonts.gstatic.com/s/i/materialicons/edit/v1/24px.svg";
 
             } else if (input.id.includes('btnDelete')) {
@@ -143,18 +143,24 @@ Features:
         return table;
     }
 
-    function convertToButton(element, text, icon, shadow = true) {
+    function convertToButton(element,  text, icon, color="default") {
         element.classList.add('my-gcc-plus-button');
-        if (shadow) element.classList.add('my-gcc-plus-button-shadow')
+        if (color) element.classList.add('my-gcc-plus-button-' + color);
+        
         element.innerHTML = null
         addTextAndIcon(element, text, icon)
         return element;
     }
 
-    function createButton(type, id = null, text = null, icon = null, onclick = null, href = null, inputs = null) {
+    function createButton(type, id = null, text = null, icon = null, color="default", onclick = null, href = null, inputs = null) {
         var element = document.createElement(type)
         if (id != null) element.id = id;
-        element.classList = "my-gcc-plus-button";
+        if (color) {
+            element.classList = "my-gcc-plus-button";
+            element.classList.add("my-gcc-plus-button-" + color);
+        } else {
+            element.classList = "my-gcc-plus-button-inactive";            
+        }
 
         addTextAndIcon(element, text, icon)
 
@@ -163,7 +169,6 @@ Features:
         } else if (type == 'a') {
             element.target = "_blank" //open in new tab
         }
-        if (onclick != null || href != null) element.classList.add('my-gcc-plus-button-shadow')
         if (onclick != null) element.setAttribute('onclick', onclick);
         if (href != null) {
             element.href = href;
@@ -188,7 +193,7 @@ Features:
         var uploadButton = document.getElementById('pg0_V_UploadAssignmentDetails__hypUploadFile');
         if (uploadButton) {
             uploadButton.classList.add('my-gcc-plus-button')
-            uploadButton.classList.add('my-gcc-plus-button-shadow')
+            uploadButton.classList.add('my-gcc-plus-button-blue')
 
             //allign the upload button and submit button
             uploadButton.parentNode.style.margin = "0 auto 30px auto"
@@ -202,7 +207,7 @@ Features:
         var submitButton = document.getElementById('pg0_V_UploadAssignmentDetails__lbtnTurnIn');
         if (submitButton) {
             submitButton.classList.add('my-gcc-plus-button')
-            submitButton.classList.add('my-gcc-plus-button-shadow')
+            submitButton.classList.add('my-gcc-plus-button-blue')
         }
 
         //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
@@ -308,11 +313,6 @@ Features:
         ralewayFont.href = 'https://fonts.googleapis.com/css?family=Raleway&display=swap'
         ralewayFont.rel = 'stylesheet';
         document.head.appendChild(ralewayFont);
-
-        var manjariFont = document.createElement('link');
-        manjariFont.href = 'https://fonts.googleapis.com/css?family=Manjari&display=swap'
-        manjariFont.rel = 'stylesheet';
-        document.head.appendChild(manjariFont);
 
         var manjariFont = document.createElement('link');
         manjariFont.href = 'https://fonts.googleapis.com/css?family=Manjari&display=swap'
@@ -529,7 +529,7 @@ Features:
                 /* Add Comment */
                 var oldAddComment = document.getElementById('pg0_V__feedbackDisplay__feedbackEditor__addEditFeedbackButton');
                 if (oldAddComment) {
-                    var newAddComment = createButton("button", oldAddComment.id, "Add a comment", "add_comment", oldAddComment.getAttribute('onclick'));
+                    var newAddComment = createButton("button", oldAddComment.id, "Add a comment", "add_comment", "default", oldAddComment.getAttribute('onclick'));
                     filesContainer.appendChild(newAddComment);
                     oldAddComment.parentNode.removeChild(oldAddComment);
                 }
@@ -549,7 +549,7 @@ Features:
                     if (oldPointsText) {
                         var points = oldPointsText.innerText.match(/(\d+)/)[0];
                         var pointsSentence = "Assignment is worth " + points + " points"
-                        var newPointsText = createButton("inactive", oldPointsText.id, pointsSentence, "description");
+                        var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description", null);
                         filesContainer.appendChild(newPointsText);
                         oldPointsText.parentNode.removeChild(oldPointsText);
                     }
@@ -609,7 +609,7 @@ Features:
                             //https://regex101.com/r/Brv8Mv/1
                             var fileInfo = file.innerText.match(/(\(\.\w+, \d+\w+, \d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{1,2}\s+(PM|AM)\))/)
                             if (fileInfo) innerText.push(fileInfo[0]);
-                            var newA = createButton('a', a.id, innerText, "cloud_download", null, a.href, inputs);
+                            var newA = createButton('a', a.id, innerText, "cloud_download", "green", null, a.href, inputs);
                             newA.getElementsByTagName('a')[0].classList.add('my-gcc-plus-assignment')
                             filesContainer.appendChild(newA);
                         }
@@ -647,7 +647,7 @@ Features:
                     if (assignmentFiles.length > 0) {
                         for (let file of assignmentFiles) {
                             var a = file.getElementsByTagName('a')[0];
-                            var newA = createButton('a', a.id, a.innerText, "cloud_download", null, a.href);
+                            var newA = createButton('a', a.id, a.innerText, "cloud_download", "default", null, a.href);
                             filesContainer.appendChild(newA);
                         }
                     }
@@ -800,7 +800,7 @@ Features:
             if (cards.length > 0) {
                 for (let card of cards) {
                     card.classList.add('my-gcc-plus-button')
-                    card.classList.add('my-gcc-plus-button-shadow')
+                    card.classList.add('my-gcc-plus-button-default')
                     //reposition the title a little bit
                     card.getElementsByClassName('col-xs-10')[0].style.width = "100%";
 
@@ -1076,14 +1076,6 @@ body #masthead {
     margin: 10px 0;
 }
 
-.my-gcc-plus-assignment {
-    background-color
-}
-
-.my-gcc-plus-button-shadow {
-    box-shadow: 0px 5px 7px #e1e1e1;
-}
-
 :not(input).my-gcc-plus-button {
     min-width: 150px;
 }
@@ -1094,8 +1086,8 @@ body #masthead {
 
 a.my-gcc-plus-button,
 .card-layout .masonry .my-gcc-plus-button,
-.my-gcc-plus-button {
-    background-color: #f5f5f5;
+.my-gcc-plus-button,
+.my-gcc-plus-button-inactive {
     font-family: 'Manjari', sans-serif;
     display: inline-block;
     text-align: center;
@@ -1103,7 +1095,6 @@ a.my-gcc-plus-button,
     padding: 12px;
     border: none;
     border-radius: 15px;
-    color: #505050 !important;
     font-size: 16px;
     margin: 0 20px;
     -webkit-transition: all 200ms;
@@ -1112,46 +1103,96 @@ a.my-gcc-plus-button,
 }
 
 .card-layout .masonry .my-gcc-plus-button:active,
-:not(inactive).my-gcc-plus-button:active {
+.my-gcc-plus-button:active {
     cursor: pointer;
     transform: scale(0.98);
 }
 
 .card-layout .masonry .my-gcc-plus-button:hover,
-:not(inactive).my-gcc-plus-button:hover {
+.my-gcc-plus-button:hover {
     cursor: pointer;
-    background-color: #f2fbff;
-    box-shadow: 0px 5px 7px #E1F5FE;
 }
 
-.card-layout .masonry .my-gcc-plus-button:hover *,
-:not(inactive).my-gcc-plus-button:hover * {
+/* NON-CLICKABLE */
+
+.my-gcc-plus-button-inactive {
+    background-color: #f5f5f5;
+    color: #505050 !important;
+}
+
+/* DEFAULT COLOR */
+
+a.my-gcc-plus-button-default,
+.card-layout .masonry .my-gcc-plus-button-default,
+.my-gcc-plus-button-default {
+    background-color: #f5f5f5;
+    box-shadow: 0px 5px 7px #e1e1e1;
+    color: #505050 !important;
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:hover,
+.my-gcc-plus-button-default:hover {
+    background-color: #e0f5ff;
+    box-shadow: 0px 5px 7px #d5e7f0;
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:hover *,
+.my-gcc-plus-button-default:hover * {
     color: rgb(0, 120, 175);
 }
 
-.card-layout .masonry .my-gcc-plus-button:active,
-:not(inactive).my-gcc-plus-button:active {
-    background-color: #edfaff;
+.card-layout .masonry .my-gcc-plus-button-default:active,
+.my-gcc-plus-button-default:active {
     box-shadow: 0px 1px 7px #E1F5FE;
 }
 
+/* GREEN COLOR */
+
+.my-gcc-plus-button-green {
+    background-color: #A5D6A7 !important; /* GREEN 200 */
+    box-shadow: 0px 5px 7px #C8E6C9 !important; /* GREEN 100 */
+    color: #414a44 !important;
+}
+
+.my-gcc-plus-button-green:hover {
+    background-color: #81C784 !important; /* GREEN 300 */
+}
+
+.my-gcc-plus-button-green:active {
+    box-shadow: 0px 1px 7px #C8E6C9 !important; /* GREEN 100 */
+}
+
+
+/* BLUE COLOR */
+
+.my-gcc-plus-button-blue {
+    background-color: #90CAF9 !important; /* BLUE 200 */
+    box-shadow: 0 5px 7px #BBDEFB !important; /* BLUE 100 */
+    color: #41464a !important;
+}
+
+.my-gcc-plus-button-blue:hover {
+    background-color: #64B5F6 !important; /* BLUE 300 */
+}
+
+.my-gcc-plus-button-blue:active {
+    box-shadow: 0px 1px 7px #BBDEFB !important; /* BLUE 100 */
+}
+
+/* RED COLOR */
+
 .my-gcc-plus-button-red {
-    background-color: #EF9A9A;
-    box-shadow: 0 5px 7px #FFCDD2;
+    background-color: #EF9A9A !important; /* RED 200 */
+    box-shadow: 0 5px 7px #FFCDD2 !important; /* RED 100 */
+    color: #4a4141 !important;
 }
 
 .my-gcc-plus-button-red:hover {
-    background-color: #E57373 !important;
-    box-shadow: 0 5px 7px #FFCDD2 !important;
+    background-color: #E57373 !important; /* RED 300 */
 }
 
 .my-gcc-plus-button-red:active {
-    box-shadow: 0px 1px 7px #FFCDD2 !important;
-}
-
-.card-layout .masonry .my-gcc-plus-button-red:hover *,
-:not(inactive).my-gcc-plus-button-red:hover * {
-    color: #505050;
+    box-shadow: 0px 1px 7px #FFCDD2 !important; /* RED 100 */
 }
 
 .color-content-one {
@@ -1556,11 +1597,6 @@ div.overrideDisplay:hover {
     background-size: 20px;
 }
 
-.my-gcc-plus-assignment:not(:hover) {
-    background-color: #E8F5E9;
-    box-shadow: 0px 5px 7px #e0f3e2;
-}
-
 /* -------------------------
 *     Course Main Page
 * -------------------------
@@ -1687,16 +1723,16 @@ div.overrideInstructions {
 /* Upload button */
 #pg0_V_UploadAssignmentDetails__hypUploadFile {
     background-image: url(https://fonts.gstatic.com/s/i/materialicons/cloud_upload/v1/24px.svg);
-    background-position: 28px 17px;
-    padding: 25px 5px 20px 55px;
+    background-position: 28px 19px;
+    padding: 28px 5px 0px 55px;
     background-repeat: no-repeat;
     background-size: 35px;
 }
-
+/*
 a.uploadFile, a.uploadFile:link, a.uploadFile:visited, #pg0_V_UploadAssignmentDetails__hypUploadFile span {
     color: #0288D1;
 }
-
+*/
 a.upload-file-late, a.upload-file-late:link, a.upload-file-late:visited {
     background-color: #ff97a1;
     color: #733a3a;
