@@ -973,7 +973,7 @@ tr.footer {
 /* Make unofficial transcript more clearly divided */
 #pg4_V_tblTermData tbody tr.header {
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 
