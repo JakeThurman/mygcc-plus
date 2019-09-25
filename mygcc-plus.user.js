@@ -847,7 +847,7 @@ Features:
                     primaryButton.remove();
 
                     //remove redundant spacer in some cards
-                    if (card.getElementsByClassName('people-card-spacer').length > 0) {
+                    if ((window.location.href.indexOf("Collaboration") > -1) && card.getElementsByClassName('people-card-spacer').length > 0) {
                         card.getElementsByClassName('people-card-spacer')[0].remove()
                     }
 
