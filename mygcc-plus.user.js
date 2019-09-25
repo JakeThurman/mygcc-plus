@@ -479,10 +479,10 @@ Features:
             $(".arrow").css({ "left": '79%' });
 
             //Insert feedback option at bottom left of page
-            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank" style="float: left">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
+            $(".footer")[$(".footer").length - 1].insertAdjacentHTML('beforeend', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGp3PM-lYed70DANXx0CiRPa2vNlAEVA2-QUeuJX2aOx7qA/viewform?usp=sf_link" target="_blank" style="float: left">MyGCC-Plus: Click here to provide feedback or report a bug</a>')
 
             //Insert changes log at bottom right of page
-            $(".footer")[1].insertAdjacentHTML('beforeend', '<a href="https://github.com/JakeThurman/mygcc-plus/commits/master" target="_blank" style="float: right">Click here to view MyGCC-Plus changelog!</a>')
+            $(".footer")[$(".footer").length - 1].insertAdjacentHTML('beforeend', '<a href="https://github.com/JakeThurman/mygcc-plus/commits/master" target="_blank" style="float: right">Click here to view MyGCC-Plus changelog!</a>')
 
             //Remove redundant repetition of text in Academics --> All My Courses (portlet)
             $(".amc-header").remove();
@@ -929,74 +929,6 @@ body #masthead {
 	text-decoration: none;
 }
 
-/* Effect 1: Brackets */
-.cl-effect-1::before,
-.cl-effect-1::after {
-	display: inline-block;
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
-	transition: transform 0.3s, opacity 0.2s;
-}
-
-.cl-effect-1::before {
-	margin-right: 10px;
-	content: '[';
-	-webkit-transform: translateX(20px);
-	-moz-transform: translateX(20px);
-	transform: translateX(20px);
-}
-
-.cl-effect-1::after {
-	margin-left: 10px;
-	content: ']';
-	-webkit-transform: translateX(-20px);
-	-moz-transform: translateX(-20px);
-	transform: translateX(-20px);
-}
-
-.cl-effect-1:hover::before,
-.cl-effect-1:hover::after,
-.cl-effect-1:focus::before,
-.cl-effect-1:focus::after {
-	opacity: 1;
-	-webkit-transform: translateX(0px);
-	-moz-transform: translateX(0px);
-	transform: translateX(0px);
-}
-
-
-/* Effect 3: bottom line slides/fades in */
-.cl-effect-3 {
-	padding: 8px 0;
-}
-
-.cl-effect-3::after {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	height: 4px;
-	background: rgba(0,0,0,0.1);
-	content: '';
-	opacity: 0;
-	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
-	transition: opacity 0.3s, transform 0.3s;
-	-webkit-transform: translateY(10px);
-	-moz-transform: translateY(10px);
-	transform: translateY(10px);
-}
-
-.cl-effect-3:hover::after,
-.cl-effect-3:focus::after {
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
-}
-
-
 .feedbackMessage {
     font-size: 1em;
     background-color: white;
@@ -1031,6 +963,17 @@ body #masthead {
 
 #pg0_V_divEmailAdvisor {
     position: inherit !important;
+}
+
+/* Get rid of gray bars on unofficial transcript page */
+tr.footer {
+    display: none;
+}
+
+/* Make unofficial transcript more clearly divided */
+#pg4_V_tblTermData tbody tr.header {
+    text-align: center;
+    font-size: 30px;
 }
 
 
@@ -1241,6 +1184,73 @@ div.detailHeader {
     padding: 15px 15px 15px 0px;
     background-color: transparent;
     border-bottom: transparent;
+}
+
+/* Effect 1: Brackets */
+.cl-effect-1::before,
+.cl-effect-1::after {
+	display: inline-block;
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
+	transition: transform 0.3s, opacity 0.2s;
+}
+
+.cl-effect-1::before {
+	margin-right: 10px;
+	content: '[';
+	-webkit-transform: translateX(20px);
+	-moz-transform: translateX(20px);
+	transform: translateX(20px);
+}
+
+.cl-effect-1::after {
+	margin-left: 10px;
+	content: ']';
+	-webkit-transform: translateX(-20px);
+	-moz-transform: translateX(-20px);
+	transform: translateX(-20px);
+}
+
+.cl-effect-1:hover::before,
+.cl-effect-1:hover::after,
+.cl-effect-1:focus::before,
+.cl-effect-1:focus::after {
+	opacity: 1;
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
+}
+
+
+/* Effect 3: bottom line slides/fades in */
+.cl-effect-3 {
+	padding: 8px 0;
+}
+
+.cl-effect-3::after {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: rgba(0,0,0,0.1);
+	content: '';
+	opacity: 0;
+	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
+	transition: opacity 0.3s, transform 0.3s;
+	-webkit-transform: translateY(10px);
+	-moz-transform: translateY(10px);
+	transform: translateY(10px);
+}
+
+.cl-effect-3:hover::after,
+.cl-effect-3:focus::after {
+	opacity: 1;
+	-webkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	transform: translateY(0px);
 }
 
 /* -------------------------
@@ -1830,7 +1840,7 @@ a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
  *           FOOTER
  * -------------------------
  */
-.footer {
+:not(tr).footer {
         background: #222;
 }
 
