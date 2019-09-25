@@ -1013,7 +1013,7 @@ tr.footer {
     display: flex;
     margin: 20px 0;
     justify-content: center;
-    padding-buttom: 10px;
+    padding-bottom: 10px;
     overflow: auto;
 }
 
