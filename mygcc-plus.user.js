@@ -1013,6 +1013,8 @@ tr.footer {
     display: flex;
     margin: 20px 0;
     justify-content: center;
+    padding-buttom: 10px;
+    overflow: auto;
 }
 
 .my-gcc-plus-buttons-container p {
