@@ -143,23 +143,26 @@ Features:
         return table;
     }
 
-    function convertToButton(element,  text, icon, color="default") {
-        element.classList.add('my-gcc-plus-button');
-        if (color) element.classList.add('my-gcc-plus-button-' + color);
-        
+    function convertToButton(element, text, icon, color = "default") {
+        if (color) {
+            element.classList.add('my-gcc-plus-button');
+            element.classList.add('my-gcc-plus-button-' + color);
+        } else {
+            element.classList.add('my-gcc-plus-button-inactive');
+        }
         element.innerHTML = null
         addTextAndIcon(element, text, icon)
         return element;
     }
 
-    function createButton(type, id = null, text = null, icon = null, color="default", onclick = null, href = null, inputs = null) {
+    function createButton(type, id = null, text = null, icon = null, color = "default", onclick = null, href = null, inputs = null) {
         var element = document.createElement(type)
         if (id != null) element.id = id;
         if (color) {
             element.classList = "my-gcc-plus-button";
             element.classList.add("my-gcc-plus-button-" + color);
         } else {
-            element.classList = "my-gcc-plus-button-inactive";            
+            element.classList = "my-gcc-plus-button-inactive";
         }
 
         addTextAndIcon(element, text, icon)
@@ -563,6 +566,17 @@ Features:
                     parent.removeChild(parent.getElementsByTagName('span')[0]);
                 }
 
+                /* Comments? Maybe? */
+                let commentsContainer = document.getElementById('pg0_V__stuAssgnInfo__panInfo')
+                if (commentsContainer.getElementsByClassName('wysiwygtext').length > 0) {
+                    let text = commentsContainer.getElementsByTagName('p')
+                    if (text.length > 0) {
+                        let buttonText = ["Instructions:", text[0].innerText]
+                        console.log(text)
+                        filesContainer.appendChild(convertToButton(text[0], buttonText, "info", null))
+                    }
+                }
+
 
                 /**
                  * Assignment Files and User Files
@@ -801,14 +815,14 @@ Features:
                 for (let card of cards) {
                     card.classList.add('my-gcc-plus-button')
                     card.classList.add('my-gcc-plus-button-default')
-                    //reposition the title a little bit
-                    card.getElementsByClassName('col-xs-10')[0].style.width = "100%";
-
-                    var aTags = card.getElementsByTagName("a");
-                    var URL = aTags[0].getAttribute("href"); //retrieve URL
-                    aTags[0].removeAttribute("href"); //make it not clickable  because the entire box will be clickable
-                    aTags[0].style.textDecoration = "none"; //don't underline the text when mousing over
-                    var linkTemp = aTags[1].innerText.toLowerCase();
+                    //reposition the title a little bit if there is one
+                    if (card.getElementsByClassName('col-xs-10').length > 0) {
+                        card.getElementsByClassName('col-xs-10')[0].style.width = "100%";
+                    }
+                    card.getElementsByTagName("a")[0].style.textDecoration = "none"; //don't underline the text when mousing over if possible
+                    let primaryButton = card.getElementsByClassName('btn-primary')[0]
+                    var URL = primaryButton.getAttribute("href"); //retrieve URL
+                    var linkTemp = primaryButton.innerText.toLowerCase();
 
                     if (card.getElementsByClassName("sub-info").length > 0) { //likely something you download
                         var subInfo = card.getElementsByClassName("sub-info")[0];
@@ -823,11 +837,19 @@ Features:
                         var icon = document.createElement("div");
                         icon.style.minHeight = "20px";
                         selectIcon(icon, linkTemp, "center")
-                        card.getElementsByClassName('col-sm-12')[0].appendChild(icon);
+                        //Depending on what kind of card, find something to append the icon to
+                        if (card.getElementsByClassName('col-sm-12').length > 0) {
+                            card.getElementsByClassName('col-sm-12')[0].appendChild(icon);
+                        }
                     }
 
                     //remove the bottom button because we don't need it TODO: what about professors where there might be an 'edit' button? What then?
-                    card.getElementsByClassName('card-action')[0].getElementsByTagName('a')[0].remove();
+                    primaryButton.remove();
+
+                    //remove redundant spacer in some cards
+                    if (card.getElementsByClassName('people-card-spacer').length > 0) {
+                        card.getElementsByClassName('people-card-spacer')[0].remove()
+                    }
 
                     //insert an a-tag so that the entire button is clickable
                     var a = document.createElement("a");
@@ -1736,7 +1758,7 @@ div.overrideInstructions {
 #pg0_V_UploadAssignmentDetails__hypUploadFile {
     background-image: url(https://fonts.gstatic.com/s/i/materialicons/cloud_upload/v1/24px.svg);
     background-position: 28px 19px;
-    padding: 28px 5px 0px 55px;
+    padding: 28px 5px 25px 55px;
     background-repeat: no-repeat;
     background-size: 35px;
 }
