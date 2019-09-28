@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.4
+// @version      1.41
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -702,7 +702,7 @@ Features:
                         shadow: "#C8E6C9"
                     },
                     "A-": {
-                        backgroundColor: "#57d154",
+                        background: "#57d154",
                         text: "#245423",
                         shadow: "#DCEDC8"
                     },
