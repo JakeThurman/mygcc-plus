@@ -196,7 +196,7 @@ Features:
         var uploadButton = document.getElementById('pg0_V_UploadAssignmentDetails__hypUploadFile');
         if (uploadButton) {
             uploadButton.classList.add('my-gcc-plus-button')
-            uploadButton.classList.add('my-gcc-plus-button-blue')
+            uploadButton.classList.add('my-gcc-plus-button-default')
 
             //allign the upload button and submit button
             uploadButton.parentNode.style.margin = "0 auto 30px auto"
@@ -210,20 +210,11 @@ Features:
         var submitButton = document.getElementById('pg0_V_UploadAssignmentDetails__lbtnTurnIn');
         if (submitButton) {
             submitButton.classList.add('my-gcc-plus-button')
-            submitButton.classList.add('my-gcc-plus-button-blue')
-        }
-
-        //Custom CSS for an assignment page with an overdue submission. Hopefully no one will ever see this code's effect
-        if (document.querySelector('.lateAssignment') !== null) {
-            if (uploadButton) {
-                uploadButton.classList.remove("uploadFile")
-                uploadButton.classList.add("upload-file-late")
-                uploadButton.classList.add("my-gcc-plus-button-red")
-            }
-            if (submitButton) {
-                submitButton.classList.remove("turnInAssignment")
-                submitButton.classList.add("turn-in-assignment-late")
+            //Custom CSS for an assignment page with an overdue submission.
+            if (document.querySelector('.lateAssignment') !== null) {
                 submitButton.classList.add("my-gcc-plus-button-red")
+            } else {
+                submitButton.classList.add('my-gcc-plus-button-blue')
             }
         }
     }
@@ -1762,20 +1753,6 @@ div.overrideInstructions {
     background-repeat: no-repeat;
     background-size: 35px;
 }
-/*
-a.uploadFile, a.uploadFile:link, a.uploadFile:visited, #pg0_V_UploadAssignmentDetails__hypUploadFile span {
-    color: #0288D1;
-}
-*/
-a.upload-file-late, a.upload-file-late:link, a.upload-file-late:visited {
-    background-color: #ff97a1;
-    color: #733a3a;
-}
-
-a.turn-in-assignment-late, a.turn-in-assignment-late:link, a.turn-in-assignment-late:visited {
-    background-color: #FFCDD2;
-    color: #733a3a;
-}
 
 /* Submit button */
 #pg0_V_UploadAssignmentDetails__lbtnTurnIn {
@@ -1793,11 +1770,6 @@ a.turn-in-assignment-late, a.turn-in-assignment-late:link, a.turn-in-assignment-
 
 a.turnInAssignment {
     background-color: #B3E5FC;
-}
-
-a.turn-in-assignment-late, a.turn-in-assignment-late:link, a.turn-in-assignment-late:visited {
-    color: #733a3a;
-    background-color: #FFCDD2;
 }
 
 a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
