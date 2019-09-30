@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.1
+// @version      1.44.2
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -998,13 +998,6 @@ tr.footer {
 * -------------------------
 */
 
-.my-gcc-plus-files-container {
-    display: grid;
-    justify-content: center;
-    margin-top: 40px;
-    border-bottom: 1px solid #eee;
-}
-
 .my-gcc-plus-section-text {
     margin-bottom: -15px;
     text-align: center;
@@ -1030,6 +1023,7 @@ tr.footer {
     justify-content: center;
     padding-bottom: 10px;
     overflow: auto;
+    align-items: center;
 }
 
 .my-gcc-plus-buttons-container p {
@@ -1049,7 +1043,7 @@ a.my-gcc-plus-button,
 .my-gcc-plus-button,
 .my-gcc-plus-button-inactive {
     font-family: 'Manjari', sans-serif;
-    display: table; /* TODO: Reconsider as inline-block because it messes with alignment in Edge */
+    display: inline-block;
     text-align: center;
     text-decoration: none !important;
     padding: 12px;
@@ -1057,6 +1051,7 @@ a.my-gcc-plus-button,
     border-radius: 15px;
     font-size: 16px;
     margin: 0 20px;
+    max-width: 300px;
     -webkit-transition: all 200ms;
     -ms-transition: all 200ms;
     transition: all 200ms;
@@ -1570,7 +1565,8 @@ li.quick-links-with-sub-nav #myPages,
 Hide things we no longer need
 */
 .facAssignmentDetailSection #pg0_V_UploadAssignmentDetails__lblYourFiles,
-#pg0_V_UploadAssignmentDetails__lblFileInfo {
+#pg0_V_UploadAssignmentDetails__lblFileInfo,
+#pg0_V__stuAssgnInfo__lblInstructions {
     display: none;
 }
 
