@@ -560,11 +560,12 @@ Features:
                 /* Comments? Maybe? */
                 let commentsContainer = document.getElementById('pg0_V__stuAssgnInfo__panInfo')
                 if (commentsContainer.getElementsByClassName('wysiwygtext').length > 0) {
-                    let text = commentsContainer.getElementsByTagName('p')
-                    if (text.length > 0) {
-                        let buttonText = ["Instructions:", text[0].innerText]
-                        console.log(text)
-                        filesContainer.appendChild(convertToButton(text[0], buttonText, "info", null))
+                    let texts = commentsContainer.getElementsByTagName('p')
+                    if (texts.length > 0) {
+                        let text = texts[0]
+                        let buttonText = ["Instructions:", text.innerText]
+                        let newComments = createButton('div', null, buttonText, 'info', null)
+                        filesContainer.appendChild(newComments)
                     }
                 }
 
@@ -1047,7 +1048,7 @@ a.my-gcc-plus-button,
 .my-gcc-plus-button,
 .my-gcc-plus-button-inactive {
     font-family: 'Manjari', sans-serif;
-    display: table;
+    display: table; /* TODO: Reconsider as inline-block because it messes with alignment in Edge */
     text-align: center;
     text-decoration: none !important;
     padding: 12px;
