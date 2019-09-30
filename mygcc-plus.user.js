@@ -1047,7 +1047,7 @@ a.my-gcc-plus-button,
 .my-gcc-plus-button,
 .my-gcc-plus-button-inactive {
     font-family: 'Manjari', sans-serif;
-    display: inline-block;
+    display: table;
     text-align: center;
     text-decoration: none !important;
     padding: 12px;
@@ -1762,10 +1762,6 @@ div.overrideInstructions {
     background-position: 15px 18px;
     text-align: left;
     background-repeat: no-repeat;
-}
-
-#pg0_V_UploadAssignmentDetails__lbtnTurnIn .turnInLink {
-    display: block;
 }
 
 a.turnInAssignment {
