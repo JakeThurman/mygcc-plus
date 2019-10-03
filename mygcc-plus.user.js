@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.2
+// @version      1.44.3
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -112,6 +112,7 @@ Features:
     function createButtonTable(inputs) {
         let elePerLine = 2;
         var table = document.createElement('table');
+        table.classList = "upload-table-buttons"
         table.style.margin = "0 auto"; //center it
 
         var tr, i = 0;
@@ -216,6 +217,10 @@ Features:
             } else {
                 submitButton.classList.add('my-gcc-plus-button-blue')
             }
+            //add click listener that will remove the edit and delete buttons below each uploaded file
+            $("#pg0_V_UploadAssignmentDetails__lbtnTurnIn").click(function () {
+                $(".upload-table-buttons").remove()
+            })
         }
     }
 
