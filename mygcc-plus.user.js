@@ -112,6 +112,7 @@ Features:
     function createButtonTable(inputs) {
         let elePerLine = 2;
         var table = document.createElement('table');
+        table.classList = "upload-table-buttons"
         table.style.margin = "0 auto"; //center it
 
         var tr, i = 0;
@@ -216,6 +217,10 @@ Features:
             } else {
                 submitButton.classList.add('my-gcc-plus-button-blue')
             }
+            //add click listener that will remove the edit and delete buttons below each uploaded file
+            $("#pg0_V_UploadAssignmentDetails__lbtnTurnIn").click(function () {
+                $(".upload-table-buttons").remove()
+            })
         }
     }
 
@@ -1006,13 +1011,6 @@ tr.footer {
 * -------------------------
 */
 
-.my-gcc-plus-files-container {
-    display: grid;
-    justify-content: center;
-    margin-top: 40px;
-    border-bottom: 1px solid #eee;
-}
-
 .my-gcc-plus-section-text {
     margin-bottom: -15px;
     text-align: center;
@@ -1038,6 +1036,7 @@ tr.footer {
     justify-content: center;
     padding-bottom: 10px;
     overflow: auto;
+    align-items: center;
 }
 
 .my-gcc-plus-buttons-container p {
@@ -1057,7 +1056,7 @@ a.my-gcc-plus-button,
 .my-gcc-plus-button,
 .my-gcc-plus-button-inactive {
     font-family: 'Manjari', sans-serif;
-    display: table; /* TODO: Reconsider as inline-block because it messes with alignment in Edge */
+    display: inline-block;
     text-align: center;
     text-decoration: none !important;
     padding: 12px;
@@ -1065,6 +1064,7 @@ a.my-gcc-plus-button,
     border-radius: 15px;
     font-size: 16px;
     margin: 0 20px;
+    max-width: 300px;
     -webkit-transition: all 200ms;
     -ms-transition: all 200ms;
     transition: all 200ms;
@@ -1578,7 +1578,8 @@ li.quick-links-with-sub-nav #myPages,
 Hide things we no longer need
 */
 .facAssignmentDetailSection #pg0_V_UploadAssignmentDetails__lblYourFiles,
-#pg0_V_UploadAssignmentDetails__lblFileInfo {
+#pg0_V_UploadAssignmentDetails__lblFileInfo,
+#pg0_V__stuAssgnInfo__lblInstructions {
     display: none;
 }
 
