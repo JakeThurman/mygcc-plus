@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.1
+// @version      1.44.3
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -23,7 +23,7 @@ Customizing:
 
 Features:
   1. Courses is always expanded
-  2. Auto logs you in
+  2. Auto logs you in (OPTIONAL)
   3. Keeps you logged in (usually)
   4. Looks better (OPTIONAL)
   5. Courses links go to Coursework page (OPTIONAL)
@@ -541,8 +541,15 @@ Features:
                 if (fullHistory == null) {
                     var oldPointsText = document.getElementsByClassName('studentAssignStatus')[0]
                     if (oldPointsText) {
-                        var points = oldPointsText.innerText.match(/(\d+)/)[0];
-                        var pointsSentence = "Assignment is worth " + points + " points"
+                        var points = oldPointsText.innerText.match(/(\d+|(credit\/no credit))/)[0];
+                        var pointsSentence;
+                        switch (points) {
+                            case "credit/no credit":
+                                pointsSentence = "Assignment is graded as credit or no credit"
+                                break
+                            default:
+                                pointsSentence = "Assignment is worth " + points + " points"
+                        }
                         var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description", null);
                         filesContainer.appendChild(newPointsText);
                         oldPointsText.parentNode.removeChild(oldPointsText);
@@ -596,6 +603,7 @@ Features:
                     switch (userFiles.length) {
                         case 0:
                             userFilesText.innerText = "You did not upload any files";
+                            break;
                         case 1:
                             userFilesText.innerText = "Your Uploaded File:";
                             break;
