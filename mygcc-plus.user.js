@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.5
+// @version      1.44.4
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -202,7 +202,6 @@ Features:
             //allign the upload button and submit button
             uploadButton.parentNode.style.margin = "0 auto 30px auto"
             uploadButton.parentNode.style.display = "flex"
-            uploadButton.parentNode.style.alignItems = "center"
             uploadButton.parentNode.parentNode.style.display = "flex"
         }
 
@@ -266,7 +265,16 @@ Features:
         // Setup
         var interval = 1000 * 60; // After a minute
         setTimeout(function callback() {
-            ajaxUtil.callAsmxWebService('services/sessionkeepalive.asmx/Ping');
+            try {
+                // Load the home page every minute
+                //  just to trick MyGCC into not logging us out!
+                $.get("/ICS/", function () {
+                    setTimeout(callback, interval);
+                });
+            }
+            catch (e) {
+                util.onError(e);
+            }
         }, interval);
 
         lastPage = location.href;
@@ -1002,11 +1010,6 @@ tr.footer {
 *          GLOBAL
 * -------------------------
 */
-
-/* add wordwrap to the title if it's too large */
-.card .title {
-    word-break: break-all
-}
 
 .my-gcc-plus-section-text {
     margin-bottom: -15px;
