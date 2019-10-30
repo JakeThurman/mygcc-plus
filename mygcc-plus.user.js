@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.5
+// @version      1.44.5.1
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -1015,7 +1015,7 @@ tr.footer {
 
 /* add wordwrap to the title if it's too large */
 .card .title {
-    word-break: break-all
+    word-break: break-word
 }
 
 .my-gcc-plus-section-text {
