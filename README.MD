@@ -4,11 +4,6 @@
 
 ![Screenshot of my.gcc.edu with the plugin running](./references/screenshot.png)
 
-
-## Info
-
-Updates are automatic. The plugin will automatically check for updates after 24-hours. 
-
 ## Features
   1. Courses is always expanded
   2. Auto logs you in
@@ -16,7 +11,9 @@ Updates are automatic. The plugin will automatically check for updates after 24-
   4. Looks better (OPTIONAL)
   5. Courses links go to Coursework page (OPTIONAL)
 
-Settings are at the bottom of the page, in the footer of mygcc
+Settings are at the bottom of the page, in the footer of mygcc.
+
+The plugin will automatically check for updates. You can turn this off in tamper monkey settings.
 
 
 ## Maintainers
