@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.5.1
+// @version      1.44.6
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -280,7 +280,27 @@ Features:
         }, interval);
 
         lastPage = location.href;
+
+        function saveCredentials(username, password) {
+            try {
+                localStorage.setItem(local_storage_username_key, username);
+                localStorage.setItem(local_storage_password_key, password);
+                console.log(username)
+                console.log(password)
+            } catch (e) {
+                alert(e);
+            }
+        }
+
         if (autoLogIn) {
+            // Capture click on submit button on invalid login page to get username and password
+            $("#CP_V_btnLogin").click(function (e) {
+                //if true, this is a real click and not a programmatic click
+                if (e.hasOwnProperty('originalEvent'))
+                    saveCredentials(document.getElementsByName("CP$V$txtUserName")[0].value, document.getElementsByName("CP$V$txtPassword")[0].value)
+                return true
+            });
+
             // If username and password are in local storage
             if (localStorage.getItem(local_storage_username_key) !== null && localStorage.getItem(local_storage_password_key) !== null) {
                 // If username and password DOM inputs are in DOM
@@ -295,15 +315,10 @@ Features:
                     $("#siteNavBar_btnLogin").click();
                 }
             } else {
-                // Capture click on submit button to get username and password
+                // Capture click on submit button to get username and password on homepage
                 $("#siteNavBar_btnLogin").click(function () {
-                    try {
-                        localStorage.setItem(local_storage_username_key, document.getElementsByName("userName")[0].value);
-                        localStorage.setItem(local_storage_password_key, document.getElementsByName("password")[0].value);
-                    } catch (e) {
-                        alert(e);
-                    }
-                    return true;
+                    saveCredentials(document.getElementsByName("userName")[0].value, document.getElementsByName("password")[0].value)
+                    return true
                 });
             }
         }
