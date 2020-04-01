@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.6
+// @version      1.44.6.1
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -563,15 +563,7 @@ Features:
                 if (fullHistory == null) {
                     var oldPointsText = document.getElementsByClassName('studentAssignStatus')[0]
                     if (oldPointsText) {
-                        var points = oldPointsText.innerText.match(/(\d+|(credit\/no credit))/)[0];
-                        var pointsSentence;
-                        switch (points) {
-                            case "credit/no credit":
-                                pointsSentence = "Assignment is graded as credit or no credit"
-                                break
-                            default:
-                                pointsSentence = "Assignment is worth " + points + " points"
-                        }
+                        var pointsSentence = oldPointsText.innerText
                         var newPointsText = createButton("div", oldPointsText.id, pointsSentence, "description", null);
                         filesContainer.appendChild(newPointsText);
                         oldPointsText.parentNode.removeChild(oldPointsText);
