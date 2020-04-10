@@ -1112,88 +1112,6 @@ a.my-gcc-plus-button,
     cursor: pointer;
 }
 
-/* NON-CLICKABLE */
-
-.my-gcc-plus-button-inactive {
-    background-color: #f5f5f5;
-    color: #505050 !important;
-}
-
-/* DEFAULT COLOR */
-
-a.my-gcc-plus-button-default,
-.card-layout .masonry .my-gcc-plus-button-default,
-.my-gcc-plus-button-default {
-    background-color: #f5f5f5;
-    box-shadow: 0px 5px 7px #e1e1e1;
-    color: #505050 !important;
-}
-
-.card-layout .masonry .my-gcc-plus-button-default:hover,
-.my-gcc-plus-button-default:hover {
-    background-color: #e0f5ff;
-    box-shadow: 0px 5px 7px #d5e7f0;
-}
-
-.card-layout .masonry .my-gcc-plus-button-default:hover *,
-.my-gcc-plus-button-default:hover * {
-    color: rgb(0, 120, 175);
-}
-
-.card-layout .masonry .my-gcc-plus-button-default:active,
-.my-gcc-plus-button-default:active {
-    box-shadow: 0px 1px 7px #E1F5FE;
-}
-
-/* GREEN COLOR */
-
-.my-gcc-plus-button-green {
-    background-color: #A5D6A7 !important; /* GREEN 200 */
-    box-shadow: 0px 5px 7px #C8E6C9 !important; /* GREEN 100 */
-    color: #414a44 !important;
-}
-
-.my-gcc-plus-button-green:hover {
-    background-color: #81C784 !important; /* GREEN 300 */
-}
-
-.my-gcc-plus-button-green:active {
-    box-shadow: 0px 1px 7px #C8E6C9 !important; /* GREEN 100 */
-}
-
-
-/* BLUE COLOR */
-
-.my-gcc-plus-button-blue {
-    background-color: #90CAF9 !important; /* BLUE 200 */
-    box-shadow: 0 5px 7px #BBDEFB !important; /* BLUE 100 */
-    color: #41464a !important;
-}
-
-.my-gcc-plus-button-blue:hover {
-    background-color: #64B5F6 !important; /* BLUE 300 */
-}
-
-.my-gcc-plus-button-blue:active {
-    box-shadow: 0px 1px 7px #BBDEFB !important; /* BLUE 100 */
-}
-
-/* RED COLOR */
-
-.my-gcc-plus-button-red {
-    background-color: #EF9A9A !important; /* RED 200 */
-    box-shadow: 0 5px 7px #FFCDD2 !important; /* RED 100 */
-    color: #4a4141 !important;
-}
-
-.my-gcc-plus-button-red:hover {
-    background-color: #E57373 !important; /* RED 300 */
-}
-
-.my-gcc-plus-button-red:active {
-    box-shadow: 0px 1px 7px #FFCDD2 !important; /* RED 100 */
-}
-
 .color-content-one {
     color: #000;
 }
@@ -1607,23 +1525,6 @@ div.assignmentTitle {
     border: 0px;
 }
 
-div.dueNext {
-    background-color: #B3E5FC;
-    border: 0px;
-    border-radius: 13px;
-}
-
-div.assignmentDisplay {
-    background-color: #f3f3f3;
-    border-radius: 13px;
-    padding: 6px 20px 10px 25px;
-}
-
-div.assignmentDisplay:hover {
-    border-color: transparent;
-    background-color: #e5f7ff;
-}
-
 //TODO change these values
 div.overrideDisplay:hover {
     background-color: #EAF1FE;
@@ -2004,6 +1905,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
 }
 
+li, p {
+    color: white
+}
+
 a, a:link, a:visited, .link-btn, .link-btn span {
     color: #00c7e6;
     text-decoration: none;
@@ -2049,6 +1954,139 @@ table span {
 
 .slide-menu-right .navbar .quick-links {
     border-top: 12px solid #121212
+}
+
+.slide-menu-right .sidebar-link-title {
+    color: #fff
+}
+
+
+/* NON-CLICKABLE */
+
+.my-gcc-plus-button-inactive {
+    background-color: #252525;
+    color: #ddd !important;
+}
+
+
+
+/* -------------------------
+*      CUSTOM BUTTONS
+* -------------------------
+*/
+
+/* DEFAULT COLOR */
+
+a.my-gcc-plus-button-default,
+.card-layout .masonry .my-gcc-plus-button-default,
+.my-gcc-plus-button-default {
+    background-color: #252525;
+    box-shadow: 0px 5px 7px black;
+    color: #ddd !important;
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:hover,
+.my-gcc-plus-button-default:hover {
+    background-color: #002e3d;
+    box-shadow: 0px 5px 7px #002030;
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:hover *,
+.my-gcc-plus-button-default:hover * {
+    color: #0078af
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:active,
+.my-gcc-plus-button-default:active {
+    box-shadow: 0px 1px 7px #002030;
+}
+
+/* GREEN COLOR */
+
+.my-gcc-plus-button-green {
+    background-color: #A5D6A7 !important; /* GREEN 200 */
+    box-shadow: 0px 5px 7px #C8E6C9 !important; /* GREEN 100 */
+    color: #414a44 !important;
+}
+
+.my-gcc-plus-button-green:hover {
+    background-color: #81C784 !important; /* GREEN 300 */
+}
+
+.my-gcc-plus-button-green:active {
+    box-shadow: 0px 1px 7px #C8E6C9 !important; /* GREEN 100 */
+}
+
+
+/* BLUE COLOR */
+
+.my-gcc-plus-button-blue {
+    background-color: #90CAF9 !important; /* BLUE 200 */
+    box-shadow: 0 5px 7px #BBDEFB !important; /* BLUE 100 */
+    color: #41464a !important;
+}
+
+.my-gcc-plus-button-blue:hover {
+    background-color: #64B5F6 !important; /* BLUE 300 */
+}
+
+.my-gcc-plus-button-blue:active {
+    box-shadow: 0px 1px 7px #BBDEFB !important; /* BLUE 100 */
+}
+
+/* RED COLOR */
+
+.my-gcc-plus-button-red {
+    background-color: #EF9A9A !important; /* RED 200 */
+    box-shadow: 0 5px 7px #FFCDD2 !important; /* RED 100 */
+    color: #4a4141 !important;
+}
+
+.my-gcc-plus-button-red:hover {
+    background-color: #E57373 !important; /* RED 300 */
+}
+
+.my-gcc-plus-button-red:active {
+    box-shadow: 0px 1px 7px #FFCDD2 !important; /* RED 100 */
+}
+
+
+/* Bottom left of Coursework portlet showing name of assignment */
+div.detailInfo span.Title, div.detailInfo span.Descrip {
+    color: white
+}
+
+/*
+Coursework page with list of assignments
+Academics > All My Courses table background color
+*/
+drawer-container default-border-alternate-one secondary-alternate-background-one,
+.secondary-alternate-background-one {
+    background-color: black !important
+}
+
+
+/* Coursework page assignment buttons */
+div.dueNext {
+    background-color: #004261;
+    border: 0px;
+    border-radius: 13px;
+}
+
+div.assignmentDisplay {
+    background-color: #252525;
+    border-radius: 13px;
+    padding: 6px 20px 10px 25px;
+}
+
+div.assignmentDisplay:hover {
+    border-color: transparent;
+    background-color: #2f373b;
+}
+
+/* Cloesd assignents on the coursework apge */
+div.assignmentDisplay.closed a {
+    color: #aaa
 }
 
                     `).appendTo(document.body);
@@ -2105,6 +2143,104 @@ a, a:link, a:visited, .link-btn, .link-btn span {
     }
 }
 
+
+/* -------------------------
+*      CUSTOM BUTTONS
+* -------------------------
+*/
+
+/* DEFAULT COLOR */
+
+a.my-gcc-plus-button-default,
+.card-layout .masonry .my-gcc-plus-button-default,
+.my-gcc-plus-button-default {
+    background-color: #f5f5f5;
+    box-shadow: 0px 5px 7px #e1e1e1;
+    color: #505050 !important;
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:hover,
+.my-gcc-plus-button-default:hover {
+    background-color: #e0f5ff;
+    box-shadow: 0px 5px 7px #d5e7f0;
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:hover *,
+.my-gcc-plus-button-default:hover * {
+    color: rgb(0, 120, 175);
+}
+
+.card-layout .masonry .my-gcc-plus-button-default:active,
+.my-gcc-plus-button-default:active {
+    box-shadow: 0px 1px 7px #E1F5FE;
+}
+
+/* GREEN COLOR */
+
+.my-gcc-plus-button-green {
+    background-color: #A5D6A7 !important; /* GREEN 200 */
+    box-shadow: 0px 5px 7px #C8E6C9 !important; /* GREEN 100 */
+    color: #414a44 !important;
+}
+
+.my-gcc-plus-button-green:hover {
+    background-color: #81C784 !important; /* GREEN 300 */
+}
+
+.my-gcc-plus-button-green:active {
+    box-shadow: 0px 1px 7px #C8E6C9 !important; /* GREEN 100 */
+}
+
+
+/* BLUE COLOR */
+
+.my-gcc-plus-button-blue {
+    background-color: #90CAF9 !important; /* BLUE 200 */
+    box-shadow: 0 5px 7px #BBDEFB !important; /* BLUE 100 */
+    color: #41464a !important;
+}
+
+.my-gcc-plus-button-blue:hover {
+    background-color: #64B5F6 !important; /* BLUE 300 */
+}
+
+.my-gcc-plus-button-blue:active {
+    box-shadow: 0px 1px 7px #BBDEFB !important; /* BLUE 100 */
+}
+
+/* RED COLOR */
+
+.my-gcc-plus-button-red {
+    background-color: #EF9A9A !important; /* RED 200 */
+    box-shadow: 0 5px 7px #FFCDD2 !important; /* RED 100 */
+    color: #4a4141 !important;
+}
+
+.my-gcc-plus-button-red:hover {
+    background-color: #E57373 !important; /* RED 300 */
+}
+
+.my-gcc-plus-button-red:active {
+    box-shadow: 0px 1px 7px #FFCDD2 !important; /* RED 100 */
+}
+
+
+div.dueNext {
+    background-color: #B3E5FC;
+    border: 0px;
+    border-radius: 13px;
+}
+
+div.assignmentDisplay {
+    background-color: #f3f3f3;
+    border-radius: 13px;
+    padding: 6px 20px 10px 25px;
+}
+
+div.assignmentDisplay:hover {
+    border-color: transparent;
+    background-color: #e5f7ff;
+}
 
                     `).appendTo(document.body);
                 }
