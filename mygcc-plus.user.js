@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.6.1
+// @version      1.5
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -232,6 +232,7 @@ Features:
         var local_storage_username_key = "mygccplus_un",
             local_storage_password_key = "mygccplus_pw",
             local_storage_restyle_key = "mygccplus_style",
+            local_storage_darkmode_key = "mygccplus_darkmode",
             local_storage_goto_coursework_key = "mygccplus_goto_coursework",
             ss_just_logged_in = "mygccplus_justloggedin",
             ss_last_page = "mygccplus_lastpage",
@@ -381,6 +382,7 @@ Features:
             { key: "borders", text: "Borders" }
         ], "shadows");
         addOption(ss_should_auto_log_in, "Automatically log you in", true, true);
+        var darkMode = addOption(local_storage_darkmode_key, "Dark Mode (BETA)", false, false);
 
         if (headerSize === "shortest") {
             $("<div>", { "id": "space" }).insertAfter($("#masthead"));
@@ -714,77 +716,92 @@ Features:
                     "A+": {
                         background: "#00c853",
                         text: "#004e20",
-                        shadow: "#C8E6C9"
+                        shadow: "#C8E6C9",
+                        darkShadow: "#3f6b41"
                     },
                     "A-": {
                         background: "#57d154",
                         text: "#245423",
-                        shadow: "#DCEDC8"
+                        shadow: "#DCEDC8",
+                        darkShadow: "#59802b"
                     },
                     "A": {
                         background: "#36c246",
                         text: "#195920",
-                        shadow: "#C8E6C9"
+                        shadow: "#C8E6C9",
+                        darkShadow: "#257028"
                     },
                     "B+": {
                         background: "#8bc34a",
                         text: "#3d5620",
-                        shadow: "#DCEDC8"
+                        shadow: "#DCEDC8",
+                        darkShadow: "#608a2f"
                     },
                     "B-": {
                         background: "#a0cb6e",
                         text: "#40502d",
-                        shadow: "#DCEDC8"
+                        shadow: "#DCEDC8",
+                        darkShadow: "#557a28"
                     },
                     "B": {
                         background: "#9ccc65",
                         text: "#32451d",
-                        shadow: "#DCEDC8"
+                        shadow: "#DCEDC8",
+                        darkShadow: "#588029"
                     },
                     "C+": {
                         background: "#cddc39",
                         text: "#5a611a",
-                        shadow: "#F0F4C3"
+                        shadow: "#F0F4C3",
+                        darkShadow: "#90992b"
                     },
                     "C-": {
                         background: "#fbc02d",
                         text: "#544112",
-                        shadow: "#FFD180"
+                        shadow: "#FFD180",
+                        darkShadow: "#b5832b"
                     },
                     "C": {
                         background: "#d4e157",
                         text: "#5d6325",
-                        shadow: "#E6EE9C"
+                        shadow: "#E6EE9C",
+                        darkShadow: "#a7b52a"
                     },
                     "D+": {
                         background: "#ffa726",
                         text: "#67430f",
-                        shadow: "#FFCC80"
+                        shadow: "#FFCC80",
+                        darkShadow: "#ba8029"
                     },
                     "D-": {
                         background: "#e65100",
                         text: "#592001",
-                        shadow: "#FFAB91"
+                        shadow: "#FFAB91",
+                        darkShadow: "#ad4626"
                     },
                     "D": {
                         background: "#f57c00",
                         text: "#623200",
-                        shadow: "#FFAB91"
+                        shadow: "#FFAB91",
+                        darkShadow: "#ab3f1d"
                     },
                     "F": {
                         background: "#f44336",
                         text: "#7e231d",
-                        shadow: "#ffc5c0"
+                        shadow: "#ffc5c0",
+                        darkShadow: "#bd3024"
                     },
                     "late": {
                         background: "#EF9A9A",
                         text: "#505050",
-                        shadow: "#FFCDD2"
+                        shadow: "#FFCDD2",
+                        darkShadow: "#b02734"
                     },
                     default: {
                         background: "#E0F7FA",
                         text: "#003375",
-                        shadow: "#ecf8f9"
+                        shadow: "#ecf8f9",
+                        darkShadow: "#21a5b0"
                     }
                 };
                 grade = grade.match(/([A-F][+\-]?(?![\w]+))/);
@@ -797,7 +814,7 @@ Features:
 
                 gradeBackground.style.backgroundColor = colors[grade].background;
                 gradeBackground.style.color = colors[grade].text;
-                gradeBackground.style.boxShadow = "0px 5px 12px" + colors[grade].shadow
+                gradeBackground.style.boxShadow = "0px 5px 12px" + (darkMode ? colors[grade].darkShadow : colors[grade].shadow)
                 if (document.getElementById(gradeValue) !== null) document.getElementById(gradeValue).style.color = colors[grade].text;
             }
 
@@ -1181,17 +1198,9 @@ a.my-gcc-plus-button-default,
     color: #000;
 }
 
-a, a:link, a:visited, .link-btn, .link-btn span {
-    color: #0b8092;
-    text-decoration: none;
-}
 a:hover, a:focus, .link-btn:hover, .link-btn:focus {
     text-decoration: underline;
     border: none;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: #333;
 }
 
 #mainLayout {
@@ -1423,22 +1432,6 @@ div.detailHeader {
 */
 
 @media screen and (max-width: 1025px) {
-    .slide-menu-right .navbar .slide-menu-toggle-btns .active a {
-        background: #97002e;
-        color: #fff !important;
-    }
-    .slide-menu-right .navbar .slide-menu-toggle-btns a:hover {
-        background: #97002e;
-        color: #fff !important;
-    }
-    .slide-menu-right .navbar .slide-menu-toggle-btns .active a:hover {
-        background: #97002e;
-        color: #fff !important;
-    }
-    .slide-menu-right .navbar .slide-menu-toggle-btns li a {
-        background: transparent;
-        color: #111;
-    }
     .slide-menu-btn {
         background-color: #97002e;
         width: 45px;
@@ -1550,12 +1543,7 @@ li.quick-links-with-sub-nav #myPages,
 
 .portlet-grid .portlet-header-bar {
     padding: 13px 20px 10px 20px;
-    background-color: #efefef;
     text-align: center;
-}
-
-.portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
-    color: #515151;
 }
 
 @media (min-width: 992px) {
@@ -1969,21 +1957,156 @@ a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
                     `).appendTo(document.body);
 
                 } else if (shadowsOrBorders === "shadows") {
+                    if (darkMode) {
+                        $("<style>").text(`
+                            @media screen and (min-width: 1026px) {
+                                #sideBar {
+                                    box-shadow: 15px 15px 15px -13px #000;
+                                    
+                                }
+                            }
+                            .portlet {
+                                box-shadow: 0px 5px 10px 0px #000;
+                            }
+                        `).appendTo(document.body);
+                    } else {
+                        $("<style>").text(`
+                            @media screen and (min-width: 1026px) {
+                                #sideBar {
+                                    box-shadow: 15px 15px 15px -13px #ddd;
+                                    
+                                }
+                            }
+                            .portlet {
+                                box-shadow: 0px 5px 10px 0px #ddd;
+                            }
+                        `).appendTo(document.body);
+                    }
 
                     $("<style>").text(`
-                        @media screen and (min-width: 1026px) {
-                            #sideBar {
-                                box-shadow: 15px 15px 15px -13px #ddd;
-                                
+                            .portlet-grid .portlet-header-bar {
+                                border-bottom: 0px;
                             }
-                        .portlet {
-                            box-shadow: 0px 5px 10px 0px #ddd;
-                        }
-                        .portlet-grid .portlet-header-bar {
-                            border-bottom: 0px;
-                        }
+                        `).appendTo(document.body);
+
+
+                }
+
+                if (darkMode) {
+
+                    $("<style>").text(`
+body {
+    color: #fff;
+    background: #121212;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #fff;
+}
+
+a, a:link, a:visited, .link-btn, .link-btn span {
+    color: #00c7e6;
+    text-decoration: none;
+}
+
+.portlet-grid .portlet-header-bar {
+    background: #424242
+}
+
+.portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
+    color: #fff;
+}
+
+.gradebookPortlet .studentDetailScreen .gbkSubheader {
+    border-bottom: solid 1px white;
+}
+
+thead th {
+    background-color: #424242 !important
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #121212 !important
+}
+
+tbody tr:nth-child(even) {
+    background-color: #252525 !important
+}
+
+table span {
+    color: white
+}
+
+
+
+/* -------------------------
+*          SIDEBAR
+* -------------------------
+*/
+.slide-menu-right, .navbar.navbar-default {
+    background-color: #121212
+}
+
+.slide-menu-right .navbar .quick-links {
+    border-top: 12px solid #121212
+}
+
                     `).appendTo(document.body);
 
+                    // Do some jQuery because it can't be changed through css
+                    $(".slide-menu-right li a").attr('style', 'color: white !important')
+                    $(".sidebar-link-title a").attr('style', 'color: white !important')
+
+                } else {
+                    $("<style>").text(`
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+a, a:link, a:visited, .link-btn, .link-btn span {
+    color: #0b8092;
+    text-decoration: none;
+}
+
+.portlet-grid .portlet-header-bar {
+    background: #efefef
+}
+
+.portlet-grid .portlet-header-bar h3, .portlet-grid .portlet-header-bar a {
+    color: #515151;
+}
+
+.gradebookPortlet .studentDetailScreen .gbkSubheader {
+    border-bottom: solid 1px black;
+}
+
+
+/* -------------------------
+*          SIDEBAR
+* -------------------------
+*/
+@media screen and (max-width: 1025px) {
+    .slide-menu-right .navbar .slide-menu-toggle-btns .active a {
+        background: #97002e;
+        color: #fff !important;
+    }
+    .slide-menu-right .navbar .slide-menu-toggle-btns a:hover {
+        background: #97002e;
+        color: #fff !important;
+    }
+    .slide-menu-right .navbar .slide-menu-toggle-btns .active a:hover {
+        background: #97002e;
+        color: #fff !important;
+    }
+    .slide-menu-right .navbar .slide-menu-toggle-btns li a {
+        background: transparent;
+        color: #111;
+    }
+}
+
+
+                    `).appendTo(document.body);
                 }
 
                 // Enable CTRL+, search
