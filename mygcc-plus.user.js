@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MyGCC plus
 // @namespace    https://github.com/jakethurman/mygcc-plus
-// @version      1.44.6.1
+// @version      1.50
 // @description  mygcc-plus
 // @downloadURL  https://github.com/jakethurman/mygcc-plus/raw/master/mygcc-plus.user.js
 // @author       Jake Thurman and Ian Spryn
@@ -294,10 +294,10 @@ Features:
 
         if (autoLogIn) {
             // Capture click on submit button on invalid login page to get username and password
-            $("#CP_V_btnLogin").click(function (e) {
+            $("#siteNavBar_welcomeBackBarLoggedOut_ButtonLogin").click(function (e) {
                 //if true, this is a real click and not a programmatic click
                 if (e.hasOwnProperty('originalEvent'))
-                    saveCredentials(document.getElementsByName("CP$V$txtUserName")[0].value, document.getElementsByName("CP$V$txtPassword")[0].value)
+                    saveCredentials(document.getElementsByName("userName")[0].value, document.getElementsByName("password")[0].value)
                 return true
             });
 
@@ -312,11 +312,11 @@ Features:
                     sessionStorage.setItem(ss_just_logged_in, JSON.stringify(true));
 
                     // Click the submit button
-                    $("#siteNavBar_btnLogin").click();
+                    $("#siteNavBar_welcomeBackBarLoggedOut_ButtonLogin").click();
                 }
             } else {
                 // Capture click on submit button to get username and password on homepage
-                $("#siteNavBar_btnLogin").click(function () {
+                $("#siteNavBar_welcomeBackBarLoggedOut_ButtonLogin").click(function () {
                     saveCredentials(document.getElementsByName("userName")[0].value, document.getElementsByName("password")[0].value)
                     return true
                 });
@@ -384,9 +384,32 @@ Features:
 
         if (headerSize === "shortest") {
             $("<div>", { "id": "space" }).insertAfter($("#masthead"));
-            $("#masthead").remove();
+
+            // If we're NOT on login page, then we need can hide the header's background color
+            // becauase it's no longer needed as a backdrop for the login fields
+            if (!document.getElementById("siteNavBar_welcomeBackBarLoggedOut_ButtonLogin")) {
+                $("<style>").text(`
+                #masthead {
+                    height: 0 !important;
+                }
+
+                .container-fluid-sidebar #sideBar {
+                    margin-top: 60px;
+                }
+                `).appendTo(document.body);                
+            } else {
+                $("<style>").text(`
+                .container-fluid-sidebar #sideBar {
+                    margin-top: 130px;
+                }
+                `).appendTo(document.body);    
+            }
 
             $("<style>").text(`
+
+            #masthead {
+                background-image: none !important;
+            }
 
             .top-nav-bar .nav-container .main-nav-submenu-container .user-login .forgot-password-link {
                 margin: 0px -40px 0px 0px;
@@ -433,10 +456,6 @@ Features:
 
                     #user-login-section .arrow {
                         left: 85% !important;
-                    }
-
-                    #search-section {
-                        margin-right: -95px;
                     }
 
                     #space {
@@ -488,7 +507,8 @@ Features:
             }
 
             // Trigger a resize even to correct the "More" dropdown in the header.
-            jenzabar.framework.topNavAndSidebarSlideMenu.trigger.resize();
+            // jenzabar.framework.topNavAndSidebarSlideMenu.trigger.resize();
+            // ^^^ Commented out because this was causing the page to completely freeze for some reason
         }
 
         if (doStyling) {
@@ -910,6 +930,11 @@ Features:
 body #masthead {
     background-size: contain !important;
     height: 120px !important;
+    background-image: url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/grove-city-college-outline.png?raw=true') !important;
+}
+
+.container-fluid-sidebar #sideBar {
+    margin-top: 144px;
 }
 
 @media screen and (min-width: 1026px) {
@@ -921,13 +946,14 @@ body #masthead {
         top: 120px !important;
     }
 
+    #user-login-section {
+        top: 80px;
+    }
+
     #siteNavBar_loginToggle .user-image {
         top: 0;
     }
 
-    #search-section {
-		margin-right: 30px;
-    }
     .logged-in .top-nav-bar .nav-container .main-nav-submenu-container .search-section {
         top: -10px;
     }
@@ -943,6 +969,19 @@ body #masthead {
 }
 			`).appendTo(document.body);
         }
+        if (headerSize === "tall") {
+            $("<style>").text(`
+body #masthead {
+    background-image: url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/grove-city-college-outline.png?raw=true') !important;
+    height: 200px !important;
+}
+
+.container-fluid-sidebar #sideBar {
+    margin-top: 224px;
+}
+			`).appendTo(document.body);
+        }
+
 
         // CSS
         if (doStyling) {
@@ -989,8 +1028,21 @@ body #masthead {
 */
 @media screen and (min-width: 1026px) {
     .targeted-message {
-        right: -135px;
-        width: calc(100% - 538px);
+        display: inline-flex;
+        width: calc(100% - 295px);
+    }
+
+    .targeted-message {
+        display: inline-flex;
+        width: calc(100% - 295px);
+    }
+
+    .targeted-message div {
+        margin: 0 auto;
+    }
+
+    .targeted-message.default-border-alternate-one {
+        border: none;
     }
 }
 
@@ -1300,6 +1352,54 @@ div.detailHeader {
     #top-nav-bar {
         top: 200px;
     }
+
+    #logo-heading {
+        position: absolute;
+    }
+
+    .site-logo-link {
+        background: none !important;
+    }
+
+    /* Fix image stretching */
+    .site-logo-link .site-logo {
+        width: initial !important;
+    }
+
+    .forgot-password-link, .lnkForgot-background {
+        background-color: #585858 !important;
+        border-radius: 3px;
+        color: #fff;
+        display: inline-block;
+        padding: 1em;
+        left: 20px;
+        position: relative;
+        top: -50px;
+    }
+
+    /* User profile icon in top left corner */
+    .site-header-container .user-btn {
+        top: -8px;
+        right: 0px;
+        z-index: 10000 !important;
+    }
+
+    /* Popup on user profile click */
+    .site-header-container .main-nav-submenu-container .user-login.popover {
+        top: 65px;
+    }
+
+    /* Fix search button being hidden for short header height */
+    #siteNavBar_searchBox_SearchButton {
+        z-index: 10000 !important;
+        top: 16px;
+        right: 70px;
+    }
+
+    /* Popup on search click */
+    #search-section {
+        margin: 10px 20px 0 0 !important;
+    }
 }
 
 @media screen and (max-width: 1025px) {
@@ -1361,10 +1461,8 @@ div.detailHeader {
 
 #masthead {
     background-color: #222222;
-    background-image: url('https://github.com/JakeThurman/mygcc-plus/blob/master/references/grove-city-college-outline.png?raw=true') !important;
     background-size: cover;
     background-position: center center;
-    height: 200px !important;
 }
 
 #myCourses.collapse {
@@ -1458,7 +1556,6 @@ div.detailHeader {
 @media screen and (min-width: 1026px) {
     #sideBar {
     width: 270px;
-    padding-top: 60px;
     padding-right: 0;
     margin-bottom: -1px;
     padding-bottom: 20px;
@@ -1501,6 +1598,7 @@ li.quick-links-with-sub-nav #myPages,
 }
 
 .slide-menu-right .sidebar-link-title {
+    margin: 10px;
     border-color: transparent;
     color: #515151;
 }
@@ -1966,6 +2064,11 @@ a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
                         .portlet {
                             border: 1px solid #ddd !important;
                         }
+                        #TargetedMessage p {
+                            border: 1px solid #ABABA7;
+                            padding: 10px;
+                            border-radius: 4px;
+                        }
                     `).appendTo(document.body);
 
                 } else if (shadowsOrBorders === "shadows") {
@@ -1982,6 +2085,11 @@ a.startAttempt .attemptLink, a.turnInAssignment .turnInLink {
                         .portlet-grid .portlet-header-bar {
                             border-bottom: 0px;
                         }
+
+                        .targeted-message div p {
+                            box-shadow: 0px 8px 15px 0px #bbb;
+                        }
+
                     `).appendTo(document.body);
 
                 }
